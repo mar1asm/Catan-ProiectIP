@@ -1,0 +1,17 @@
+Product backlog:
+- menu - start, optiuni
+- login/signup
+- profilul jucatorului: costumizarea jucatorului (2 variante: jucatori costumizati sau costumizare)
+- tabla de joc - background, piese hexagon (stanca, campie, padure, apa, ...), satele (casute), zaruri + animatie, resurse (lemn, piatra, ...), useri (pictograma, ... + e randul lui!), chat
+- setari - optiuni: asseturi unity
+- curency - pictograma
+- iconuri in game
+- ecran de loading
+- ecran inceput joc + chat
+- tabla jocului: expansiuni
+- pagina statistici!
+- animatii!!
+- singleplayer, multiplayer, tournaments
+- tutorial joc
+- friends page
+- level progress

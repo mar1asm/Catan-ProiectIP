@@ -1,0 +1,11 @@
+Sprint 1:
+- login: username/email + parola, play without login, quit
+- signup: username, email, parola, confimare parola, confirmare termeni si conditii
+- meniu principal: username, personaj, ceva background, play button, setting button
+- setari: muzica mut/unmute, profilul userului, 
+- loading page: background, loading button
+- caracter default pt pagina unde userul nu se logheaza
+- tabla de joc: tabla, useri, casute, iconuri
+- costumizare personaj: cu modificari/personaje stricte!
+- friends page
+- level progress
