@@ -1,4 +1,4 @@
-Product backlog: -- de impartit pe categorii
+Product backlog:
 Must have: 
 - login/signup, forgot password, joaca ca si guest, quit - ca si pagina de start
 - menu (dupa logare): singleplayer, multiplayer, optiuni/setari, almanahul cu regulile jocului
@@ -6,7 +6,7 @@ Must have:
 - profilul jucatorului: player character profile, level progress (icons for every level), friends, privacy policy + terms of services (pe site), logout
 - player character profile: statistics, expansions, default appearances
 - meniu (princ) -> singleplayer: meniu expansiuni / moduri de joc
-- credits
+- credits 
 - tutorial
 - meniu loading for players (inainte de joc) -> 
 	- invite players: from guild / friends

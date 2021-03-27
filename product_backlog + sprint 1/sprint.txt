@@ -1,11 +1,14 @@
 Sprint 1:
 - login: username/email + parola, play without login, quit
-- signup: username, email, parola, confimare parola, confirmare termeni si conditii
-- meniu principal: username, personaj, ceva background, play button, setting button
-- setari: muzica mut/unmute, profilul userului, 
+- signup: username, email, parola, confimare parola, confirmare termeni si conditii, quit, login
+- meniu principal: dupa logare, pagina contine: username, personaj (icon), bkg, singleplayer, multiplayer, settings button (icon), rules button (icon), quit, chat in drp
+- setari: muzica mut/unmute
 - loading page: background, loading button
 - caracter default pt pagina unde userul nu se logheaza
 - tabla de joc: tabla, useri, casute, iconuri
-- costumizare personaj: cu modificari/personaje stricte!
+- profile:  player character profile, level progress (icons for every level), friends, privacy policy + terms of services (pe site), logout
+- rules page
+- loading for game
+- costumizare personaj: default users
 - friends page
 - level progress
