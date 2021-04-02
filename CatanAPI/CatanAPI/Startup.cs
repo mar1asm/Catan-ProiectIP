@@ -1,16 +1,10 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace CatanAPI
 {
@@ -27,6 +21,11 @@ namespace CatanAPI
         public void ConfigureServices(IServiceCollection services)
         {
 
+            //services.AddDbContext<Models.CatanAPIDbContext>(options =>
+            //options.UseNpgsql(Configuration.GetConnectionString("CatanAPIContext")));
+
+            // Temporary, for testing purposes we keep an InMemoryDatabase with no persistence to avoid setting up a PostgreSQL Database
+            services.AddDbContext<Models.CatanAPIDbContext>(options => options.UseInMemoryDatabase("CatanAPI"));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
