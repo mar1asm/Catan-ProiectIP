@@ -26,6 +26,7 @@ namespace CatanAPI
 
             // Temporary, for testing purposes we keep an InMemoryDatabase with no persistence to avoid setting up a PostgreSQL Database
             services.AddDbContext<Models.CatanAPIDbContext>(options => options.UseInMemoryDatabase("CatanAPI"));
+            services.AddMvc();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
