@@ -1,4 +1,6 @@
 
+using System.Collections.Generic;
+
 namespace CatanAPI.Models
 {
     public class User
@@ -8,6 +10,9 @@ namespace CatanAPI.Models
         public string LastName { get; set; }
         public string Email { get; set; }
         public short Roles { get; set; }
-        public int SessionId { get; set; }
+
+        public ICollection<Notification> Notifications { get; set; }
+        public ICollection<GameSession> GameSessions { get; set; }
+        public ICollection<Contact> Contacts { get; set; }
     }
 }
