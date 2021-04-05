@@ -36,6 +36,24 @@ namespace CatanAPI.Models
                         userNotificationBuilder.HasKey(userNotification => new { userNotification.UserId, userNotification.NotificationId });
                     }
                 );
+
+            modelBuilder.Entity<GameSession>()
+                 .HasMany(gameSession => gameSession.Users)
+                 .WithMany(user => user.GameSessions)
+                 .UsingEntity<GameSessionUser>(
+                     gameSessionUser => gameSessionUser
+                                       .HasOne(entry => entry.User)
+                                       .WithMany(user => user.GameSessionUsers),
+                     gameSessionUser => gameSessionUser
+                                       .HasOne(entry => entry.GameSession)
+                                       .WithMany(entry => entry.GameSessionUsers),
+                     gameSessionUserBuilder =>
+                     {
+                         gameSessionUserBuilder.Property(gameSessionUser => gameSessionUser.Status).HasDefaultValue(GameSessionStatus.Pending);
+                         gameSessionUserBuilder.Property(gameSessionUser => gameSessionUser.SessionRoles).HasDefaultValue(GameSessionRoles.GameUser);
+                         gameSessionUserBuilder.HasKey(gameSessionUser => new { gameSessionUser.UserId, gameSessionUser.GameSessionId });
+                     }
+                );
                 
         }
     }

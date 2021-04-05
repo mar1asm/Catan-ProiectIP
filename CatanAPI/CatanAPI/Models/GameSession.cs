@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using System;
 namespace CatanAPI.Models
 {
+    public enum GameSessionStatus
+    {
+        Pending,
+        Accepted
+    }
     public class GameSession
     {
         public int GameSessionId { get; set; }
@@ -10,6 +15,8 @@ namespace CatanAPI.Models
         public DateTime CreatedAt { get; set; }
 
         public ICollection<Extension> Extensions { get; set; }
-        public ICollection<GameSessionUser> GameSessionUsers { get; set; }
+
+        public ICollection<User> Users { get; set; }
+        public List<GameSessionUser> GameSessionUsers { get; set; }
     }
 }

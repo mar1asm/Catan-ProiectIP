@@ -19,7 +19,10 @@ namespace CatanAPI.Models
 
         public ICollection<Notification> Notifications { get; set; }
         public List<UserNotification> UserNotifications { get; set; }
+
         public ICollection<GameSession> GameSessions { get; set; }
+        public List<GameSessionUser> GameSessionUsers { get; set; }
+
         public ICollection<Contact> Contacts { get; set; }
     }
 }
