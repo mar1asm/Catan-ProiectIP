@@ -22,16 +22,42 @@ namespace CatanAPI.Controllers
 
         // GET: api/Users
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
         {
-            return await _context.Users.ToListAsync();
+            var users = await _context.Users.Select(b => new UserDto
+            {
+                UserId = b.UserId,
+                FirstName = b.FirstName,
+                LastName = b.LastName,
+                Email = b.Email,
+                Notifications = b.UserNotifications
+                .Select(
+                    n => new NotificationDto { NotificationId = n.UserNotificationId, CreatedAt = n.CreatedAt, Text = n.Notification.Text, Read = n.Read })
+                .ToList()
+            }).ToListAsync();
+            return Ok(users);
         }
 
         // GET: api/Users/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(int id)
+        public async Task<ActionResult<UserDto>> GetUser(int id)
         {
-            var user = await _context.Users.FindAsync(id);
+            var user = await _context
+                .Users.
+                Select(entry => 
+                new UserDto
+                    {
+                    UserId = entry.UserId,
+                    FirstName = entry.FirstName,
+                    LastName = entry.LastName,
+                    Email = entry.Email,
+                    Notifications = entry.UserNotifications
+                    .Select(
+                    n => new NotificationDto { NotificationId = n.UserNotificationId, CreatedAt = n.CreatedAt, Text = n.Notification.Text, Read = n.Read })
+                    .ToList()
+                }
+                )
+                .SingleOrDefaultAsync(entry => entry.UserId == id);
 
             if (user == null)
             {
