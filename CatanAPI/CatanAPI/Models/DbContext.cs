@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-
+using System;
 namespace CatanAPI.Models
 {
     public class CatanAPIDbContext : DbContext
@@ -8,12 +8,21 @@ namespace CatanAPI.Models
         public DbSet<User> Users { get; set; }
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<Notification> Notifications { get; set; }
+        public DbSet<UserNotification> UserNotifications { get; set; }
 
         public DbSet<Extension> Extensions { get; set; }
         public DbSet<GameSession> GameSessions { get; set; }
         
 
-        public CatanAPIDbContext(DbContextOptions<CatanAPIDbContext> options) : base(options) { }
+        public CatanAPIDbContext(DbContextOptions<CatanAPIDbContext> options) : base(options) {
+            User user1 = new User { FirstName = "John", LastName = "Doe", Email = "john_doe@test.com", Roles = (short)UserRoles.User };
+            Notification notification1 = new Notification { CreatedAt = DateTime.Now, Text = "Hello world!" };
+            //Users.Add(user1);
+            //Notifications.Add(notification1);
+            UserNotifications.Add(new UserNotification { CreatedAt = DateTime.Now, User = user1, Notification = notification1 });
+            this.SaveChanges();
+            //UserNotifications.Add(new UserNotification { CreatedAt = DateTime.Now, Notification = notification1, User = user1 });
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -36,7 +45,6 @@ namespace CatanAPI.Models
                         userNotificationBuilder.HasKey(userNotification => new { userNotification.UserId, userNotification.NotificationId });
                     }
                 );
-
             modelBuilder.Entity<GameSession>()
                  .HasMany(gameSession => gameSession.Users)
                  .WithMany(user => user.GameSessions)
