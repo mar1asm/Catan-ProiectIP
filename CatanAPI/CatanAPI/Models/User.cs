@@ -1,8 +1,14 @@
 
 using System.Collections.Generic;
-
+using System;
 namespace CatanAPI.Models
 {
+    [Flags]
+    public enum UserRoles
+    {
+        User          = 0x001,
+        Administrator = 0x010
+    }
     public class User
     {
         public int UserId { get; set; }
