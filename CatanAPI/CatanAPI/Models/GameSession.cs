@@ -6,7 +6,9 @@ namespace CatanAPI.Models
     public enum GameSessionStatus
     {
         Pending,
-        Accepted
+        Started,
+        Cancelled,
+        Finished
     }
     public class GameSession
     {
