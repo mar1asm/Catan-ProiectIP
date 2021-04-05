@@ -10,6 +10,11 @@ namespace CatanAPI.Models
         GameModerator = 0x010,
         GameAdmin     = 0x100
     }
+    public enum GameSessionUserStatus
+    {
+        Pending,
+        Accepted
+    }
     public class GameSessionUser
     {
         public int SessionRoles { get; set; }
