@@ -10,5 +10,6 @@ namespace CatanAPI.Models
         public DateTime CreatedAt { get; set; }
 
         public ICollection<User> Users { get; set; }
+        public List<UserNotification> UserNotifications { get; set; }
     }
 }

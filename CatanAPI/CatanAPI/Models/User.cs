@@ -18,6 +18,7 @@ namespace CatanAPI.Models
         public short Roles { get; set; }
 
         public ICollection<Notification> Notifications { get; set; }
+        public List<UserNotification> UserNotifications { get; set; }
         public ICollection<GameSession> GameSessions { get; set; }
         public ICollection<Contact> Contacts { get; set; }
     }
