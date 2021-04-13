@@ -1,4 +1,4 @@
-namespace CatanAPI.Models
+namespace CatanAPI.Data.DTO
 {
     public class ContactDto
     {

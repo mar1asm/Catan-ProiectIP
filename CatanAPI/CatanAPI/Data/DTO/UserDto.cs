@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace CatanAPI.Models
+namespace CatanAPI.Data.DTO
 {
     public class UserDto
     {
