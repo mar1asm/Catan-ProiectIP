@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CatanAPI.Models;
+using JWTAuthenticationWithSwagger.Authentication;
 
 namespace CatanAPI.Controllers
 {
@@ -13,9 +14,9 @@ namespace CatanAPI.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly CatanAPIDbContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public UsersController(CatanAPIDbContext context)
+        public UsersController(ApplicationDbContext context)
         {
             _context = context;
         }

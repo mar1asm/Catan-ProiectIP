@@ -1,4 +1,3 @@
-
 using System.Collections.Generic;
 using System;
 namespace CatanAPI.Models
@@ -9,12 +8,11 @@ namespace CatanAPI.Models
         User          = 0x001,
         Administrator = 0x010
     }
-    public class User
+    public class User : Microsoft.AspNetCore.Identity.IdentityUser
     {
         public int UserId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string Email { get; set; }
         public short Roles { get; set; }
 
         public ICollection<Notification> Notifications { get; set; }
