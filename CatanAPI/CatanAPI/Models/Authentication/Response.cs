@@ -1,4 +1,4 @@
-﻿namespace JWTAuthenticationWithSwagger.Authentication
+﻿namespace CatanAPI.Models.Authentication
 {
     public class Response
     {

@@ -1,5 +1,5 @@
 ﻿using CatanAPI.Models;
-using JWTAuthenticationWithSwagger.Authentication;
+using CatanAPI.Models.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -12,7 +12,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JWTAuthenticationWithSwagger.Controllers
+namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

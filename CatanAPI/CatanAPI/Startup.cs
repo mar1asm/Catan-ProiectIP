@@ -5,12 +5,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
-using JWTAuthenticationWithSwagger.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using CatanAPI.Models;
+using CatanAPI.Data;
 
 namespace CatanAPI
 {
@@ -31,7 +31,7 @@ namespace CatanAPI
             //options.UseNpgsql(Configuration.GetConnectionString("CatanAPIContext")));
 
             // Temporary, for testing purposes we keep an InMemoryDatabase with no persistence to avoid setting up a PostgreSQL Database
-            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("CatanAPI")));
+            services.AddDbContext<CatanAPIDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("CatanAPI")));
             services.AddMvc();
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -40,7 +40,7 @@ namespace CatanAPI
             });
 
             services.AddIdentity<User, IdentityRole>()
-               .AddEntityFrameworkStores<ApplicationDbContext>()
+               .AddEntityFrameworkStores<CatanAPIDbContext>()
                .AddDefaultTokenProviders();
 
             // Adding Authentication  

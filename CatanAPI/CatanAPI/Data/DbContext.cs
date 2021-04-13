@@ -1,9 +1,11 @@
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using CatanAPI.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
-namespace CatanAPI.Models
+namespace CatanAPI.Data
 {
-    public class CatanAPIDbContext : DbContext
+    public class CatanAPIDbContext : IdentityDbContext
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Contact> Contacts { get; set; }
@@ -15,7 +17,7 @@ namespace CatanAPI.Models
         
 
         public CatanAPIDbContext(DbContextOptions<CatanAPIDbContext> options) : base(options) {
-            User user1 = new User { FirstName = "John", LastName = "Doe", Email = "john_doe@test.com", Roles = (short)UserRoles.User };
+            User user1 = new User { FirstName = "John", LastName = "Doe", Email = "john_doe@test.com", Roles = (short)Models.UserRoles.User };
             Notification notification1 = new Notification { CreatedAt = DateTime.Now, Text = "Hello world!" };
             //Users.Add(user1);
             //Notifications.Add(notification1);
