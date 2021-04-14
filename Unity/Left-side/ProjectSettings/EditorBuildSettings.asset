@@ -10,5 +10,14 @@ EditorBuildSettings:
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
     path: Assets/Scenes/signup.unity
-    guid: 40b7d52bc1255bf42a9b326258402684
+    guid: 8c940b54f18646f42aa0e2f930df8672
+  - enabled: 1
+    path: Assets/Scenes/forgotPass.unity
+    guid: dd60864762777ac438caf92eb708baa5
+  - enabled: 1
+    path: Assets/Scenes/mainMenu.unity
+    guid: 5c5444dc4570f9f48a8c19a1b77fb2bb
+  - enabled: 1
+    path: Assets/Scenes/plProfile.unity
+    guid: 0c749fb4237467240b13e8fedd3645fa
   m_configObjects: {}
