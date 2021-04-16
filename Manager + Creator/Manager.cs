@@ -29,13 +29,6 @@ public sealed class Manager//Patronu'
     }
 
     
-    // private List<string> _TheList = new List<string>();
-    // public List<string> TheList
-    // {
-    //     get { return _TheList; }
-    //     set { _TheList = value; }
-    // }
-    
     public RulesExpansion Rules{
         get { return rules;}
         set { rules = value;}
@@ -103,8 +96,6 @@ public sealed class Manager//Patronu'
 
     public void toFile(){
         
-
-        // scriem in fisier ce returneaza`toStringAvailableTiles`
         string output = "";
         output = "{\n";
         output += toStringAvailableTiles() + ",\n";
