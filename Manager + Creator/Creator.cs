@@ -1,0 +1,3 @@
+interface Creator{
+    string toString();
+}
