@@ -29,7 +29,7 @@ namespace CatanAPI.Controllers
         {
             var users = await _context.Users.Select(b => new UserDto
             {
-                UserId = b.UserId,
+                UserId = b.Id,
                 FirstName = b.FirstName,
                 LastName = b.LastName,
                 Email = b.Email,
@@ -50,7 +50,7 @@ namespace CatanAPI.Controllers
                 Select(entry => 
                 new UserDto
                     {
-                    UserId = entry.UserId,
+                    UserId = entry.Id,
                     FirstName = entry.FirstName,
                     LastName = entry.LastName,
                     Email = entry.Email,
@@ -75,7 +75,7 @@ namespace CatanAPI.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUser(int id, User user)
         {
-            if (id != user.UserId)
+            if (id != user.Id)
             {
                 return BadRequest();
             }
@@ -109,7 +109,7 @@ namespace CatanAPI.Controllers
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUser", new { id = user.UserId }, user);
+            return CreatedAtAction("GetUser", new { id = user.Id }, user);
         }
 
         // DELETE: api/Users/5
@@ -130,7 +130,7 @@ namespace CatanAPI.Controllers
 
         private bool UserExists(int id)
         {
-            return _context.Users.Any(e => e.UserId == id);
+            return _context.Users.Any(e => e.Id == id);
         }
     }
 }

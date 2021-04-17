@@ -8,9 +8,8 @@ namespace CatanAPI.Models
         User          = 0x001,
         Administrator = 0x010
     }
-    public class User : Microsoft.AspNetCore.Identity.IdentityUser
+    public class User : Microsoft.AspNetCore.Identity.IdentityUser<int>
     {
-        public int UserId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public short Roles { get; set; }
