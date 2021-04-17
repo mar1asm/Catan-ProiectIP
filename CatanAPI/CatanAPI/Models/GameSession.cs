@@ -12,7 +12,7 @@ namespace CatanAPI.Models
     }
     public class GameSession
     {
-        public int GameSessionId { get; set; }
+        public int Id { get; set; }
         public int Status { get; set; }
         public DateTime CreatedAt { get; set; }
 

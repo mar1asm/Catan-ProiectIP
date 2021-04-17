@@ -35,7 +35,7 @@ namespace CatanAPI.Controllers
                 Email = b.Email,
                 Notifications = b.UserNotifications
                 .Select(
-                    n => new NotificationDto { NotificationId = n.UserNotificationId, CreatedAt = n.CreatedAt, Text = n.Notification.Text, Read = n.Read })
+                    n => new NotificationDto { NotificationId = n.Id, CreatedAt = n.CreatedAt, Text = n.Notification.Text, Read = n.Read })
                 .ToList()
             }).ToListAsync();
             return Ok(users);
@@ -56,7 +56,7 @@ namespace CatanAPI.Controllers
                     Email = entry.Email,
                     Notifications = entry.UserNotifications
                     .Select(
-                    n => new NotificationDto { NotificationId = n.UserNotificationId, CreatedAt = n.CreatedAt, Text = n.Notification.Text, Read = n.Read })
+                    n => new NotificationDto { NotificationId = n.Id, CreatedAt = n.CreatedAt, Text = n.Notification.Text, Read = n.Read })
                     .ToList()
                 }
                 )

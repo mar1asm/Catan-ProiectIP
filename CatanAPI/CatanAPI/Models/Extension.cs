@@ -4,7 +4,7 @@ namespace CatanAPI.Models
 {
     public class Extension
     {
-        public int ExtensionId { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
     }
 }
