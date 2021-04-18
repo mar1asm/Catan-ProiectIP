@@ -4,7 +4,7 @@ namespace CatanAPI.Data.DTO
 {
     public class UserContactsDto
     {
-        public int UserId { get; set; }
+        public string UserId { get; set; }
 
         public List<ContactDto> Contacts { get; set; }
 
