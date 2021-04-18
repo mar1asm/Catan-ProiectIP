@@ -1,5 +1,9 @@
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations.Schema;
 using System;
+using System.Linq;
+
 namespace CatanAPI.Models
 {
     [Flags]
@@ -8,8 +12,9 @@ namespace CatanAPI.Models
         User          = 0x001,
         Administrator = 0x010
     }
-    public class User : Microsoft.AspNetCore.Identity.IdentityUser<int>
+    public class User : IdentityUser
     {
+ 
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public short Roles { get; set; }
@@ -20,6 +25,19 @@ namespace CatanAPI.Models
         public ICollection<GameSession> GameSessions { get; set; }
         public List<GameSessionUser> GameSessionUsers { get; set; }
 
-        public ICollection<Contact> Contacts { get; set; }
+        public virtual ICollection<Contact> SentContactRequests { get; set; }
+
+        public virtual ICollection<Contact> ReceievedContactRequests { get; set; }
+        [NotMapped]
+        public virtual ICollection<Contact> Contacts
+        {
+            get
+            {
+                var contacts = SentContactRequests.Where(x => x.Accepted).ToList();
+                contacts.AddRange(ReceievedContactRequests.Where(x => x.Accepted));
+                return contacts.ToList();
+            }
+        }
+
     }
 }
