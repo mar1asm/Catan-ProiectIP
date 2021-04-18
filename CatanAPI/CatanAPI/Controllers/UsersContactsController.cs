@@ -40,28 +40,40 @@ namespace CatanAPI.Controllers
 
         [Authorize]
         [HttpGet("{id}")]
-        public async Task<ActionResult<Contact>> GetContact(int id)
+        public async Task<ActionResult<ContactDto>> GetContact(int id)
         {
             var contact = await _context.Contacts.FindAsync(id);
+            var user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
 
             if (contact == null)
             {
                 return NotFound();
             }
 
-            return contact;
+            return new ContactDto
+            {
+                Id = contact.Id,
+                Accepted = contact.Accepted,
+                UserName = user.Id == contact.Sender.Id ? contact.Receiver.UserName : contact.Sender.UserName
+            };
         }
 
         [Authorize]
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutContact(int id, Contact contact)
+        public async Task<IActionResult> PutContact(int id, ContactDto contact)
         {
-            if (id != contact.Id)
+            var currentUser = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+            var contactEntry = await _context.Contacts.SingleOrDefaultAsync(entry => entry.Id == id);
+            if(contactEntry == null)
             {
-                return BadRequest();
+                return NotFound();
             }
-
-            _context.Entry(contact).State = EntityState.Modified;
+            // We can only accept requests from others, not force accept requests initiated by us
+            if((contactEntry.ReceiverId != currentUser.Id && contactEntry.SenderId != currentUser.Id) || contactEntry.ReceiverId != currentUser.Id)
+            {
+                return Unauthorized();
+            }
+            contactEntry.Accepted = true;
 
             try
             {
