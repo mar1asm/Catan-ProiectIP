@@ -80,13 +80,19 @@ namespace CatanAPI.Controllers
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 Email = model.Email,
-                //UserId = int.Parse(Guid.NewGuid().ToString()),
-                //SecurityStamp = Guid.NewGuid().ToString(),
                 UserName = model.Username
             };
             var result = await userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
-                return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User creation failed! Please check user details and try again." });
+            {
+                var errors = new List<string>();
+                errors.Add("User creation failed. Errors:");
+                foreach(var error in result.Errors)
+                {
+                    errors.Add(error.Description);
+                }
+                return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = string.Join("\n", errors) });
+            }
 
             return Ok(new Response { Status = "Success", Message = "User created successfully!" });
         }
@@ -103,7 +109,7 @@ namespace CatanAPI.Controllers
                 var changePasswordResult = userManager.ResetPasswordAsync(user, token, model.NewPassword);
                 if (changePasswordResult.IsCompletedSuccessfully)
                 {
-                    return Ok(new
+                    return Ok(new Response
                     {
                         Status = "success",
                         Message = "Passwword Change completed successfully"
