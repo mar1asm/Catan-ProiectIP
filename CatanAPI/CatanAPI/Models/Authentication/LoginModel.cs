@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace JWTAuthenticationWithSwagger.Authentication
+namespace CatanAPI.Models.Authentication
 {
     public class LoginModel
     {

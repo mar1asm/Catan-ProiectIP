@@ -5,12 +5,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
-using JWTAuthenticationWithSwagger.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using CatanAPI.Models;
+using CatanAPI.Data;
 
 namespace CatanAPI
 {
@@ -31,16 +31,41 @@ namespace CatanAPI
             //options.UseNpgsql(Configuration.GetConnectionString("CatanAPIContext")));
 
             // Temporary, for testing purposes we keep an InMemoryDatabase with no persistence to avoid setting up a PostgreSQL Database
-            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("CatanAPI")));
+            services.AddDbContext<CatanAPIDbContext>(options => options.UseInMemoryDatabase("CatanAPI"));
             services.AddMvc();
+            services.AddHttpContextAccessor();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CatanAPI", Version = "v1" });
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+                {
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer",
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Description = "Enter 'Bearer' [space] and then your valid token in the text input below.\r\n\r\nExample: \"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9\"",
+                });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                          new OpenApiSecurityScheme
+                            {
+                                Reference = new OpenApiReference
+                                {
+                                    Type = ReferenceType.SecurityScheme,
+                                    Id = "Bearer"
+                                }
+                            },
+                            new string[] {}
+
+                    }
+                });
             });
 
             services.AddIdentity<User, IdentityRole>()
-               .AddEntityFrameworkStores<ApplicationDbContext>()
+               .AddEntityFrameworkStores<CatanAPIDbContext>()
                .AddDefaultTokenProviders();
 
             // Adding Authentication  

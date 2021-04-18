@@ -6,7 +6,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CatanAPI.Models;
-using JWTAuthenticationWithSwagger.Authentication;
+using CatanAPI.Data;
+using CatanAPI.Data.DTO;
+using CatanAPI.Models.Authentication;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CatanAPI.Controllers
 {
@@ -14,25 +18,59 @@ namespace CatanAPI.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly CatanAPIDbContext _context;
+        private readonly UserManager<User> _userManager;
 
-        public UsersController(ApplicationDbContext context)
+        public UsersController(CatanAPIDbContext context, UserManager<User> manager)
         {
             _context = context;
+            _userManager = manager;
         }
 
         // GET: api/Users
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
         {
-            return await _context.Users.ToListAsync();
+            var users = await _context.Users.Select(b => new UserDto
+            {
+                Id = b.Id,
+                FirstName = b.FirstName,
+                LastName = b.LastName,
+                Email = b.Email,
+                Notifications = b.UserNotifications
+                .Select(
+                    n => new NotificationDto { NotificationId = n.Id, CreatedAt = n.CreatedAt, Text = n.Notification.Text, Read = n.Read })
+                .ToList()
+            }).ToListAsync();
+            return Ok(users);
         }
 
         // GET: api/Users/5
+        [Authorize]
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(int id)
+        public async Task<ActionResult<UserDto>> GetUser(string id)
         {
-            var user = await _context.Users.FindAsync(id);
+            var currentUser = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+            if(id != currentUser.Id)
+            {
+                return Unauthorized();
+            }
+            var user = await _context
+                .Users.
+                Select(entry => 
+                new UserDto
+                    {
+                    Id = entry.Id,
+                    FirstName = entry.FirstName,
+                    LastName = entry.LastName,
+                    Email = entry.Email,
+                    Notifications = entry.UserNotifications
+                    .Select(
+                    n => new NotificationDto { NotificationId = n.Id, CreatedAt = n.CreatedAt, Text = n.Notification.Text, Read = n.Read })
+                    .ToList()
+                }
+                )
+                .SingleOrDefaultAsync(entry => entry.Id == id);
 
             if (user == null)
             {
@@ -44,15 +82,24 @@ namespace CatanAPI.Controllers
 
         // PUT: api/Users/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize]
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(int id, User user)
+        public async Task<IActionResult> PutUser(string id, UserUpdateDto user)
         {
-            if (id != user.UserId)
+            var currentUser = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+            if (id != currentUser.Id)
             {
-                return BadRequest();
+                return Unauthorized();
             }
-
-            _context.Entry(user).State = EntityState.Modified;
+            var userEntry = await _context.Users.SingleOrDefaultAsync(entry => entry.Id == id);
+            if(userEntry == null)
+            {
+                return NotFound();
+            }
+            userEntry.FirstName = user.FirstName != null ? user.FirstName : userEntry.FirstName;
+            userEntry.LastName = user.LastName != null ? user.LastName : userEntry.LastName;
+            userEntry.Email = user.Email != null ? user.Email : userEntry.Email ;
+            userEntry.UserName = user.UserName != null ? user.UserName : userEntry.UserName;
 
             try
             {
@@ -81,7 +128,7 @@ namespace CatanAPI.Controllers
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUser", new { id = user.UserId }, user);
+            return CreatedAtAction("GetUser", new { id = user.Id }, user);
         }
 
         // DELETE: api/Users/5
@@ -100,9 +147,9 @@ namespace CatanAPI.Controllers
             return NoContent();
         }
 
-        private bool UserExists(int id)
+        private bool UserExists(string id)
         {
-            return _context.Users.Any(e => e.UserId == id);
+            return _context.Users.Any(e => e.Id == id);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using CatanAPI.Models;
-using JWTAuthenticationWithSwagger.Authentication;
+using CatanAPI.Models.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -12,7 +13,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JWTAuthenticationWithSwagger.Controllers
+namespace CatanAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -79,15 +80,51 @@ namespace JWTAuthenticationWithSwagger.Controllers
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 Email = model.Email,
-                //UserId = int.Parse(Guid.NewGuid().ToString()),
-                //SecurityStamp = Guid.NewGuid().ToString(),
                 UserName = model.Username
             };
             var result = await userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
-                return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User creation failed! Please check user details and try again." });
+            {
+                var errors = new List<string>();
+                errors.Add("User creation failed. Errors:");
+                foreach(var error in result.Errors)
+                {
+                    errors.Add(error.Description);
+                }
+                return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = string.Join("\n", errors) });
+            }
 
             return Ok(new Response { Status = "Success", Message = "User created successfully!" });
+        }
+        [Authorize]
+        [HttpPost]
+        [Route("change")]
+        public async Task<IActionResult> ResetPassword([FromBody] ChangePasswordModel model)
+        {
+            var user = await userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+            
+            if(await userManager.CheckPasswordAsync(user, model.OldPassword))
+            {
+                var token = await userManager.GeneratePasswordResetTokenAsync(user);
+                var changePasswordResult = userManager.ResetPasswordAsync(user, token, model.NewPassword);
+                if (changePasswordResult.IsCompletedSuccessfully)
+                {
+                    return Ok(new Response
+                    {
+                        Status = "success",
+                        Message = "Passwword Change completed successfully"
+                    });
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError, 
+                        new Response 
+                        { Status = "Error",
+                          Message = "Changing Password Failed! Please check user details and try again." 
+                        });
+                }
+            }
+            return Unauthorized();
         }
 
     }
