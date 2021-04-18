@@ -1,5 +1,6 @@
 ﻿using CatanAPI.Models;
 using CatanAPI.Models.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -12,7 +13,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace API.Controllers
+namespace CatanAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -88,6 +89,36 @@ namespace API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User creation failed! Please check user details and try again." });
 
             return Ok(new Response { Status = "Success", Message = "User created successfully!" });
+        }
+        [Authorize]
+        [HttpPost]
+        [Route("change")]
+        public async Task<IActionResult> ResetPassword([FromBody] ChangePasswordModel model)
+        {
+            var user = await userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+            
+            if(await userManager.CheckPasswordAsync(user, model.OldPassword))
+            {
+                var token = await userManager.GeneratePasswordResetTokenAsync(user);
+                var changePasswordResult = userManager.ResetPasswordAsync(user, token, model.NewPassword);
+                if (changePasswordResult.IsCompletedSuccessfully)
+                {
+                    return Ok(new
+                    {
+                        Status = "success",
+                        Message = "Passwword Change completed successfully"
+                    });
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError, 
+                        new Response 
+                        { Status = "Error",
+                          Message = "Changing Password Failed! Please check user details and try again." 
+                        });
+                }
+            }
+            return Unauthorized();
         }
 
     }
