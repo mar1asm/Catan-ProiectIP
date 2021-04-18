@@ -2,12 +2,12 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using CatanAPI.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 using System;
 namespace CatanAPI.Data
 {
-    public class CatanAPIDbContext : IdentityDbContext
+    public class CatanAPIDbContext : IdentityDbContext<User>
     {
-        public DbSet<User> Users { get; set; }
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<UserNotification> UserNotifications { get; set; }
@@ -17,17 +17,12 @@ namespace CatanAPI.Data
         
 
         public CatanAPIDbContext(DbContextOptions<CatanAPIDbContext> options) : base(options) {
-            User user1 = new User { FirstName = "John", LastName = "Doe", Email = "john_doe@test.com", Roles = (short)Models.UserRoles.User };
-            Notification notification1 = new Notification { CreatedAt = DateTime.Now, Text = "Hello world!" };
-            //Users.Add(user1);
-            //Notifications.Add(notification1);
-            UserNotifications.Add(new UserNotification { CreatedAt = DateTime.Now, User = user1, Notification = notification1 });
-            this.SaveChanges();
-            //UserNotifications.Add(new UserNotification { CreatedAt = DateTime.Now, Notification = notification1, User = user1 });
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<User>()
                 .HasMany(user => user.Notifications)
                 .WithMany(notification => notification.Users)
@@ -64,7 +59,14 @@ namespace CatanAPI.Data
                          gameSessionUserBuilder.HasKey(gameSessionUser => new { gameSessionUser.UserId, gameSessionUser.GameSessionId });
                      }
                 );
-                
+            modelBuilder.Entity<Contact>()
+                .HasOne(contact => contact.Sender)
+                .WithMany(user => user.SentContactRequests)
+                .HasForeignKey(contact => contact.SenderId);
+            modelBuilder.Entity<Contact>()
+                .HasOne(contact => contact.Receiver)
+                .WithMany(user => user.ReceievedContactRequests)
+                .HasForeignKey(contact => contact.ReceiverId);
         }
     }
 }
