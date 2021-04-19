@@ -858,6 +858,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tilePrefab: {fileID: 6437722949401728408, guid: 477aa19d8f4cab7408f2b635d971f449, type: 3}
   cornerPrefab: {fileID: 2617766818235144533, guid: f7044ebddf8f72444bbbdc8616f7c20b, type: 3}
+  settlementPrefab: {fileID: 7144694465790816074, guid: 01cab6ac98821c4408222d7b680aaa55, type: 3}
   board:
     availableTileTypes: []
 --- !u!4 &1854074576
