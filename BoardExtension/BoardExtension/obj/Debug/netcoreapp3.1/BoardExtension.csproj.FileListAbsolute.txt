@@ -1,0 +1,11 @@
+C:\Users\marti\Desktop\Visual Studio\BoardExtension\BoardExtension\bin\Debug\netcoreapp3.1\BoardExtension.exe
+C:\Users\marti\Desktop\Visual Studio\BoardExtension\BoardExtension\bin\Debug\netcoreapp3.1\BoardExtension.deps.json
+C:\Users\marti\Desktop\Visual Studio\BoardExtension\BoardExtension\bin\Debug\netcoreapp3.1\BoardExtension.runtimeconfig.json
+C:\Users\marti\Desktop\Visual Studio\BoardExtension\BoardExtension\bin\Debug\netcoreapp3.1\BoardExtension.runtimeconfig.dev.json
+C:\Users\marti\Desktop\Visual Studio\BoardExtension\BoardExtension\bin\Debug\netcoreapp3.1\BoardExtension.dll
+C:\Users\marti\Desktop\Visual Studio\BoardExtension\BoardExtension\bin\Debug\netcoreapp3.1\BoardExtension.pdb
+C:\Users\marti\Desktop\Visual Studio\BoardExtension\BoardExtension\obj\Debug\netcoreapp3.1\BoardExtension.csprojAssemblyReference.cache
+C:\Users\marti\Desktop\Visual Studio\BoardExtension\BoardExtension\obj\Debug\netcoreapp3.1\BoardExtension.AssemblyInfoInputs.cache
+C:\Users\marti\Desktop\Visual Studio\BoardExtension\BoardExtension\obj\Debug\netcoreapp3.1\BoardExtension.AssemblyInfo.cs
+C:\Users\marti\Desktop\Visual Studio\BoardExtension\BoardExtension\obj\Debug\netcoreapp3.1\BoardExtension.dll
+C:\Users\marti\Desktop\Visual Studio\BoardExtension\BoardExtension\obj\Debug\netcoreapp3.1\BoardExtension.pdb
