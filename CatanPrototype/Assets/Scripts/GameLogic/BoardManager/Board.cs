@@ -48,11 +48,11 @@ public class Board
     /// <param name="corner1"></param>
     /// <param name="corner2"></param>
     //---------------------------------------DE SCHIMBAT NUMELE LA FCT ASTA !!! -----------------------------
-    public void PlaceConnectorSCHIMBA(PlayerColor color, Corner corner1, Corner corner2)
+    public void PlaceConnector(PlayerColor color, Corner corner1, Corner corner2)
     {
         BoardCoordinate bc1 = corner1.coordinate;
         BoardCoordinate bc2 = corner2.coordinate;
-        PlaceConnectorSCHIMBA(color, bc1, bc2);
+        PlaceConnector(color, bc1, bc2);
     }
     /// <summary>
     /// Functia care adauga un conector intre doua puncte de pe harta
@@ -63,7 +63,7 @@ public class Board
     /// <param name="bc1"></param>
     /// <param name="bc2"></param>
     //---------------------------------------DE SCHIMBAT NUMELE LA FCT ASTA !!! -----------------------------
-    private void PlaceConnectorSCHIMBA(PlayerColor color, BoardCoordinate bc1, BoardCoordinate bc2)
+    private void PlaceConnector(PlayerColor color, BoardCoordinate bc1, BoardCoordinate bc2)
     {
         int networkIndex = (int)color;
         var network = playerRoadNetworks[networkIndex];
