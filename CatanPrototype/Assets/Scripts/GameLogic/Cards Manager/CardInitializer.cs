@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CardInitializer 
+public class CardInitializer
 {
     // Start is called before the first frame update
     /*id Start()
@@ -16,3 +16,4 @@ public class CardInitializer
         
     }
     */
+}
