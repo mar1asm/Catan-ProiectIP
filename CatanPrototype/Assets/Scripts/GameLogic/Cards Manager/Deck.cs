@@ -39,14 +39,14 @@ public class Deck
     public void add(Card card)
     {
         package.Add(card);
-        _nr = _nr + 1;
+        _nr++;
     }
     public void remove(Card card)
     {
         if (package.Contains(card))
         {
             package.Remove(card);
-            _nr = _nr - 1;
+            _nr--;
 
         }
     }

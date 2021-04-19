@@ -7,6 +7,7 @@ public class BoardManagerBehaviour : MonoBehaviour
 {
     [SerializeField]
     private GameObject tilePrefab;
+
     [SerializeField]
     private GameObject cornerPrefab;
     [SerializeField]
