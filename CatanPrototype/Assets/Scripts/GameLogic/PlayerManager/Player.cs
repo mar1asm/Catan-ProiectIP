@@ -10,7 +10,11 @@ public class Player
     public PlayerColor color;
     int score;
     //DeckPlayer deck;
-
+    public Player(string name, string id)
+    {
+        nickname = name;
+        ID = id;
+    }
     public void ScoreAdd(int value)
     {
         score = score + value;
