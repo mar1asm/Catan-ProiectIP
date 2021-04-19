@@ -1,25 +1,26 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SettlementBehaviour : MonoBehaviour
+public class ConnectorBehaviour : MonoBehaviour
 {
+    private Connector _connector;
 
-    private Settlement _settlement;
-    public Settlement settlement
+    public Connector connector
     {
         get
         {
-            return _settlement;
+            return _connector;
         }
 
         set
         {
-            _settlement = value;
+            _connector = value;
             CleanVFX();
-            _settlement.AddVFX2Object(transform.GetChild(0).gameObject);
+            _connector.AddVFX2Object(transform.GetChild(0).gameObject);
         }
     }
+
 
     private void CleanVFX()
     {
