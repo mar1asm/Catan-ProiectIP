@@ -1,20 +1,20 @@
 m_ProjectFiles:
   m_ManifestFileStatus:
-    m_FilePath: C:/Users/madab/OneDrive/Desktop/LABs/PROIECT IP/unity/left-side/Packages/manifest.json
+    m_FilePath: C:/Users/madab/OneDrive/Desktop/LABs/PROIECT IP/aici e codul/Unity/left-side/Packages/manifest.json
     m_PathExists: 1
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637535688872580397
-    m_Hash: 2204306383
+      ticks: 637546015081220877
+    m_Hash: 686281437
   m_LockFileStatus:
-    m_FilePath: C:/Users/madab/OneDrive/Desktop/LABs/PROIECT IP/unity/left-side/Packages/packages-lock.json
+    m_FilePath: C:/Users/madab/OneDrive/Desktop/LABs/PROIECT IP/aici e codul/Unity/left-side/Packages/packages-lock.json
     m_PathExists: 1
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637535689253022211
-    m_Hash: 3394294237
+      ticks: 637546015081220877
+    m_Hash: 3979380318
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
 m_PackageAssets:
@@ -25,7 +25,7 @@ m_PackageAssets:
       isDirectDependency: 1
       version: 5.0.4
       source: 1
-      resolvedPath: C:\Users\madab\OneDrive\Desktop\LABs\PROIECT IP\unity\left-side\Library\PackageCache\com.unity.2d.animation@5.0.4
+      resolvedPath: C:\Users\madab\OneDrive\Desktop\LABs\PROIECT IP\aici e codul\Unity\left-side\Library\PackageCache\com.unity.2d.animation@5.0.4
       assetPath: Packages/com.unity.2d.animation
       name: com.unity.2d.animation
       displayName: 2D Animation
@@ -156,7 +156,7 @@ m_PackageAssets:
       isDirectDependency: 1
       version: 4.0.1
       source: 1
-      resolvedPath: C:\Users\madab\OneDrive\Desktop\LABs\PROIECT IP\unity\left-side\Library\PackageCache\com.unity.2d.pixel-perfect@4.0.1
+      resolvedPath: C:\Users\madab\OneDrive\Desktop\LABs\PROIECT IP\aici e codul\Unity\left-side\Library\PackageCache\com.unity.2d.pixel-perfect@4.0.1
       assetPath: Packages/com.unity.2d.pixel-perfect
       name: com.unity.2d.pixel-perfect
       displayName: 2D Pixel Perfect
@@ -230,7 +230,7 @@ m_PackageAssets:
       isDirectDependency: 1
       version: 4.0.2
       source: 1
-      resolvedPath: C:\Users\madab\OneDrive\Desktop\LABs\PROIECT IP\unity\left-side\Library\PackageCache\com.unity.2d.psdimporter@4.0.2
+      resolvedPath: C:\Users\madab\OneDrive\Desktop\LABs\PROIECT IP\aici e codul\Unity\left-side\Library\PackageCache\com.unity.2d.psdimporter@4.0.2
       assetPath: Packages/com.unity.2d.psdimporter
       name: com.unity.2d.psdimporter
       displayName: 2D PSD Importer
@@ -391,7 +391,7 @@ m_PackageAssets:
       isDirectDependency: 1
       version: 5.1.1
       source: 1
-      resolvedPath: C:\Users\madab\OneDrive\Desktop\LABs\PROIECT IP\unity\left-side\Library\PackageCache\com.unity.2d.spriteshape@5.1.1
+      resolvedPath: C:\Users\madab\OneDrive\Desktop\LABs\PROIECT IP\aici e codul\Unity\left-side\Library\PackageCache\com.unity.2d.spriteshape@5.1.1
       assetPath: Packages/com.unity.2d.spriteshape
       name: com.unity.2d.spriteshape
       displayName: 2D SpriteShape
@@ -571,7 +571,7 @@ m_PackageAssets:
       isDirectDependency: 1
       version: 1.3.9
       source: 1
-      resolvedPath: C:\Users\madab\OneDrive\Desktop\LABs\PROIECT IP\unity\left-side\Library\PackageCache\com.unity.collab-proxy@1.3.9
+      resolvedPath: C:\Users\madab\OneDrive\Desktop\LABs\PROIECT IP\aici e codul\Unity\left-side\Library\PackageCache\com.unity.collab-proxy@1.3.9
       assetPath: Packages/com.unity.collab-proxy
       name: com.unity.collab-proxy
       displayName: Unity Collaborate
@@ -666,7 +666,7 @@ m_PackageAssets:
       isDirectDependency: 1
       version: 2.0.7
       source: 1
-      resolvedPath: C:\Users\madab\OneDrive\Desktop\LABs\PROIECT IP\unity\left-side\Library\PackageCache\com.unity.ide.rider@2.0.7
+      resolvedPath: C:\Users\madab\OneDrive\Desktop\LABs\PROIECT IP\aici e codul\Unity\left-side\Library\PackageCache\com.unity.ide.rider@2.0.7
       assetPath: Packages/com.unity.ide.rider
       name: com.unity.ide.rider
       displayName: JetBrains Rider Editor
@@ -769,7 +769,7 @@ m_PackageAssets:
       isDirectDependency: 1
       version: 2.0.7
       source: 1
-      resolvedPath: C:\Users\madab\OneDrive\Desktop\LABs\PROIECT IP\unity\left-side\Library\PackageCache\com.unity.ide.visualstudio@2.0.7
+      resolvedPath: C:\Users\madab\OneDrive\Desktop\LABs\PROIECT IP\aici e codul\Unity\left-side\Library\PackageCache\com.unity.ide.visualstudio@2.0.7
       assetPath: Packages/com.unity.ide.visualstudio
       name: com.unity.ide.visualstudio
       displayName: Visual Studio Editor
@@ -850,7 +850,7 @@ m_PackageAssets:
       isDirectDependency: 1
       version: 1.2.3
       source: 1
-      resolvedPath: C:\Users\madab\OneDrive\Desktop\LABs\PROIECT IP\unity\left-side\Library\PackageCache\com.unity.ide.vscode@1.2.3
+      resolvedPath: C:\Users\madab\OneDrive\Desktop\LABs\PROIECT IP\aici e codul\Unity\left-side\Library\PackageCache\com.unity.ide.vscode@1.2.3
       assetPath: Packages/com.unity.ide.vscode
       name: com.unity.ide.vscode
       displayName: Visual Studio Code Editor
@@ -919,7 +919,7 @@ m_PackageAssets:
       isDirectDependency: 1
       version: 1.1.24
       source: 1
-      resolvedPath: C:\Users\madab\OneDrive\Desktop\LABs\PROIECT IP\unity\left-side\Library\PackageCache\com.unity.test-framework@1.1.24
+      resolvedPath: C:\Users\madab\OneDrive\Desktop\LABs\PROIECT IP\aici e codul\Unity\left-side\Library\PackageCache\com.unity.test-framework@1.1.24
       assetPath: Packages/com.unity.test-framework
       name: com.unity.test-framework
       displayName: Test Framework
@@ -1007,7 +1007,7 @@ m_PackageAssets:
       isDirectDependency: 1
       version: 3.0.4
       source: 1
-      resolvedPath: C:\Users\madab\OneDrive\Desktop\LABs\PROIECT IP\unity\left-side\Library\PackageCache\com.unity.textmeshpro@3.0.4
+      resolvedPath: C:\Users\madab\OneDrive\Desktop\LABs\PROIECT IP\aici e codul\Unity\left-side\Library\PackageCache\com.unity.textmeshpro@3.0.4
       assetPath: Packages/com.unity.textmeshpro
       name: com.unity.textmeshpro
       displayName: TextMeshPro
@@ -1158,7 +1158,7 @@ m_PackageAssets:
       isDirectDependency: 1
       version: 1.4.6
       source: 1
-      resolvedPath: C:\Users\madab\OneDrive\Desktop\LABs\PROIECT IP\unity\left-side\Library\PackageCache\com.unity.timeline@1.4.6
+      resolvedPath: C:\Users\madab\OneDrive\Desktop\LABs\PROIECT IP\aici e codul\Unity\left-side\Library\PackageCache\com.unity.timeline@1.4.6
       assetPath: Packages/com.unity.timeline
       name: com.unity.timeline
       displayName: Timeline
@@ -3103,7 +3103,7 @@ m_PackageAssets:
       isDirectDependency: 0
       version: 1.0.6
       source: 1
-      resolvedPath: C:\Users\madab\OneDrive\Desktop\LABs\PROIECT IP\unity\left-side\Library\PackageCache\com.unity.ext.nunit@1.0.6
+      resolvedPath: C:\Users\madab\OneDrive\Desktop\LABs\PROIECT IP\aici e codul\Unity\left-side\Library\PackageCache\com.unity.ext.nunit@1.0.6
       assetPath: Packages/com.unity.ext.nunit
       name: com.unity.ext.nunit
       displayName: Custom NUnit
@@ -3164,7 +3164,7 @@ m_PackageAssets:
       isDirectDependency: 0
       version: 1.1.0
       source: 1
-      resolvedPath: C:\Users\madab\OneDrive\Desktop\LABs\PROIECT IP\unity\left-side\Library\PackageCache\com.unity.mathematics@1.1.0
+      resolvedPath: C:\Users\madab\OneDrive\Desktop\LABs\PROIECT IP\aici e codul\Unity\left-side\Library\PackageCache\com.unity.mathematics@1.1.0
       assetPath: Packages/com.unity.mathematics
       name: com.unity.mathematics
       displayName: Mathematics
@@ -3215,7 +3215,7 @@ m_PackageAssets:
       isDirectDependency: 0
       version: 4.0.3
       source: 1
-      resolvedPath: C:\Users\madab\OneDrive\Desktop\LABs\PROIECT IP\unity\left-side\Library\PackageCache\com.unity.2d.common@4.0.3
+      resolvedPath: C:\Users\madab\OneDrive\Desktop\LABs\PROIECT IP\aici e codul\Unity\left-side\Library\PackageCache\com.unity.2d.common@4.0.3
       assetPath: Packages/com.unity.2d.common
       name: com.unity.2d.common
       displayName: 2D Common
@@ -3282,7 +3282,7 @@ m_PackageAssets:
       isDirectDependency: 0
       version: 4.0.1
       source: 1
-      resolvedPath: C:\Users\madab\OneDrive\Desktop\LABs\PROIECT IP\unity\left-side\Library\PackageCache\com.unity.2d.path@4.0.1
+      resolvedPath: C:\Users\madab\OneDrive\Desktop\LABs\PROIECT IP\aici e codul\Unity\left-side\Library\PackageCache\com.unity.2d.path@4.0.1
       assetPath: Packages/com.unity.2d.path
       name: com.unity.2d.path
       displayName: 2D Path
@@ -3329,5 +3329,5 @@ m_PackageAssets:
         path: 
   m_LocalPackages:
     m_LocalFileStatus: []
-m_ProjectPath: C:/Users/madab/OneDrive/Desktop/LABs/PROIECT IP/unity/left-side/Packages
+m_ProjectPath: C:/Users/madab/OneDrive/Desktop/LABs/PROIECT IP/aici e codul/Unity/left-side/Packages
 m_EditorVersion: 2020.3.2f1 (8fd9074bf66c)
