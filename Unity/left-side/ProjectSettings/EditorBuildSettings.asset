@@ -32,4 +32,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/friends.unity
     guid: 61bb40415b0015b45b4e7ba8b5912aba
+  - enabled: 1
+    path: Assets/Scenes/profile.unity
+    guid: 0813274b49d6eb040b29ee1fd8fff76b
+  - enabled: 1
+    path: Assets/Scenes/expansions.unity
+    guid: cc9a045b3b29656449611d9354daa2c5
   m_configObjects: {}
