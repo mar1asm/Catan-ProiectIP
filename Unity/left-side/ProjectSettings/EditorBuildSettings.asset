@@ -38,4 +38,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/expansions.unity
     guid: cc9a045b3b29656449611d9354daa2c5
+  - enabled: 1
+    path: Assets/Scenes/lvlProgress.unity
+    guid: ea1423dc167039c4685358a612a853bd
+  - enabled: 1
+    path: Assets/Scenes/appearance.unity
+    guid: 9ff788926dcc286499301ee495fc1368
+  - enabled: 1
+    path: Assets/Scenes/chooseTiles.unity
+    guid: ca2c1d59297a7e84abb6b8212170c3a7
+  - enabled: 1
+    path: Assets/Scenes/createExp.unity
+    guid: 2ef2f8e04dd07f344accf0123575d1cc
   m_configObjects: {}
