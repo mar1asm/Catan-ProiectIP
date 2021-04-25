@@ -1,6 +1,6 @@
 import requests
 
-API_BASE = r'http://localhost:5000/api'
+API_BASE = r'https://localhost:5001/api'
 AUTHENTICATE_BASE = API_BASE + '/authenticate'
 REGISTER = AUTHENTICATE_BASE + '/register'
 LOGIN = AUTHENTICATE_BASE + '/login'
@@ -23,26 +23,35 @@ USERS = [
     }
 ]
 
+session = requests.Session()
+
 
 def register_users():
+    print("Register Users")
     for user in USERS:
-        r = requests.post(REGISTER, json=user, verify=False)
+        r = session.post(REGISTER, json=user, verify=False)
         print(r.json())
 
 
 def log_in(user):
-    r = requests.post(LOGIN, json=user, verify=False)
-    token = r.json()['token']
-    HEADERS['Authorization'] = 'Bearer ' + token
+    print("Log In")
+    r = session.post(LOGIN, json=user, verify=False)
+    session.headers['authorization'] = 'Bearer ' + r.json()['token']
+    HEADERS['authorization'] = 'Bearer ' + r.json()['token']
+    print(r.status_code)
 
 
 def add_contacts():
-    r = requests.post(CONTACTS, json={'userName': 'user2'}, headers=HEADERS, verify=False)
+    print("Add Contacts")
+    r = session.post(CONTACTS, json={'userName': 'user2'}, headers=HEADERS, verify=False)
+    print(r.request.headers)
+    print(session.headers)
     print(r.text)
 
 
 def list_contacts():
-    r = requests.get(CONTACTS, headers=HEADERS, verify=False)
+    print("List Contacts")
+    r = session.get(CONTACTS, verify=False)
     print(r.text)
 
 
