@@ -7,6 +7,16 @@ public class PlayerManager : MonoBehaviour
 {
     public List<Player> players;
 
+    void Start()
+    {
+       
+    }
+
+    void Update()
+    {
+
+    }
+
     public void AddPlayer(Player p)
     {
         players.Add(p);
