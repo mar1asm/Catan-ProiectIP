@@ -1,0 +1,24 @@
+{
+    "availableCard": [
+        {
+            "type": "sheep",
+          
+        },
+        {
+            "type": "wheat",
+           
+        },
+        {
+            "type": "wood",
+           
+        },
+        {
+            "type": "stone",
+           
+        },
+        {
+            "type": "brick",
+            
+        }
+    ]
+}
