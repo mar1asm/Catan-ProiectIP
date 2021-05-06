@@ -939,16 +939,28 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2145461194}
-        m_TargetAssemblyTypeName: goScene, Assembly-CSharp
-        m_MethodName: loadScene
-        m_Mode: 5
+      - m_Target: {fileID: 2145461195}
+        m_TargetAssemblyTypeName: forgotPass, Assembly-CSharp
+        m_MethodName: getEmail
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 976456834}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: login
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2145461195}
+        m_TargetAssemblyTypeName: forgotPass, Assembly-CSharp
+        m_MethodName: veriftForgot
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: login
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &925649094
@@ -1660,6 +1672,7 @@ GameObject:
   - component: {fileID: 2145461192}
   - component: {fileID: 2145461193}
   - component: {fileID: 2145461194}
+  - component: {fileID: 2145461195}
   m_Layer: 0
   m_Name: left-bk
   m_TagString: Untagged
@@ -1747,5 +1760,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9971920cd69356549a09c1c8a036b667, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2145461195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2145461191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bca17fa95b6f0d94a99f9935c8097cf0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
