@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ProgressCard : DevelopmentCard
 {
-    private int _numberProgressCard; // 25 ar trebui
+    /*private int _numberProgressCard; // 25 ar trebui
 
     public int numberProgressCard
     {
@@ -18,6 +18,7 @@ public class ProgressCard : DevelopmentCard
 
         }
     }
+    */
     // Start is called before the first frame update
     /* void Start()
      {
@@ -30,8 +31,13 @@ public class ProgressCard : DevelopmentCard
 
      }
      */
-     public ProgressCard(int nr)
+   
+    public ProgressCard(string s)
     {
-        _numberProgressCard = nr;
+        type = s;
+    }
+    public override string getType()
+    {
+        return "progress";
     }
 }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Brick : ResourceCard
+public class BrickDeck : Deck
 {
     // Start is called before the first frame update
     /*void Start()
@@ -14,16 +14,11 @@ public class Brick : ResourceCard
     void Update()
     {
         
-    }*/
-    public override string getResource()
-    {
-        return "brick";
     }
-    public Brick(int number, ResourceTypes type)
+    */
+    public BrickDeck(string name1)
     {
-        _numberResourceCard = number;
-        CardType = type;
-
-
+        type = name1;
+        package = new List<Card>();
     }
 }

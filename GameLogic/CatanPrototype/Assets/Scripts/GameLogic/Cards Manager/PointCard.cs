@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PointCard : DevelopmentCard
 {
-    private int _numberPointCard; // 25 ar trebui
+   /* private int _numberPointCard; // 25 ar trebui
 
     public int numberPointCard
     {
@@ -18,6 +18,7 @@ public class PointCard : DevelopmentCard
 
         }
     }
+    */
     // Start is called before the first frame update
     /*void Start()
     {
@@ -30,8 +31,17 @@ public class PointCard : DevelopmentCard
         
     }
     */
-    public PointCard(int nr)
+    public override string getType()
+    {
+        return "point";
+    }
+    /*public PointCard(int nr)
     {
         _numberPointCard=nr;
+    }
+    */
+    public PointCard(string s)
+    {
+        type = s;
     }
 }

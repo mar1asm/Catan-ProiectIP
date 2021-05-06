@@ -65,9 +65,9 @@ public abstract class Tile
     //De exemplu, un numar
     public virtual GameObject AddVFX2Object(GameObject parent) 
     {
-        Debug.LogError(parent.transform.parent.name);
+       // Debug.LogError(parent.transform.parent.name);
         
-        if(inGameObject == null)
+        if(inGameObject==null)
         {
             inGameObject = parent;
         }

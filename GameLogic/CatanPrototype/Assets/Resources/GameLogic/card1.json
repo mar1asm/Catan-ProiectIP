@@ -1,0 +1,110 @@
+{
+  "availableCard": [
+
+
+    {
+      "name": "sheep",
+
+      "d":
+      [
+        {
+
+          "type": "sheep",
+          "number": 19
+
+        }
+       
+      ]
+    },
+
+
+    {
+      "name": "wheat",
+
+      "d": 
+      [
+        {
+
+          "type": "wheat",
+          "number": 19
+
+        }
+      ]
+    },
+
+    {
+      "name": "wood",
+
+      "d": [
+        {
+
+          "type": "wood",
+          "number": 19
+
+        }
+      ]
+    },
+
+    {
+      "name": "stone",
+
+      "d": [
+        {
+
+          "type": "stone",
+          "number": 19
+
+        }
+      ]
+    },
+
+    {
+      "name": "brick",
+
+      "d": [
+        {
+
+          "type": "brick",
+          "number": 19
+
+        }
+      ]
+    },
+
+    {
+      "name": "development",
+
+      "d": [
+
+        {
+
+          "type": "soldier",
+          "number": 14
+
+        },
+        {
+
+          "type": "victory",
+          "number": 5
+
+        },
+        {
+          "type": "road",
+          "number": 2
+
+        },
+        {
+          "type": "year",
+          "number": 2
+        },
+        {
+          "type": "monopoly",
+          "number": 2
+        }
+      ]
+    }
+   
+    
+  ]
+
+}
