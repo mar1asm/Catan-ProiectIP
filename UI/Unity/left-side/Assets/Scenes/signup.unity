@@ -214,6 +214,7 @@ GameObject:
   - component: {fileID: 28438290}
   - component: {fileID: 28438292}
   - component: {fileID: 28438291}
+  - component: {fileID: 28438293}
   m_Layer: 0
   m_Name: left-bk (1)
   m_TagString: Untagged
@@ -319,6 +320,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9971920cd69356549a09c1c8a036b667, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &28438293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 28438288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4289f5f6469cb6448b80bda9c77953d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &138592333
 GameObject:
   m_ObjectHideFlags: 0
@@ -401,7 +414,7 @@ MonoBehaviour:
   m_Interactable: 1
   m_TargetGraphic: {fileID: 138592336}
   m_TextComponent: {fileID: 318459991}
-  m_Placeholder: {fileID: 0}
+  m_Placeholder: {fileID: 1274236137}
   m_ContentType: 7
   m_InputType: 2
   m_AsteriskChar: 42
@@ -544,7 +557,7 @@ MonoBehaviour:
   m_Interactable: 1
   m_TargetGraphic: {fileID: 281006482}
   m_TextComponent: {fileID: 1906585337}
-  m_Placeholder: {fileID: 0}
+  m_Placeholder: {fileID: 682405421}
   m_ContentType: 6
   m_InputType: 0
   m_AsteriskChar: 42
@@ -714,7 +727,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1721696608}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1184,7 +1197,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1721696608}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1638,7 +1651,7 @@ MonoBehaviour:
   m_Interactable: 1
   m_TargetGraphic: {fileID: 999948505}
   m_TextComponent: {fileID: 21831480}
-  m_Placeholder: {fileID: 0}
+  m_Placeholder: {fileID: 1165322698}
   m_ContentType: 7
   m_InputType: 2
   m_AsteriskChar: 42
@@ -2470,8 +2483,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: -0.62}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 470982145}
   - {fileID: 755857959}
+  - {fileID: 470982145}
   m_Father: {fileID: 927543955}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3164,16 +3177,64 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 28438292}
-        m_TargetAssemblyTypeName: goScene, Assembly-CSharp
-        m_MethodName: loadScene
-        m_Mode: 5
+      - m_Target: {fileID: 28438293}
+        m_TargetAssemblyTypeName: signup, Assembly-CSharp
+        m_MethodName: getUsername
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1721696607}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: mainMenu
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 28438293}
+        m_TargetAssemblyTypeName: signup, Assembly-CSharp
+        m_MethodName: getEmail
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 281006479}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 28438293}
+        m_TargetAssemblyTypeName: signup, Assembly-CSharp
+        m_MethodName: getPass
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 999948502}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 28438293}
+        m_TargetAssemblyTypeName: signup, Assembly-CSharp
+        m_MethodName: getRePass
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 138592333}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 28438293}
+        m_TargetAssemblyTypeName: signup, Assembly-CSharp
+        m_MethodName: verifySignup
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: mainMenu
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &2089377872
