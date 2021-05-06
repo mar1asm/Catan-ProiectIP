@@ -24,6 +24,7 @@ public abstract class Settlement
 
     protected Settlement(Corner corner)
     {
+        LoadVFX();
         this.corner = corner;
         this.corner.settlement = this;
     }

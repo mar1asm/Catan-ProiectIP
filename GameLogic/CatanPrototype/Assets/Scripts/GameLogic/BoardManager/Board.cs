@@ -9,6 +9,8 @@ public class Board
     //private static GameObject tilePrefab = (GameObject)Resources.Load("GameLogic/Prefabs/TilePrefab");
     //private static GameObject cornerPrefab = (GameObject)Resources.Load("GameLogic/Prefabs/CornerPrefab");
 
+    
+
     public List<string> availableTileTypes;
     public Dictionary<BoardCoordinate, Tile> tiles {
          get; private set;
@@ -20,6 +22,8 @@ public class Board
         get; private set;
     }
 
+
+    public List<Port> ports = new List<Port>();
 
     public Dictionary<BoardCoordinate, List<BoardCoordinate>>[] playerRoadNetworks
     {
@@ -40,6 +44,22 @@ public class Board
 
 
     }
+
+    
+    public Port PlacePort(Corner c1, Corner c2, ResourceTypes resource, int resourcesNeeded, int resourcesObtained)
+    {
+        if(!(corners.ContainsKey(c1.coordinate) && corners.ContainsKey(c2.coordinate))) {
+            return null;
+        }
+
+        Port port = new Port(corners[c1.coordinate], corners[c2.coordinate], resource, 
+            new Vector2Int(resourcesNeeded, resourcesObtained));
+
+        ports.Add(port);
+        return port;
+    }
+
+
 
     /// <summary>
     /// 
@@ -192,13 +212,24 @@ public class Board
         
         int colorID = (int)p.color;
         Settlement settlementToPlace = GetSettlementFromString(boardCoordinate, type);
+        settlementToPlace.owner = p;
 
-        if (playerRoadNetworks[colorID].ContainsKey(boardCoordinate))
+
+        //if (playerRoadNetworks[colorID].ContainsKey(boardCoordinate))
+        //{
+        //    List<Corner> availableCorners = GetAvailableCorners(p.color);
+        //    foreach (var c in availableCorners)
+        //        if (boardCoordinate == c.coordinate)
+        //        {
+        //            return settlementToPlace;
+        //        }
+        Debug.Log(boardCoordinate.q + " " + boardCoordinate.r);
+        if (corners.ContainsKey(boardCoordinate))
         {
-            List<Corner> availableCorners = GetAvailableCorners(p.color);
-            foreach (var c in availableCorners)
-                if(boardCoordinate==c.coordinate)
-                    return settlementToPlace;
+
+            corners[boardCoordinate].settlement = settlementToPlace;
+            Debug.Log("Am pus");
+            return settlementToPlace;
         }
 
         return null;

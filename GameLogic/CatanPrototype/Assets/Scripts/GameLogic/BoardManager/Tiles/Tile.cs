@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 
-public abstract class Tile
+public abstract class Tile : ILoadVFX
 {
 
 
@@ -64,9 +64,7 @@ public abstract class Tile
     //Il si returnez, in cazul in care vrem sa adaugam lucruri la el
     //De exemplu, un numar
     public virtual GameObject AddVFX2Object(GameObject parent) 
-    {
-        Debug.LogError(parent.transform.parent.name);
-        
+    {   
         if(inGameObject == null)
         {
             inGameObject = parent;
