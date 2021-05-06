@@ -16,6 +16,8 @@ public class SettlementBehaviour : MonoBehaviour
         set
         {
             _settlement = value;
+            //AM COMENTAT DOAR PENTRU TESTARE
+            //ToDo: decomenteaza aici
             CleanVFX();
             _settlement.AddVFX2Object(transform.GetChild(0).gameObject);
         }

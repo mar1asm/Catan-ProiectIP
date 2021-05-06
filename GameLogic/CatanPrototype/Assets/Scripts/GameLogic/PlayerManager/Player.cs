@@ -9,7 +9,7 @@ public class Player
     public string ID;
     public PlayerColor color;
     int score;
-    //DeckPlayer deck;
+    DeckPlayer deck;
     public Player(string name, string id)
     {
         nickname = name;

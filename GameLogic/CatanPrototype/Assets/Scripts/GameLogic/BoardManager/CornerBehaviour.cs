@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CornerBehaviour : MonoBehaviour
 {
+    [SerializeField]
     private Corner _corner;
     public Corner corner
     {
