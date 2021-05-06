@@ -325,6 +325,7 @@ GameObject:
   - component: {fileID: 214937651}
   - component: {fileID: 214937653}
   - component: {fileID: 214937652}
+  - component: {fileID: 214937654}
   m_Layer: 0
   m_Name: left-bk
   m_TagString: Untagged
@@ -427,6 +428,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9971920cd69356549a09c1c8a036b667, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &214937654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214937649}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edc9140c88e0ebb4399dce459524e24c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &221122633
@@ -2474,16 +2487,40 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 214937653}
-        m_TargetAssemblyTypeName: goScene, Assembly-CSharp
-        m_MethodName: loadScene
-        m_Mode: 5
+      - m_Target: {fileID: 214937654}
+        m_TargetAssemblyTypeName: login, Assembly-CSharp
+        m_MethodName: getText1
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1373112007}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: mainMenu
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 214937654}
+        m_TargetAssemblyTypeName: login, Assembly-CSharp
+        m_MethodName: getText2
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1883916494}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 214937654}
+        m_TargetAssemblyTypeName: login, Assembly-CSharp
+        m_MethodName: verifyLogin
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: mainMenu
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &2041721128
