@@ -20,7 +20,6 @@ public class Village : Settlement
 
     public override void LoadVFX()
     {
-        //Trebuie adaugata aici incarcarea VFX-ului, asemanator cum am facut la Tiles
-        //(vezi SheepTile pentru un exemplu)
+        VFX = (GameObject)Resources.Load("GameLogic/Prefabs/VillageVFX-WIP");
     }
 }
