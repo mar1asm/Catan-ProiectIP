@@ -584,10 +584,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4414f4863faafe04e9eaf9cc207670f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  p: []
+  players: []
   order: 
   size: 0
-  currentPlayer: -1
+  currentPlayerIndex: -1
+  tradeManager: {fileID: 2069777499}
 --- !u!1001 &822299411
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -871,6 +872,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 634a2690731559f47972a8d1809a057b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  decks: []
 --- !u!1 &1854074574
 GameObject:
   m_ObjectHideFlags: 0
@@ -952,6 +954,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boardManager: {fileID: 1854074575}
+  turnManager: {fileID: 750080241}
 --- !u!4 &2069777500
 Transform:
   m_ObjectHideFlags: 0

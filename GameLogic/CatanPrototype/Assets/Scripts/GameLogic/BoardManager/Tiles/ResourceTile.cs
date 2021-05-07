@@ -44,7 +44,7 @@ public abstract class ResourceTile : Tile
     {
         GameObject tile = base.AddVFX2Object(parent);
         inGameNumberTile = GameObject.Instantiate(numberTilePrefab, new Vector3(0, 0.5f, 0), Quaternion.identity, tile.transform);
-        Debug.Log("Numarul acestui tile este: " + inGameNumberTile.transform.position);
+        //Debug.Log("Numarul acestui tile este: " + inGameNumberTile.transform.position);
         return tile;
     }
 

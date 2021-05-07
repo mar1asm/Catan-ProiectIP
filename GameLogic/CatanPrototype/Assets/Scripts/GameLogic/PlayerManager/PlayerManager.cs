@@ -15,15 +15,34 @@ public class PlayerManager : MonoBehaviour
 
         players.Add(test);
 
-       
 
-        StartCoroutine(WaitForBoardToFinish());
+        test.deck.add(new SheepCard(1, ResourceTypes.Sheep));
+        test.deck.add(new SheepCard(1, ResourceTypes.Sheep));
+        test.deck.add(new SheepCard(1, ResourceTypes.Sheep));
+
+        Trade t = new Trade(true);
+        t.AddResourceNeeded(ResourceTypes.Sheep);
+        t.AddResourceNeeded(ResourceTypes.Sheep);
+        //t.AddResourceNeeded(ResourceTypes.Stone);
+
+        TradeManagerBehaviour tmb = GameObject.Find("Trade Manager").GetComponent<TradeManagerBehaviour>();
+
+        Debug.Log(tmb.PlayerSatisfiesTradeRequirements(test, t));
+
+        test.PayResources(t.resourcesNeeded);
+
+        Debug.Log("Cate carti are?" + test.deck.Cards.Count);
+        //StartCoroutine(WaitForBoardToFinish());
         
   
 
 
     }
 
+    /// <summary>
+    /// Corutina asta este doar pentru test, a nu se folosi!!
+    /// </summary>
+    /// <returns></returns>
     IEnumerator WaitForBoardToFinish()
     {
         yield return new WaitForSeconds(1);
@@ -31,7 +50,7 @@ public class PlayerManager : MonoBehaviour
         bb.AddSettlement(players[0], new BoardCoordinate(1.33f, -2.66f), "village");
         Debug.Log("am pus");
         TradeManagerBehaviour tmb = GameObject.Find("Trade Manager").GetComponent<TradeManagerBehaviour>();
-        var trades = tmb.GetTradesForPlayer(players[0]);
+        var trades = tmb.GetHarbourTradesForPlayer(players[0]);
         Debug.Log("E bine aici " + trades.Count);
         foreach (Trade trade in trades)
         {
