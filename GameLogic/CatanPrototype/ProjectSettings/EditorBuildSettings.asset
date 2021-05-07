@@ -4,5 +4,65 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/appearance.unity
+    guid: 9ff788926dcc286499301ee495fc1368
+  - enabled: 1
+    path: Assets/Scenes/blockList.unity
+    guid: f16995802ba6c8643841ad5330e8fdb8
+  - enabled: 1
+    path: Assets/Scenes/chooseTiles.unity
+    guid: ca2c1d59297a7e84abb6b8212170c3a7
+  - enabled: 1
+    path: Assets/Scenes/createExp.unity
+    guid: 2ef2f8e04dd07f344accf0123575d1cc
+  - enabled: 1
+    path: Assets/Scenes/expansions.unity
+    guid: cc9a045b3b29656449611d9354daa2c5
+  - enabled: 1
+    path: Assets/Scenes/forgotPass.unity
+    guid: dd60864762777ac438caf92eb708baa5
+  - enabled: 1
+    path: Assets/Scenes/friends.unity
+    guid: 61bb40415b0015b45b4e7ba8b5912aba
+  - enabled: 1
+    path: Assets/Scenes/login.unity
+    guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/lvlProgress.unity
+    guid: ea1423dc167039c4685358a612a853bd
+  - enabled: 1
+    path: Assets/Scenes/mainMenu.unity
+    guid: 5c5444dc4570f9f48a8c19a1b77fb2bb
+  - enabled: 1
+    path: Assets/Scenes/multiplayer.unity
+    guid: a50e3a4787a863d40914d49c21fef4f8
+  - enabled: 1
+    path: Assets/Scenes/PlayingWithBoardScene.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/plProfile.unity
+    guid: 0c749fb4237467240b13e8fedd3645fa
+  - enabled: 1
+    path: Assets/Scenes/profile.unity
+    guid: 0813274b49d6eb040b29ee1fd8fff76b
+  - enabled: 1
+    path: Assets/Scenes/resetPassword.unity
+    guid: 5abfb1f1318171c4b9f412ae508ece25
+  - enabled: 1
+    path: Assets/Scenes/rules.unity
+    guid: 4584eb7590420834186b4cdd844185ba
+  - enabled: 1
+    path: Assets/Scenes/searchFriends.unity
+    guid: 21f15d19ff8fa274295bdc7d5106fcc9
+  - enabled: 1
+    path: Assets/Scenes/settings.unity
+    guid: fd17f9fccba4a6747849da3186b1dc31
+  - enabled: 1
+    path: Assets/Scenes/signup.unity
+    guid: 8c940b54f18646f42aa0e2f930df8672
+  - enabled: 1
+    path: Assets/Scenes/update.unity
+    guid: bc8fa50690fb71f4d86328a1c070879b
   m_configObjects: {}
