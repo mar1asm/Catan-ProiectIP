@@ -32,7 +32,7 @@ public abstract class ResourceCard : Card
 
         }
     }
-   public ResourceCard(int number, ResourceTypes type)
+  /* public ResourceCard(int number, ResourceTypes type)
     {
         _numberResourceCard = number;
         CardType = type;
@@ -49,6 +49,7 @@ public abstract class ResourceCard : Card
 
         
     }
+    */
     public abstract string getResource();
 
     /* void Start()

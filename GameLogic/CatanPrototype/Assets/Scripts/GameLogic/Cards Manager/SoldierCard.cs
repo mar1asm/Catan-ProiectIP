@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SoldierCard : DevelopmentCard
 {
-    private int _numberSoldierCard; // 14 r trebui
+    /*private int _numberSoldierCard; // 14 r trebui
 
     public int numberSoldierCard
     {
@@ -18,8 +18,18 @@ public class SoldierCard : DevelopmentCard
 
         }
     }
+    
     public SoldierCard(int nr)
     {
         _numberSoldierCard=nr;
+    }
+    */
+    public SoldierCard(string s)
+    {
+        type = s;
+    }
+    public override string getType()
+    {
+        return "soldier";
     }
 }

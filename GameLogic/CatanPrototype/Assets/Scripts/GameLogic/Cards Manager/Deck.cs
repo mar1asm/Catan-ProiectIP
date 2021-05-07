@@ -1,20 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class Deck 
+[System.Serializable]
+public  class Deck 
 {
-    private List<Card> package;
-    private int _nr;
-    public int nr
+    protected string type;    
+    protected List<Card> package;
+    /*protected int number;
+    public int Number
     {
         get
         {
-            return _nr;
+            return number;
+        }
+       set
+        {
+            number = value;
+
+        }
+        
+    }
+    */
+    public int _type
+    {
+        get
+        {
+            return _type;
         }
         set
         {
-            _nr = value;
+            _type = value;
 
         }
     }
@@ -30,30 +45,37 @@ public class Deck
 
         }
     }
-    public Deck()
+    /*public int  getNr()
     {
-        _nr = 0;
-        package = new List<Card>();
-
-    }
+        return _number;
+    }*/
     public void add(Card card)
     {
         package.Add(card);
-        _nr++;
+       // number++;
     }
     public void remove(Card card)
     {
         if (package.Contains(card))
         {
             package.Remove(card);
-            _nr--;
+          // number--;
 
         }
     }
-
+    public Deck(string type)
+    {
+        //this.number = number;
+        this.type = type;
+    }
+    public Deck()
+    {
+        Debug.Log("Se apeleaza constr implicit");
+    }
+    /*
     // Start is called before the first frame update
-
-    /* void Start()
+    
+     void Start()
      {
 
      }

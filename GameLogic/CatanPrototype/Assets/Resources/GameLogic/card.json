@@ -1,21 +1,28 @@
 {
   "availableCard": [
+
     {
       "type": "sheep",
       "number": 19
+
     },
+
     {
       "type": "wheat",
       "number": 19
     },
+
     {
       "type": "wood",
       "number": 19
     },
+
+
     {
       "type": "stone",
       "number": 19
     },
+
     {
       "type": "brick",
       "number": 19
@@ -33,7 +40,11 @@
       "number": 5
     }
   ],
-  [
-    
+
+  "deck": [
+    {
+     
+    }
+
   ]
 }

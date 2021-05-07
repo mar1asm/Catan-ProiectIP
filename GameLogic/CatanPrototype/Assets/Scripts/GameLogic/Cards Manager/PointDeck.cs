@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Stone : ResourceCard
+public class PointDeck : Deck
 {
     // Start is called before the first frame update
     /* void Start()
@@ -14,16 +14,11 @@ public class Stone : ResourceCard
      void Update()
      {
 
-     }*/
-    public override string getResource()
+     }
+     */
+    public PointDeck(string name1)
     {
-        return "stone";
-    }
-    public Stone(int number, ResourceTypes type)
-    {
-        _numberResourceCard = number;
-        CardType = type;
-
-
+        type = name1;
+        package = new List<Card>();
     }
 }
