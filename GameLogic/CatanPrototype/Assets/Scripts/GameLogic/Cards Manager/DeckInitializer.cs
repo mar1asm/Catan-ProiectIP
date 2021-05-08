@@ -93,7 +93,7 @@ public class DeckInitializer
                                 //DevelopmentCard b = new SoldierCard("soldier");
 
                                 //Deck d5 = new SoldierDeck("soldier");
-                            Debug.Log("SOLDAT");
+                           
                             for (int i = 0; i < dd.number; i++)
                                 d.add(new SoldierCard("soldier"));
 

@@ -6,7 +6,10 @@ public abstract class ResourceTile : Tile
 {
 
     private int _numberTileValue = 0;
-    protected ResourceTypes resourceType = ResourceTypes.Sheep;
+    public ResourceTypes resourceType = ResourceTypes.Sheep;
+
+
+    
     public int numberTileValue
     {
         get

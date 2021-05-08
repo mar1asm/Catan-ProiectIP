@@ -7,6 +7,7 @@ public class ForestTile : ResourceTile
 
     public ForestTile(float q, float r) : base(q, r)
     {
+        Debug.Log("THIS IS DUMB");
         resourceType = ResourceTypes.Wood;
     }
 
@@ -24,7 +25,7 @@ public class ForestTile : ResourceTile
 
     public override void LoadVFX()
     {
-        VFX = (GameObject)Resources.Load("GameLogic/Prefabs/Forest");
+        VFX = (GameObject)Resources.Load("GameLogic/Prefabs/HexTiles/HexaWood");
     }
 
 

@@ -21,6 +21,6 @@ public class MountainTile : ResourceTile
 
     public override void LoadVFX()
     {
-        VFX = (GameObject)Resources.Load("GameLogic/Prefabs/SnowyMountain");
+        VFX = (GameObject)Resources.Load("GameLogic/Prefabs/HexTiles/HexaRocks");
     }
 }
