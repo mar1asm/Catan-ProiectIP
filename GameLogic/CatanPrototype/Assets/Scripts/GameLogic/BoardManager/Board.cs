@@ -10,6 +10,7 @@ public class Board
     //private static GameObject cornerPrefab = (GameObject)Resources.Load("GameLogic/Prefabs/CornerPrefab");
 
     public List<string> availableTileTypes;
+    public List<string> availableNumberTileTypes;
     public Dictionary<BoardCoordinate, Tile> tiles {
          get; private set;
     }
@@ -100,6 +101,13 @@ public class Board
         string tileType = availableTileTypes[index];
         availableTileTypes.RemoveAt(index);
         return tileType;
+    }
+    private string ExtractRandomNumberTileType()
+    {
+        int index = Random.Range(0, availableNumberTileTypes.Count);
+        string numberTileType = availableNumberTileTypes[index];
+        availableNumberTileTypes.RemoveAt(index);
+        return numberTileType;
     }
 
     public void AddAvailableTileType(string tileType, int numberOfTiles)
@@ -360,5 +368,24 @@ public class Board
         }
     }
 
-
+    private NumberTile GetNumberTileFromString(BoardCoordinate boardCoordinate, string type)
+    {
+        //made by jon
+        switch (type)
+        {
+            case "random": return GetNumberTileFromString(boardCoordinate, ExtractRandomNumberTileType());
+            case "2": return new NumberTile(2, boardCoordinate);
+            case "3": return new NumberTile(3,boardCoordinate);
+            case "4": return new NumberTile(4,boardCoordinate);
+            case "5": return new NumberTile(5,boardCoordinate);
+            case "6": return new NumberTile(6,boardCoordinate);
+            case "7": return new NumberTile(7,boardCoordinate);
+            case "8": return new NumberTile(8,boardCoordinate);
+            case "9": return new NumberTile(9,boardCoordinate);
+            case "10": return new NumberTile(10,boardCoordinate);
+            case "11": return new NumberTile(11,boardCoordinate);
+            case "12": return new NumberTile(12,boardCoordinate);
+            default: return new TestNumberTile(boardCoordinate);
+        }
+    }
 }

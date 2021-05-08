@@ -6,4 +6,22 @@ using UnityEngine;
 public class NumberTile 
 {
     int Value;
+
+    public BoardCoordinate coordinate;
+
+    public NumberTile()
+    {
+        Value = 0;
+        coordinate = null;
+    }
+    public NumberTile(int value, BoardCoordinate coordinate)
+    {
+        Value = value;
+        this.coordinate = coordinate;
+    }
+    public NumberTile(BoardCoordinate coordinate)
+    {
+        Value = 1;
+        this.coordinate = coordinate;
+    }
 }

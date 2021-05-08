@@ -1,125 +1,192 @@
 {
-    "availableTiles": [
-        {
-            "type": "sheep",
-            "number": 4
-        },
-        {
-            "type": "wheat",
-            "number": 4
-        },
-        {
-            "type": "wood",
-            "number": 4
-        },
-        {
-            "type": "mountain",
-            "number": 3
-        },
-        {
-            "type": "desert",
-            "number": 1
-        },
-        {
-            "type": "brick",
-            "number": 3
-        }
-    ],
-    "board" :[
-        {
-            "q": 0,
-            "r": 0,
-            "type": "random"
-        },
-        {
-            "q": 0,
-            "r": -1,
-            "type": "random"
-        },
-        {
-            "q": 1,
-            "r": -1,
-            "type": "random"
-        },
-        {
-            "q": 1,
-            "r": 0,
-            "type": "random"
-        },
-        {
-            "q": 0,
-            "r": 1,
-            "type": "random"
-        },
-        {
-            "q": -1,
-            "r": 1,
-            "type": "random"
-        },
-        {
-            "q": -1,
-            "r": 0,
-            "type": "random"
-        },
-        {
-            "q": 0,
-            "r": -2,
-            "type": "random"
-        },
-        {
-            "q": 1,
-            "r": -2,
-            "type": "random"
-        },
-        {
-            "q": 2,
-            "r": -2,
-            "type": "random"
-        },
-        {
-            "q": 2,
-            "r": -1,
-            "type": "random"
-        },
-        {
-            "q": 2,
-            "r": 0,
-            "type": "random"
-        },
-        {
-            "q": 1,
-            "r": 1,
-            "type": "random"
-        },
-        {
-            "q": 0,
-            "r": 2,
-            "type": "random"
-        },
-        {
-            "q": -1,
-            "r": 2,
-            "type": "random"
-        },
-        {
-            "q": -2,
-            "r": 2,
-            "type": "random"
-        },
-        {
-            "q": -2,
-            "r": 1,
-            "type": "random"
-        },
-        {
-            "q": -2,
-            "r": 0,
-            "type": "random"
-        },
-        {
-            "q": -1,
-            "r": -1,
-            "type": "random"
-        }
-    ]
+  "availableNumberTiles": [
+    {
+      "value": 2,
+      "number": 1
+    },
+    {
+      "value": 3,
+      "number": 2
+    },
+    {
+      "value": 4,
+      "number": 2
+    },
+    {
+      "value": 5,
+      "number": 2
+    },
+    {
+      "value": 6,
+      "number": 2
+    },
+    {
+      "value": 7,
+      "number": 2
+    },
+    {
+      "value": 8,
+      "number": 2
+    },
+    {
+      "value": 9,
+      "number": 2
+    },
+    {
+      "value": 10,
+      "number": 2
+    },
+    {
+      "value": 11,
+      "number": 2
+    },
+    {
+      "value": 12,
+      "number": 1
+    }
+
+  ],
+
+  "availableTiles": [
+    {
+      "type": "sheep",
+      "number": 4
+    },
+    {
+      "type": "wheat",
+      "number": 4
+    },
+    {
+      "type": "wood",
+      "number": 4
+    },
+    {
+      "type": "mountain",
+      "number": 3
+    },
+    {
+      "type": "desert",
+      "number": 1
+    },
+    {
+      "type": "brick",
+      "number": 3
+    }
+  ],
+  "board": [
+    {
+      "q": 0,
+      "r": 0,
+      "type": "random",
+      "value": "random"
+    },
+    {
+      "q": 0,
+      "r": -1,
+      "type": "random",
+      "value": "random"
+    },
+    {
+      "q": 1,
+      "r": -1,
+      "type": "random",
+      "value": "random"
+    },
+    {
+      "q": 1,
+      "r": 0,
+      "type": "random",
+      "value": "random"
+    },
+    {
+      "q": 0,
+      "r": 1,
+      "type": "random",
+      "value": "random"
+    },
+    {
+      "q": -1,
+      "r": 1,
+      "type": "random",
+      "value": "random"
+    },
+    {
+      "q": -1,
+      "r": 0,
+      "type": "random",
+      "value": "random"
+    },
+    {
+      "q": 0,
+      "r": -2,
+      "type": "random",
+      "value": "random"
+    },
+    {
+      "q": 1,
+      "r": -2,
+      "type": "random",
+      "value": "random"
+    },
+    {
+      "q": 2,
+      "r": -2,
+      "type": "random",
+      "value": "random"
+    },
+    {
+      "q": 2,
+      "r": -1,
+      "type": "random",
+      "value": "random"
+    },
+    {
+      "q": 2,
+      "r": 0,
+      "type": "random",
+      "value": "random"
+    },
+    {
+      "q": 1,
+      "r": 1,
+      "type": "random",
+      "value": "random"
+    },
+    {
+      "q": 0,
+      "r": 2,
+      "type": "random",
+      "value": "random"
+    },
+    {
+      "q": -1,
+      "r": 2,
+      "type": "random",
+      "value": "random"
+    },
+    {
+      "q": -2,
+      "r": 2,
+      "type": "random",
+      "value": "random"
+    },
+    {
+      "q": -2,
+      "r": 1,
+      "type": "random",
+      "value": "random"
+    },
+    {
+      "q": -2,
+      "r": 0,
+      "type": "random",
+      "value": "random"
+    },
+    {
+      "q": -1,
+      "r": -1,
+      "type": "random",
+      "value": "random"
+    }
+  ]
 }

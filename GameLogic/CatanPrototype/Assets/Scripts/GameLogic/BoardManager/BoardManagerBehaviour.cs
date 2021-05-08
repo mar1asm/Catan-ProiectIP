@@ -41,12 +41,17 @@ public class BoardManagerBehaviour : MonoBehaviour
     public Player CheckLongestRoad()
     {
         //made by jon
-        for(int i=0; i<(int)PlayerColor.NbOfColors; ++i)
-        {
-
-        }
-
         return null;
+    }
+
+    public List<Corner> GetAvailableCorners(PlayerColor color)
+    {
+        return board.GetAvailableCorners(color);
+    }
+
+    public List<KeyValuePair<Corner, Corner>> GetAvailableConnectors(PlayerColor color)
+    {
+        return board.GetAvailableConnectors(color);
     }
 
 
