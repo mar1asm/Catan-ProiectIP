@@ -46,7 +46,7 @@ public class Port : ILoadVFX
 
             Vector3 relPos = v2 - v1;
             Quaternion rotation = Quaternion.LookRotation(relPos, Vector3.up);
-            Debug.Log(rotation.eulerAngles);
+           
             return rotation;
         }
     }

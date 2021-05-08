@@ -23,7 +23,7 @@ public class WheatTile : ResourceTile
 
     public override void LoadVFX()
     {
-        VFX = (GameObject)Resources.Load("GameLogic/Prefabs/Crops");
+        VFX = (GameObject)Resources.Load("GameLogic/Prefabs/HexTiles/HexaWheat");
     }
 
 

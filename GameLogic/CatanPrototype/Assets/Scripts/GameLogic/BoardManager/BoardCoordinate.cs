@@ -12,7 +12,7 @@ public class BoardCoordinate
      */
 
     private static GameObject measurementsReference;
-    private static float widthOfTile = 1.004f;
+    private static float widthOfTile =  0.01004f * 11048.06f;
     public float q;
     public float r;
 
