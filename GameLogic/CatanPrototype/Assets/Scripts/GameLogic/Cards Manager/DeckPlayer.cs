@@ -50,6 +50,22 @@ public class DeckPlayer
 
         }
     }
+    public void removeCard(ResourceTypes resource)
+    {
+
+        foreach (Card c in Cards)
+        {
+            if (c is ResourceCard) // trebuie vazut daca intra vreodata pe if ul asta 
+            {
+                if(((ResourceCard)c).CardType == resource)
+                {
+                    remove(c);
+                    break;
+                }
+
+            }
+        }
+    }
     // Start is called before the first frame update
     /*void Start()
       {
