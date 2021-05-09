@@ -15,7 +15,7 @@ public class Player
         deck = new DeckPlayer();
         nickname = name;
         ID = id;
-        board = b;
+        // nu board = b;
     }
 
 
@@ -75,15 +75,15 @@ public class Player
         score = value;
     }
 
-    public Settlement PlaceSettlement(BoardCoordinate boardCoordinate, string type)
-    {
-        board.PlaceSettlement(this, boardCoordinate, type);
-        return null;
-    }
+    //public Settlement PlaceSettlement(BoardCoordinate boardCoordinate, string type)
+    //{
+    //    board.PlaceSettlement(this, boardCoordinate, type);
+    //    return null;
+    //}
 
-    public Connector PlaceConnector(BoardCoordinate bc1, BoardCoordinate bc2, string type)
-    {
-        board.PlaceConnector(this, bc1, bc2, type);
-        return null;
-    }
+    //public Connector PlaceConnector(BoardCoordinate bc1, BoardCoordinate bc2, string type)
+    //{
+    //    board.PlaceConnector(this, bc1, bc2, type);
+    //    return null;
+    //}
 }
