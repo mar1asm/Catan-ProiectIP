@@ -22,6 +22,6 @@ public class BrickTile : ResourceTile
 
     public override void LoadVFX()
     {
-        VFX = (GameObject)Resources.Load("GameLogic/Prefabs/CandyLand1");
+        VFX = (GameObject)Resources.Load("GameLogic/Prefabs/HexTiles/HexaArgile");
     }
 }

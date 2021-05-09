@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+
 [System.Serializable]
-public  class Deck 
+public class Deck 
 {
-    protected string type;    
-    protected List<Card> package;
+    public string type;    
+    public List<Card> package;
     /*protected int number;
     public int Number
     {
@@ -21,18 +23,18 @@ public  class Deck
         
     }
     */
-    public int _type
-    {
-        get
-        {
-            return _type;
-        }
-        set
-        {
-            _type = value;
+    //public int _type
+    //{
+    //    get
+    //    {
+    //        return type;
+    //    }
+    //    set
+    //    {
+    //        type = value;
 
-        }
-    }
+    //    }
+    //}
     public List<Card> Package
     {
         get
@@ -51,6 +53,7 @@ public  class Deck
     }*/
     public void add(Card card)
     {
+       
         package.Add(card);
        // number++;
     }
@@ -63,14 +66,43 @@ public  class Deck
 
         }
     }
+
+    public Card TakeFirstCard()
+    {
+        if (package.Count <= 0)
+        {
+            Debug.LogError("[" + type + "] This deck is empty");
+            return null;
+        }
+        Card card = package[0];
+        package.RemoveAt(0);
+        return card;
+    }
+
+
+
+    public void Shuffle()
+    {
+        List<Card> newCards = new List<Card>();
+
+        while(package.Count != 0)
+        {
+            int index = Random.Range(0, package.Count);
+            newCards.Add(package[index]);
+            package.RemoveAt(index);
+        }
+
+        package = newCards;
+    }
     public Deck(string type)
     {
         //this.number = number;
+        package = new List<Card>();
         this.type = type;
     }
     public Deck()
     {
-        Debug.Log("Se apeleaza constr implicit");
+        //Debug.Log("Se apeleaza constr implicit");
     }
     /*
     // Start is called before the first frame update

@@ -181,6 +181,7 @@ public class BoardManagerBehaviour : MonoBehaviour
         foreach(KeyValuePair<BoardCoordinate, Tile> entry in board.tiles)
         {
             Vector3 position = entry.Key.ToWorldSpace();
+            Debug.Log(entry.Value.GetTypeAsString());
             GameObject tile = Instantiate(tilePrefab, position, Quaternion.identity, transform);
             tile.GetComponent<TileBehaviour>().tile = entry.Value;
         }

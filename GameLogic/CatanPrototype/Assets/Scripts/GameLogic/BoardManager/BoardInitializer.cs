@@ -32,13 +32,15 @@ public class BoardInitializer
             board.AddAvailableTileType(tileNumberDescriber.type, tileNumberDescriber.number);
         }
 
+
         foreach (HexDescriber hexDescriber in game.board)
         {
             Tile tile = board.PlaceTile(hexDescriber.q, hexDescriber.r, hexDescriber.type);
+            
             board.PlaceCorners(tile);
         }
        
-
+       
         return board;
     }
 }

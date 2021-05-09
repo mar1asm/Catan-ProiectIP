@@ -9,26 +9,16 @@ public class DeckInitializer
         TextAsset txtData = (TextAsset)Resources.Load(filePath);
         string jsonString = txtData.text;
         List<Deck> lst = new List<Deck>();
-       
-       
-       
-        
-        //ResourceCard r = new ResourceCard();
-        //DevelopmentCard dv = new DevelopmentCard();
-
-       // int nrDev = 0;
         CardDescriber cards = JsonUtility.FromJson<CardDescriber>(jsonString);
         foreach (AvailableCard  available in cards.availableCard)
         {
+            Debug.Log("Deckul are numele: " + available.name);
+            switch (available.name) {
+                case "sheep": {
+                    foreach (DeckDescriber dd in available.d)
+                    {
 
-           
-                switch (available.name) {
-                    case "sheep":
-                 
-                     foreach (DeckDescriber dd in available.d)
-                     {
-                         
-                         ResourceCard s = new SheepCard(dd.number, ResourceTypes.Sheep);
+                        ResourceCard s = new SheepCard(dd.number, ResourceTypes.Sheep);
 
                         Deck d = new SheepDeck("sheep");
                         for (int i = 0; i < dd.number; i++)
@@ -36,8 +26,11 @@ public class DeckInitializer
                         lst.Add(d);
                     }
 
+
                     break;
-                case "stone":
+                }
+
+                case "stone": {
                     foreach (DeckDescriber dd in available.d)
                     {
                         ResourceCard st = new StoneCard(dd.number, ResourceTypes.Stone);
@@ -49,8 +42,9 @@ public class DeckInitializer
                         lst.Add(d1);
                     }
                     break;
+                }
                     
-                case "wood":
+                case "wood": {
                     foreach (DeckDescriber dd in available.d)
                     {
                         ResourceCard w = new WoodCard(dd.number, ResourceTypes.Wood);
@@ -61,8 +55,9 @@ public class DeckInitializer
                         lst.Add(d2);
                     }
                     break;
+                } 
                   
-                case "wheat":
+                case "wheat": {
                     foreach (DeckDescriber dd in available.d)
                     {
                         ResourceCard wh = new WheatCard(dd.number, ResourceTypes.Wheat);
@@ -72,8 +67,9 @@ public class DeckInitializer
                         lst.Add(d3);
                     }
                     break;
+                }
                    
-              case "brick":
+                case "brick": {
                     foreach (DeckDescriber dd in available.d)
                     {
                         ResourceCard b = new BrickCard(dd.number, ResourceTypes.Brick);
@@ -83,94 +79,71 @@ public class DeckInitializer
 
                         lst.Add(d4);
                     }
-                  break;
+                    break;
+                }    
                     
-             case "development":
+                case "development": {
+                    Deck d = new Deck("Development");
+                    Debug.Log("Deck-ul : " + d.type);
                     foreach (DeckDescriber dd in available.d)
                     {
+                        
                         if (dd.type == "soldier")
                         {
-                           DevelopmentCard b = new SoldierCard("soldier");
-                            Deck d5 = new SoldierDeck("soldier");
+                                //DevelopmentCard b = new SoldierCard("soldier");
+
+                                //Deck d5 = new SoldierDeck("soldier");
+                           
                             for (int i = 0; i < dd.number; i++)
-                                d5.add(b);
+                                d.add(new SoldierCard("soldier"));
 
                             // nrDev = nrDev + dd.number;
-                            lst.Add(d5);
                         }
-                       else if (dd.type == "victory")
+                        else if (dd.type == "victory")
                         {
                             DevelopmentCard b = new PointCard("point");
-                            Deck d6 = new PointDeck("point");
+                                //Deck d6 = new PointDeck("point");
+                            Debug.Log("VICTORIE");
                             for (int i = 0; i < dd.number; i++)
-                                d6.add(b);
+                                d.add(new PointCard("point"));
 
                             //nrDev = nrDev + dd.number;
-                            lst.Add(d6);
+                      
                         }
-                      else  if (dd.type == "road")
+                        else if (dd.type == "road")
                         {
                             DevelopmentCard b = new RoadCard("road");
-                            Deck d9 = new RoadDeck("road");
+                            // Deck d9 = new RoadDeck("road");
                             for (int i = 0; i < dd.number; i++)
-                                d9.add(b);
-                            lst.Add(d9);
+                                d.add(new RoadCard("road"));
                             // nrDev = nrDev + dd.number;
                         }
                         else if (dd.type == "year")
                         {
                             DevelopmentCard b = new YearCard("year");
-                            Deck d7 = new YearDeck("year");
+                            //Deck d7 = new YearDeck("year");
                             for (int i = 0; i < dd.number; i++)
-                                d7.add(b);
-                            lst.Add(d7);
+                                d.add(new YearCard("year"));
 
                         }
                         else if (dd.type == "monopoly")
                         {
                             DevelopmentCard b = new MonopolyCard("monopoly");
-                            Deck d8 = new MonopolyDeck("monopoly");
                             for (int i = 0; i < dd.number; i++)
-                                d8.add(b);
-
-                            // nrDev = nrDev + dd.number;
-                            lst.Add(d8);
+                                d.add(new MonopolyCard("monopoly"));
                         }
 
                     }
+                        Debug.Log("aiiiiiiiiiiiiiiiiiiiiiiiiiiici");
+                    lst.Add(d);
                     break;
-
-                    /*
-                     
-                 DevelopmentCard p = new ProgressCard(available.d.Number);
-                 Deck d5 = new ProgressDeck("progress");
-                 for (int i = 0; i < available.d.Number; i++)
-                     d5.add(p);
-                 nrDev = nrDev + available.d.Number;
-
-                 break;
-             case "soldier":
-                 DevelopmentCard sd = new SoldierCard(available.d.Number);
-                 Deck d6 = new SoldierDeck("soldier");
-                 for (int i = 0; i < available.d.Number; i++)
-                     d6.add(sd);
-                 nrDev = nrDev + available.d.Number;
-
-                 break;
-             case "victory":
-                 DevelopmentCard v = new PointCard(available.d.Number);
-                 Deck d7 = new PointDeck("point");
-                 for (int i = 0; i < available.d.Number; i++)
-                     d7.add(v);
-                 nrDev = nrDev + available.d.Number;
-
-                 break;
-                 */
+                }
 
             }
 
         }
-       return lst;
+        Debug.Log("Atatea deckuri sunt: " + lst.Count);
+        return lst;
     }
 
 

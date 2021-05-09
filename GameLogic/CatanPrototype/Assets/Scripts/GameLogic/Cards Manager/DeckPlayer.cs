@@ -10,12 +10,7 @@ public class DeckPlayer
     {
         get
         {
-            return _nrCards;
-        }
-        set
-        {
-            _nrCards = value;
-
+            return cards.Count;
         }
     }
     public List<Card> Cards
@@ -39,15 +34,47 @@ public class DeckPlayer
     public void add(Card card)
     {
         cards.Add(card);
-        _nrCards = _nrCards + 1;
     }
+
+    public void add(ResourceTypes resource)
+    {
+        switch (resource)
+        {
+            case ResourceTypes.Sheep: add(new SheepCard(1, resource));
+                break;
+            case ResourceTypes.Brick: add(new BrickCard(1, resource));
+                break;
+            case ResourceTypes.Wood: add(new WoodCard(1, resource));
+                break;
+            case ResourceTypes.Stone: add(new StoneCard(1, resource));
+                break;
+            case ResourceTypes.Wheat: add(new WheatCard(1, resource));
+                break;
+            default: Debug.LogError("Not a correct type of resource");
+                break;
+        }
+    }
+
     public void remove(Card card)
     {
         if(cards.Contains(card))
         {
             cards.Remove(card);
-            _nrCards = _nrCards - 1;
+        }
+    }
 
+    public void remove(ResourceTypes resource)
+    {
+        foreach(Card card in cards)
+        {
+            if(card is ResourceCard)
+            {
+                if( ((ResourceCard)card).CardType == resource)
+                {
+                    remove(card);
+                    return;
+                }
+            }
         }
     }
     // Start is called before the first frame update
