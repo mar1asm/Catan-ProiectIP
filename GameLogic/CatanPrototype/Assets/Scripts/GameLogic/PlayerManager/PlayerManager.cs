@@ -14,14 +14,31 @@ public class PlayerManager : MonoBehaviour
         test.color = PlayerColor.Blue;
 
         players.Add(test);
-
-       
-
         StartCoroutine(WaitForBoardToFinish());
-        
-  
-
-
+        /// cod de test  pentru player manager
+        DeckPlayer dp = new DeckPlayer();
+        ResourceCard sp = new SheepCard(1,ResourceTypes.Sheep);
+        ResourceCard sp1 = new SheepCard(1, ResourceTypes.Sheep);
+        ResourceCard sp2 = new SheepCard(1, ResourceTypes.Sheep);
+        ResourceCard bc = new BrickCard(1, ResourceTypes.Brick);
+        ResourceCard bc1 = new  BrickCard(1, ResourceTypes.Brick);
+        ResourceCard bc2 = new BrickCard(1, ResourceTypes.Brick);
+        ResourceCard wc = new WoodCard(1, ResourceTypes.Wood);
+        ResourceCard wc1 = new WoodCard(1, ResourceTypes.Wood);
+        ResourceCard wc2 = new WoodCard(1, ResourceTypes.Wood);
+        dp.add(sp);
+        dp.add(sp1);
+        dp.add(sp2);
+        dp.add(bc);
+        dp.add(bc1);
+        dp.add(bc2);
+        dp.add(wc);
+        dp.add(wc1);
+        dp.add(wc2);
+        Building rc = new RoadCost();
+        rc.takeCards(ref dp);
+        Debug.Log("Uite cate au ramas ");
+        Debug.Log(dp.nrCards);
     }
 
     IEnumerator WaitForBoardToFinish()
@@ -57,5 +74,6 @@ public class PlayerManager : MonoBehaviour
     {
         players.Remove(p);
     }
+   
 
 }
