@@ -5,4 +5,5 @@ using UnityEngine;
 public class CraftingCost
 {
     public List<ResourceTypes> resourcesRequired;
+
 }

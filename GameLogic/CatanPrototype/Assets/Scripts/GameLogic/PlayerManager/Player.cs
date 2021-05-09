@@ -15,6 +15,8 @@ public class Player
         nickname = name;
         ID = id;
     }
+
+
     public void ScoreAdd(int value)
     {
         score = score + value;

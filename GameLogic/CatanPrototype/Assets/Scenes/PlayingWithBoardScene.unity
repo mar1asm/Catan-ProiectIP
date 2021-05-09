@@ -904,8 +904,10 @@ MonoBehaviour:
   cornerPrefab: {fileID: 2617766818235144533, guid: f7044ebddf8f72444bbbdc8616f7c20b, type: 3}
   settlementPrefab: {fileID: 8439629535120656920, guid: 75780ced20d83304480b1b29c6894a88, type: 3}
   connectorPrefab: {fileID: 0}
+  portPrefab: {fileID: 4589061853924234682, guid: 45e875fd53b1b7645830e96edf9eb86f, type: 3}
   board:
     availableTileTypes: []
+    ports: []
 --- !u!4 &1854074576
 Transform:
   m_ObjectHideFlags: 0
@@ -919,6 +921,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2069777498
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2069777500}
+  - component: {fileID: 2069777499}
+  m_Layer: 0
+  m_Name: Trade Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2069777499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2069777498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdb12c9465010014dbd76f1f095e5215, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boardManager: {fileID: 1854074575}
+--- !u!4 &2069777500
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2069777498}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.1973567, y: 1.5576094, z: 3.2052019}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &5807510397679562244
 PrefabInstance:
