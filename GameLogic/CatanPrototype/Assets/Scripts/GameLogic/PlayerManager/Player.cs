@@ -15,6 +15,7 @@ public class Player
         deck = new DeckPlayer();
         nickname = name;
         ID = id;
+        board = b;
     }
 
 
@@ -72,5 +73,17 @@ public class Player
     public void ScoreSet(int value)
     {
         score = value;
+    }
+
+    public Settlement PlaceSettlement(BoardCoordinate boardCoordinate, string type)
+    {
+        board.PlaceSettlement(this, boardCoordinate, type);
+        return null;
+    }
+
+    public Connector PlaceConnector(BoardCoordinate bc1, BoardCoordinate bc2, string type)
+    {
+        board.PlaceConnector(this, bc1, bc2, type);
+        return null;
     }
 }
