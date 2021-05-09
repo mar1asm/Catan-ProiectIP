@@ -10,7 +10,7 @@ public class PlayerManager : MonoBehaviour
 
     void Start()
     {
-        Player test = new Player("test", "abc");
+        /*Player test = new Player("test", "abc");
         test.color = PlayerColor.Blue;
 
         players.Add(test);
@@ -19,7 +19,7 @@ public class PlayerManager : MonoBehaviour
 
         StartCoroutine(WaitForBoardToFinish());
         
-  
+  */
 
 
     }

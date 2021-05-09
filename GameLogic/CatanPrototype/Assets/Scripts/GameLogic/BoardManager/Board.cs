@@ -242,7 +242,7 @@ public class Board
         int colorID = (int)p.color;
         Connector connectorToPlace = GetConnectorFromString(bc1, bc2, type);
 
-        if (playerRoadNetworks[colorID].ContainsKey(bc1) || playerRoadNetworks[colorID].ContainsKey(bc2))// daca macar una din cele doua coordonate face parte din graful playerului
+        /*if (playerRoadNetworks[colorID].ContainsKey(bc1) || playerRoadNetworks[colorID].ContainsKey(bc2))// daca macar una din cele doua coordonate face parte din graful playerului
         {
             List<KeyValuePair<Corner, Corner>> availableConnectors = GetAvailableConnectors(p.color);
             foreach(var conn in availableConnectors)
@@ -251,9 +251,10 @@ public class Board
                     bc2 == conn.Key.coordinate && bc1 == conn.Value.coordinate)
                     return connectorToPlace;//daca coordonatele se gasesc in lista availableConnectors atunci putem pune drumul
             }
-        }
+        }*/
 
-        return null;
+        PlaceConnector(p.color, bc1, bc2);
+        return connectorToPlace;
 
 
         /*

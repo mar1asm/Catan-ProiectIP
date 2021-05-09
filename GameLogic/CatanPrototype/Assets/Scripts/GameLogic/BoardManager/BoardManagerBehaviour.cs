@@ -34,8 +34,11 @@ public class BoardManagerBehaviour : MonoBehaviour
                         ResourceTypes.Any, 3, 1);
 
         InstantiateBoard();
-        
-      
+
+        Player p = new Player("ad", "id",board);
+        p.color = PlayerColor.Blue;
+
+        AddConnector(p, new BoardCoordinate(1.33f, -2.66f), new BoardCoordinate(1.66f, -2.66f), "road");
 
         
        
