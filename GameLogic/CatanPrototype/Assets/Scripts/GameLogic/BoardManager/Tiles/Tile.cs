@@ -29,6 +29,8 @@ public abstract class Tile : ILoadVFX
 
     };
 
+    public ResourceTile resourceTile;
+
     public Corner[] corners = new Corner[6];
 
     //Coordonatele in q si r
