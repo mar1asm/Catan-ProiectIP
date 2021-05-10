@@ -98,10 +98,10 @@ namespace CatanAPI.Controllers
             {
                 return NotFound();
             }
-            userEntry.FirstName = user.FirstName != null ? user.FirstName : userEntry.FirstName;
-            userEntry.LastName = user.LastName != null ? user.LastName : userEntry.LastName;
-            userEntry.Email = user.Email != null ? user.Email : userEntry.Email ;
-            userEntry.UserName = user.UserName != null ? user.UserName : userEntry.UserName;
+            userEntry.FirstName = user.FirstName ?? userEntry.FirstName;
+            userEntry.LastName = user.LastName ?? userEntry.LastName;
+            userEntry.Email = user.Email ?? userEntry.Email;
+            userEntry.UserName = user.UserName ?? userEntry.UserName;
 
             try
             {
