@@ -6,9 +6,10 @@ public class Road : Connector
 {
     public Road(Corner c1, Corner c2) : base(c1,c2)
     {
+
     }
     public override void LoadVFX()
     {
-        throw new System.NotImplementedException();
+        VFX = (GameObject)Resources.Load("GameLogic/Prefabs/Settlements/Road");
     }
 }
