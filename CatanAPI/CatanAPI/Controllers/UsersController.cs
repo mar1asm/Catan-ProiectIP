@@ -37,6 +37,7 @@ namespace CatanAPI.Controllers
                 FirstName = b.FirstName,
                 LastName = b.LastName,
                 Email = b.Email,
+                UserName = b.UserName,
                 Notifications = b.UserNotifications
                 .Select(
                     n => new NotificationDto { NotificationId = n.Id, CreatedAt = n.CreatedAt, Text = n.Notification.Text, Read = n.Read })
@@ -63,6 +64,7 @@ namespace CatanAPI.Controllers
                     Id = entry.Id,
                     FirstName = entry.FirstName,
                     LastName = entry.LastName,
+                    UserName = entry.UserName,
                     Email = entry.Email,
                     Notifications = entry.UserNotifications
                     .Select(
