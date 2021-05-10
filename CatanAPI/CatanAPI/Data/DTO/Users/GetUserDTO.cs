@@ -1,8 +1,9 @@
+using CatanAPI.Data.DTO.NotificationsDTO;
 using System.Collections.Generic;
 
-namespace CatanAPI.Data.DTO
+namespace CatanAPI.Data.DTO.UsersDTO
 {
-    public class UserDto
+    public class GetUserDTO
     {
         public string Id { get; set; }
         public string FirstName { get; set; }

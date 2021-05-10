@@ -1,5 +1,5 @@
 using System;
-namespace CatanAPI.Data.DTO
+namespace CatanAPI.Data.DTO.NotificationsDTO
 {
     public class NotificationDto
     {

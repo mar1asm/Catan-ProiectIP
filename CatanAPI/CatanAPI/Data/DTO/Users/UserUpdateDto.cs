@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace CatanAPI.Data.DTO
+namespace CatanAPI.Data.DTO.UsersDTO
 {
     public class UserUpdateDto
     {
