@@ -35,7 +35,7 @@ public abstract class Building
         {
             if (c is ResourceCard) // trebuie vazut daca intra vreodata pe if ul asta 
             {
-                
+                Debug.Log("intra aicea merge Ieiii bucurie mare !!!!!!");
 
                 switch (((ResourceCard)c).CardType)
                 {

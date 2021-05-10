@@ -40,6 +40,8 @@ public class RoadCost : Building
     }
     public RoadCost()
     {
+        cost = new CraftingCost();
+        cost.resourcesRequired = new Dictionary<ResourceTypes, int>();
         cost.resourcesRequired.Add(ResourceTypes.Wood, 1);
         cost.resourcesRequired.Add(ResourceTypes.Brick, 1);
     }
