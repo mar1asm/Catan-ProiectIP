@@ -41,8 +41,7 @@ namespace CatanAPI
                 var dbName = Configuration["ConnectionStrings:InMemory"];
                 services.AddDbContext<CatanAPIDbContext>(options => options.UseInMemoryDatabase(dbName));
             }
-            // Temporary, for testing purposes we keep an InMemoryDatabase with no persistence to avoid setting up a PostgreSQL Database
-            
+            services.AddScoped<CatanAPIDbContext>();
             services.AddMvc();
             services.AddHttpContextAccessor();
             services.AddControllers();
