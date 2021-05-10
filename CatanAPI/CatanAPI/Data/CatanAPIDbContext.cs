@@ -52,7 +52,7 @@ namespace CatanAPI.Data
                                        .WithMany(entry => entry.GameSessionUsers),
                      gameSessionUserBuilder =>
                      {
-                         gameSessionUserBuilder.Property(gameSessionUser => gameSessionUser.Status).HasDefaultValue(GameSessionStatus.Pending);
+                         gameSessionUserBuilder.Property(gameSessionUser => gameSessionUser.Status).HasDefaultValue(GameSessionUserStatus.Pending);
                          gameSessionUserBuilder.Property(gameSessionUser => gameSessionUser.SessionRoles).HasDefaultValue(GameSessionRoles.GameUser);
                          gameSessionUserBuilder.HasKey(gameSessionUser => new { gameSessionUser.UserId, gameSessionUser.GameSessionId });
                      }
