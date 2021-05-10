@@ -59,7 +59,7 @@ namespace CatanAPI.Controllers
             {
                 return NotFound();
             }
-            if(!gameSession.GameSessionUsers.Any(item => item.User.Id == currentUser.Id))
+            if(!gameSession.GameSessionUsers.Any(item => item.UserId == currentUser.Id))
             {
                 return Unauthorized();
             }
