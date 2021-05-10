@@ -76,7 +76,7 @@ namespace CatanAPI.Controllers
         // POST: api/GameSessions
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<GameSession>> PostGameSession(CreateSessionDto gameSession)
+        public async Task<ActionResult<GetSessionMinDto>> PostGameSession(CreateSessionDto gameSession)
         {
             var currentUser = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
             var session = new GameSession
@@ -100,7 +100,12 @@ namespace CatanAPI.Controllers
             });
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetGameSession", new { id = session.Id }, session);
+            return CreatedAtAction("GetGameSession", new { id = session.Id }, new GetSessionMinDto 
+            { 
+                Id = session.Id, 
+                CreatedAt = session.CreatedAt, 
+                Status = session.Status 
+            });
         }
 
         // DELETE: api/GameSessions/5
