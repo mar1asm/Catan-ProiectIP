@@ -1,0 +1,172 @@
+Using pre-set license
+Built from '2020.3/release' branch; Version is '2020.3.2f1 (8fd9074bf66c) revision 9427207'; Using compiler version '192528614'; Build Type 'Release'
+OS: 'Windows 10 Home; OS build 18363.1440; Version 1909; 64bit' Language: 'ro' Physical Memory: 8076 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 0
+
+ COMMAND LINE ARGUMENTS:
+C:\Program Files\Unity\Editor\Unity.exe
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker1
+-projectPath
+C:/Users/Alexandra/Documents/GitHub/Catan-ProiectIP/CatanPrototype
+-logFile
+Logs/AssetImportWorker1.log
+-srvPort
+51116
+Successfully changed project path to: C:/Users/Alexandra/Documents/GitHub/Catan-ProiectIP/CatanPrototype
+C:/Users/Alexandra/Documents/GitHub/Catan-ProiectIP/CatanPrototype
+Using Asset Import Pipeline V2.
+Refreshing native plugins compatible for Editor in 33.86 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2020.3.2f1 (8fd9074bf66c)
+[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path C:/Users/Alexandra/Documents/GitHub/Catan-ProiectIP/CatanPrototype/Assets
+GfxDevice: creating device client; threaded=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.0]
+    Renderer: NVIDIA GeForce 940MX (ID=0x134d)
+    Vendor:   
+    VRAM:     2010 MB
+    Driver:   27.21.14.5167
+Initialize mono
+Mono path[0] = 'C:/Program Files/Unity/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files/Unity/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
+Mono config path = 'C:/Program Files/Unity/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56832
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/Unity/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.002208 seconds.
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 30.84 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.306 seconds
+Platform modules already initialized, skipping
+Registering precompiled user dll's ...
+Registered in 0.000858 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.29 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.329 seconds
+Platform modules already initialized, skipping
+========================================================================
+Worker process is ready to serve import requests
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.15 seconds
+Refreshing native plugins compatible for Editor in 0.52 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1163 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 60.3 MB.
+System memory in use after: 60.4 MB.
+
+Unloading 9 unused Assets to reduce memory usage. Loaded Objects now: 1607.
+Total: 2.527600 ms (FindLiveObjects: 0.183900 ms CreateObjectMapping: 0.053000 ms MarkObjects: 2.189800 ms  DeleteObjects: 0.099500 ms)
+
+========================================================================
+Received Import Request.
+  path: Assets/Scripts/GameLogic/Turn Manager/TurnManagerBehaviour.cs
+  artifactKey: Guid(4414f4863faafe04e9eaf9cc207670f5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/GameLogic/Turn Manager/TurnManagerBehaviour.cs using Guid(4414f4863faafe04e9eaf9cc207670f5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9f271aa122a3b39b50d209a843e8c05f') in 0.200746 seconds
+  Import took 0.289902 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000256 seconds.
+  path: Assets/Scripts/BoardManager/BoardManagerBehaviour.cs
+  artifactKey: Guid(965afa8591905ea44af5ec5e95bb20a9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/BoardManager/BoardManagerBehaviour.cs using Guid(965afa8591905ea44af5ec5e95bb20a9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '75b3eba63f8aa74c65b496bd3771fa3f') in 0.008153 seconds
+  Import took 0.072721 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 208.776642 seconds.
+  path: Assets/Scripts/BoardManager/ResourceTypes.cs
+  artifactKey: Guid(b963d26f5aac7fb4995d3567a1f6ef0c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/BoardManager/ResourceTypes.cs using Guid(b963d26f5aac7fb4995d3567a1f6ef0c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '781115044b9ed65a449d7e69a1a84642') in 0.022548 seconds
+  Import took 0.040999 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 12.846590 seconds.
+  path: Assets/Scripts/BoardManager/BoardBehaviour.cs
+  artifactKey: Guid(9cb34af83a7f10a4585b8f446ccbb707) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/BoardManager/BoardBehaviour.cs using Guid(9cb34af83a7f10a4585b8f446ccbb707) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ace82da3449390b7f2320ee192b030fe') in 0.030605 seconds
+  Import took 0.041591 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 10.622671 seconds.
+  path: Assets/Scripts/BoardManager/GameDescriber.cs
+  artifactKey: Guid(b74f2b9176b06904984753feef55374f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/BoardManager/GameDescriber.cs using Guid(b74f2b9176b06904984753feef55374f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '801b43a8924d24bce703062c875652b6') in 0.024710 seconds
+  Import took 0.028584 seconds .
+
+========================================================================
+Received Prepare
+Trying to reload asset but can't find object on disk
+
+Trying to reload asset but can't find object on disk
+
+Trying to reload asset but can't find object on disk
+
+Trying to reload asset but can't find object on disk
+
+Trying to reload asset but can't find object on disk
+
+Trying to reload asset but can't find object on disk
+
+Trying to reload asset but can't find object on disk
+
+Trying to reload asset but can't find object on disk
+
+Trying to reload asset but can't find object on disk
+
+Trying to reload asset but can't find object on disk
+
+Trying to reload asset but can't find object on disk
+
+Trying to reload asset but can't find object on disk
+
+Trying to reload asset but can't find object on disk
+
+Trying to reload asset but can't find object on disk
+
+Trying to reload asset but can't find object on disk
+
+Trying to reload asset but can't find object on disk
+
+Trying to reload asset but can't find object on disk
+
+Registering precompiled user dll's ...
+Registered in 0.001067 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 1.03 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  2.591 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.82 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1109 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 58.2 MB.
+System memory in use after: 58.3 MB.
+
+Unloading 38 unused Assets to reduce memory usage. Loaded Objects now: 1577.
+Total: 11.659300 ms (FindLiveObjects: 0.885700 ms CreateObjectMapping: 0.181800 ms MarkObjects: 10.442500 ms  DeleteObjects: 0.145500 ms)
+
+AssetImportWorkerClient::OnTransportError - code=2 error=End of file
