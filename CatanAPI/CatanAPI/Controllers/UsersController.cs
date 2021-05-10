@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using CatanAPI.Models;
-using CatanAPI.Data;
-using CatanAPI.Data.DTO;
-using CatanAPI.Models.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
+
+using CatanAPI.Models;
+using CatanAPI.Data;
+using CatanAPI.Data.DTO.NotificationsDTO;
+using CatanAPI.Data.DTO.UsersDTO;
 
 namespace CatanAPI.Controllers
 {
@@ -29,9 +29,9 @@ namespace CatanAPI.Controllers
 
         // GET: api/Users
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<GetUserDTO>>> GetUsers()
         {
-            var users = await _context.Users.Select(b => new UserDto
+            var users = await _context.Users.Select(b => new GetUserDTO
             {
                 Id = b.Id,
                 FirstName = b.FirstName,
@@ -48,7 +48,7 @@ namespace CatanAPI.Controllers
         // GET: api/Users/5
         [Authorize]
         [HttpGet("{id}")]
-        public async Task<ActionResult<UserDto>> GetUser(string id)
+        public async Task<ActionResult<GetUserDTO>> GetUser(string id)
         {
             var currentUser = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
             if(id != currentUser.Id)
@@ -58,7 +58,7 @@ namespace CatanAPI.Controllers
             var user = await _context
                 .Users.
                 Select(entry => 
-                new UserDto
+                new GetUserDTO
                     {
                     Id = entry.Id,
                     FirstName = entry.FirstName,
