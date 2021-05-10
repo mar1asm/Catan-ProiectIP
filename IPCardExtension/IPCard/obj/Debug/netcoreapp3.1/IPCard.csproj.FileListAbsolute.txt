@@ -1,0 +1,13 @@
+D:\IP-Project\IPCard\IPCard\bin\Debug\netcoreapp3.1\IPCard.exe
+D:\IP-Project\IPCard\IPCard\bin\Debug\netcoreapp3.1\IPCard.deps.json
+D:\IP-Project\IPCard\IPCard\bin\Debug\netcoreapp3.1\IPCard.runtimeconfig.json
+D:\IP-Project\IPCard\IPCard\bin\Debug\netcoreapp3.1\IPCard.runtimeconfig.dev.json
+D:\IP-Project\IPCard\IPCard\bin\Debug\netcoreapp3.1\IPCard.dll
+D:\IP-Project\IPCard\IPCard\bin\Debug\netcoreapp3.1\IPCard.pdb
+D:\IP-Project\IPCard\IPCard\obj\Debug\netcoreapp3.1\IPCard.csprojAssemblyReference.cache
+D:\IP-Project\IPCard\IPCard\obj\Debug\netcoreapp3.1\IPCard.csproj.CoreCompileInputs.cache
+D:\IP-Project\IPCard\IPCard\obj\Debug\netcoreapp3.1\IPCard.AssemblyInfoInputs.cache
+D:\IP-Project\IPCard\IPCard\obj\Debug\netcoreapp3.1\IPCard.AssemblyInfo.cs
+D:\IP-Project\IPCard\IPCard\obj\Debug\netcoreapp3.1\IPCard.dll
+D:\IP-Project\IPCard\IPCard\obj\Debug\netcoreapp3.1\IPCard.pdb
+D:\IP-Project\IPCard\IPCard\obj\Debug\netcoreapp3.1\IPCard.genruntimeconfig.cache
