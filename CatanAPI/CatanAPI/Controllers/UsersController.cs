@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using CatanAPI.Models;
-using CatanAPI.Data;
-using CatanAPI.Data.DTO;
-using CatanAPI.Models.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
+
+using CatanAPI.Models;
+using CatanAPI.Data;
+using CatanAPI.Data.DTO.NotificationsDTO;
+using CatanAPI.Data.DTO.UsersDTO;
 
 namespace CatanAPI.Controllers
 {
@@ -29,14 +29,15 @@ namespace CatanAPI.Controllers
 
         // GET: api/Users
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<GetUserDTO>>> GetUsers()
         {
-            var users = await _context.Users.Select(b => new UserDto
+            var users = await _context.Users.Select(b => new GetUserDTO
             {
                 Id = b.Id,
                 FirstName = b.FirstName,
                 LastName = b.LastName,
                 Email = b.Email,
+                UserName = b.UserName,
                 Notifications = b.UserNotifications
                 .Select(
                     n => new NotificationDto { NotificationId = n.Id, CreatedAt = n.CreatedAt, Text = n.Notification.Text, Read = n.Read })
@@ -48,7 +49,7 @@ namespace CatanAPI.Controllers
         // GET: api/Users/5
         [Authorize]
         [HttpGet("{id}")]
-        public async Task<ActionResult<UserDto>> GetUser(string id)
+        public async Task<ActionResult<GetUserDTO>> GetUser(string id)
         {
             var currentUser = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
             if(id != currentUser.Id)
@@ -58,11 +59,12 @@ namespace CatanAPI.Controllers
             var user = await _context
                 .Users.
                 Select(entry => 
-                new UserDto
+                new GetUserDTO
                     {
                     Id = entry.Id,
                     FirstName = entry.FirstName,
                     LastName = entry.LastName,
+                    UserName = entry.UserName,
                     Email = entry.Email,
                     Notifications = entry.UserNotifications
                     .Select(
@@ -96,10 +98,10 @@ namespace CatanAPI.Controllers
             {
                 return NotFound();
             }
-            userEntry.FirstName = user.FirstName != null ? user.FirstName : userEntry.FirstName;
-            userEntry.LastName = user.LastName != null ? user.LastName : userEntry.LastName;
-            userEntry.Email = user.Email != null ? user.Email : userEntry.Email ;
-            userEntry.UserName = user.UserName != null ? user.UserName : userEntry.UserName;
+            userEntry.FirstName = user.FirstName ?? userEntry.FirstName;
+            userEntry.LastName = user.LastName ?? userEntry.LastName;
+            userEntry.Email = user.Email ?? userEntry.Email;
+            userEntry.UserName = user.UserName ?? userEntry.UserName;
 
             try
             {
@@ -133,7 +135,7 @@ namespace CatanAPI.Controllers
 
         // DELETE: api/Users/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(int id)
+        public async Task<IActionResult> DeleteUser(string id)
         {
             var user = await _context.Users.FindAsync(id);
             if (user == null)

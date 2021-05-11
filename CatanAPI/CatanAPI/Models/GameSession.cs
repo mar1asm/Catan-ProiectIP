@@ -13,7 +13,7 @@ namespace CatanAPI.Models
     public class GameSession
     {
         public int Id { get; set; }
-        public int Status { get; set; }
+        public GameSessionStatus Status { get; set; }
         public DateTime CreatedAt { get; set; }
 
         public ICollection<Extension> Extensions { get; set; }

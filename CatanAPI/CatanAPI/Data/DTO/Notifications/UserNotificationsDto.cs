@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace CatanAPI.Data.DTO
+namespace CatanAPI.Data.DTO.NotificationsDTO
 {
     public class UserNotificationsDto
     {

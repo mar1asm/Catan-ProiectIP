@@ -17,8 +17,8 @@ namespace CatanAPI.Models
     }
     public class GameSessionUser
     {
-        public int SessionRoles { get; set; }
-        public int Status { get; set; }
+        public GameSessionRoles SessionRoles { get; set; }
+        public GameSessionUserStatus Status { get; set; }
         
 
         public string UserId { get; set; }
