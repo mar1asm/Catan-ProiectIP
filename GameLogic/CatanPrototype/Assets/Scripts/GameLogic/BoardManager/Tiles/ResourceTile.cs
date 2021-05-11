@@ -57,7 +57,7 @@ public abstract class ResourceTile : Tile
     {
         for(int i = 0; i < 6; ++i)
         {
-            corners[i].ActivateSettlement();
+            corners[i].ActivateSettlement(resourceType);
         }
     }
 }
