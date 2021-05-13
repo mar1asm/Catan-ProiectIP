@@ -16,6 +16,7 @@ public abstract class Settlement
         set
         {
             _owner = value;
+            //VFX.GetComponent<ChangingColorBehaviour>().UpdateColor(_owner);
             //O sa trebuiasca pus cod aici care sa schimbe culoarea cum trebuie
         }
     }
@@ -44,7 +45,10 @@ public abstract class Settlement
     {
         //give any resources list to the owner
         List<ResourceTypes> l =new List<ResourceTypes>();
-        l.Add(resourceType); //nu stiu de unde as putea lua tipul de resursa -Alexandra
+        for(int i = 0; i < GetNumberOfResources(); ++i)
+        {
+            l.Add(resourceType);
+        }
         _owner.GetResources(l);
     }
 

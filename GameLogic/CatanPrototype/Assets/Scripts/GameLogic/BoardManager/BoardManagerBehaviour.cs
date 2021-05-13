@@ -22,13 +22,16 @@ public class BoardManagerBehaviour : MonoBehaviour
     [SerializeField]
     private Board board;
 
-    //E o variabila folosita doar la testare, nu are relevanta in viitor
-    
 
-    //Dictionary<Vector2, GameObject> board = new Dictionary<Vector2, GameObject>();
+  
+    private float deltaY = 0.002003f * 5751.438f * 0.3f;
+
+
 
     void Start()
     {
+        //deltaY = 0.002003f * 5751.438f * 0.3f;
+    
         InitializeBoardFromFile("GameLogic/inimioara");
         /*board.PlacePort(new Corner(new BoardCoordinate(1.33f, -2.66f)),
                         new Corner(new BoardCoordinate(0.66f, -2.33f)),
@@ -36,7 +39,17 @@ public class BoardManagerBehaviour : MonoBehaviour
         */
         InstantiateBoard();
 
-        Player pBlue = new Player("ad", "id",board);
+
+        Player p = new Player("test", "123");
+
+        p.color = PlayerColor.Red;
+
+        AddSettlement(p, new BoardCoordinate(1.33f, -2.66f), "city");
+        AddConnector(p, new BoardCoordinate(1.33f, -2.66f), new BoardCoordinate(0.66f, -2.33f), "road");
+        
+       
+
+        Player pBlue = new Player("ad", "id");
         pBlue.color = PlayerColor.Blue;
 
         //AddConnector(pBlue, new BoardCoordinate(1.33f, -2.66f), new BoardCoordinate(1.66f, -2.33f), "road");
@@ -45,7 +58,7 @@ public class BoardManagerBehaviour : MonoBehaviour
         //AddConnector(pBlue, new BoardCoordinate(2.66f, -2.33f), new BoardCoordinate(2.33f, -1.67f), "road");
         //AddConnector(pBlue, new BoardCoordinate(2.33f, -1.67f), new BoardCoordinate(2.66f, -1.33f), "road");
 
-        Player pRed = new Player("da", "id2", board);
+        Player pRed = new Player("da", "id2");
         pRed.color = PlayerColor.Red;
 
 
@@ -64,8 +77,7 @@ public class BoardManagerBehaviour : MonoBehaviour
         AddConnector(pRed, new BoardCoordinate(-0.33f, -1.33f), new BoardCoordinate(-0.66f, -1.67f), "road");
 
 
-        Debug.Log("culoarea: "+board.CheckLongestRoad());        
-
+        Debug.Log("culoarea: " + board.CheckLongestRoad());        
 
 
 
@@ -173,8 +185,11 @@ public class BoardManagerBehaviour : MonoBehaviour
         //made by jon
         Settlement settlement = board.PlaceSettlement(p,coordinate, type);
         Vector3 position = settlement.corner.coordinate.ToWorldSpace();
+        position.y += deltaY;
         GameObject gameobj = Instantiate(settlementPrefab, position, Quaternion.identity, transform);
+        settlement.owner = p;
         gameobj.GetComponent<SettlementBehaviour>().settlement = settlement;
+        
 
     }
 
@@ -206,10 +221,12 @@ public class BoardManagerBehaviour : MonoBehaviour
 
         Connector connector = board.PlaceConnector(p,bc1,bc2,type);
         Vector3 position = connector.middle.ToWorldSpace();
+
+        position.y += deltaY; 
         Quaternion rotation = connector.rotation;
         GameObject gameobj = Instantiate(connectorPrefab, position, rotation, transform);
-        //gameobj.GetComponent<ConnectorBehaviour>().connector = connector;
-
+        connector.owner = p;
+        gameobj.GetComponent<ConnectorBehaviour>().connector = connector;
     }
 
 
@@ -223,13 +240,17 @@ public class BoardManagerBehaviour : MonoBehaviour
             Debug.Log(entry.Value.GetTypeAsString());
             GameObject tile = Instantiate(tilePrefab, position, Quaternion.identity, transform);
             tile.GetComponent<TileBehaviour>().tile = entry.Value;
+            if(entry.Value is ResourceTile)
+            {
+                ((ResourceTile)entry.Value).numberTileValue = 12;
+            }
         }
 
         foreach(KeyValuePair<BoardCoordinate, Corner> entry in board.corners)
         {
            // Debug.Log(entry.Key.q + " " + entry.Key.r);
             Vector3 position = entry.Key.ToWorldSpace();
-            position.y += 0.3f;
+            position.y += deltaY;
             GameObject corner = Instantiate(cornerPrefab, position, Quaternion.identity, transform);
             corner.GetComponent<CornerBehaviour>().corner = entry.Value;
         }
