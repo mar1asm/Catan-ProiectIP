@@ -53,6 +53,21 @@ public class BoardManagerBehaviour : MonoBehaviour
     }
 
 
+    public void GiveResources(int nr)
+    {
+        // Debug.Log("Jucatorii care au asezari pe" + nr + "primesc resurse.");
+
+        foreach (KeyValuePair<BoardCoordinate, Tile> entry in board.tiles)
+        {
+            if (entry.Value is ResourceTile)
+                if(((ResourceTile)entry.Value).numberTileValue == nr)
+                  entry.Value.SpecialAction();
+        }
+
+    }
+
+
+
     /// <summary>
     /// Lista de trade-uri posibile din port-urile construite de jucator
     /// </summary>

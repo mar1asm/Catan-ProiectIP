@@ -17,9 +17,9 @@ public class Corner
     /// <summary>
     /// Activeaza efectul settlementului din acest colt
     /// </summary>
-    public void ActivateSettlement()
+    public void ActivateSettlement( ResourceTypes resourceType)
     {
         if (settlement == null) return;
-        settlement.GenerateResources();
+        settlement.GenerateResources(resourceType);
     }
 }

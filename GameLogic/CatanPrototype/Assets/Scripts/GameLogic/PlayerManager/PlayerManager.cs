@@ -15,7 +15,6 @@ public class PlayerManager : MonoBehaviour
 
         players.Add(test);
 
-
         test.deck.add(new SheepCard(1, ResourceTypes.Sheep));
         test.deck.add(new SheepCard(1, ResourceTypes.Sheep));
         test.deck.add(new SheepCard(1, ResourceTypes.Sheep));
@@ -34,9 +33,7 @@ public class PlayerManager : MonoBehaviour
         Debug.Log("Cate carti are?" + test.deck.Cards.Count);
         //StartCoroutine(WaitForBoardToFinish());
         
-  
-
-
+ 
     }
 
     /// <summary>
@@ -76,5 +73,6 @@ public class PlayerManager : MonoBehaviour
     {
         players.Remove(p);
     }
+   
 
 }
