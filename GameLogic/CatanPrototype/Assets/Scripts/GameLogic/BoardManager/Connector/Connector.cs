@@ -47,6 +47,7 @@ public abstract class Connector
     {
         this.corners[0] = c1;
         this.corners[1] = c2;
+        LoadVFX();
         //middle = (c1.coordinate + c2.coordinate) / 2;
         //middle = media(c1.coordinate + c2.coordinate);
     }

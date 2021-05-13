@@ -67,7 +67,6 @@ public class Board
     /// <param name="color"></param>
     /// <param name="corner1"></param>
     /// <param name="corner2"></param>
-    //---------------------------------------DE SCHIMBAT NUMELE LA FCT ASTA !!! -----------------------------
     public void PlaceConnector(PlayerColor color, Corner corner1, Corner corner2)
     {
         BoardCoordinate bc1 = corner1.coordinate;
@@ -82,7 +81,7 @@ public class Board
     /// <param name="color"></param>
     /// <param name="bc1"></param>
     /// <param name="bc2"></param>
-    //---------------------------------------DE SCHIMBAT NUMELE LA FCT ASTA !!! -----------------------------
+    
     private void PlaceConnector(PlayerColor color, BoardCoordinate bc1, BoardCoordinate bc2)
     {
         int networkIndex = (int)color;
@@ -111,7 +110,7 @@ public class Board
         {
             network[bc2].Add(bc1);
         }
-        //aici nu trebuie pus network in playerRoadNetworks[networkIndex]?? ? ? ? ? ?  ? ? ?
+        
     }
     
     private string ExtractRandomTileType()
@@ -229,7 +228,6 @@ public class Board
         {
 
             corners[boardCoordinate].settlement = settlementToPlace;
-            Debug.Log("Am pus");
             return settlementToPlace;
         }
 
@@ -243,18 +241,20 @@ public class Board
         int colorID = (int)p.color;
         Connector connectorToPlace = GetConnectorFromString(bc1, bc2, type);
 
-        if (playerRoadNetworks[colorID].ContainsKey(bc1) || playerRoadNetworks[colorID].ContainsKey(bc2))// daca macar una din cele doua coordonate face parte din graful playerului
-        {
-            List<KeyValuePair<Corner, Corner>> availableConnectors = GetAvailableConnectors(p.color);
-            foreach(var conn in availableConnectors)
-            {
-                if (bc1 == conn.Key.coordinate && bc2 == conn.Value.coordinate ||
-                    bc2 == conn.Key.coordinate && bc1 == conn.Value.coordinate)
-                    return connectorToPlace;//daca coordonatele se gasesc in lista availableConnectors atunci putem pune drumul
-            }
-        }
+        //if (playerRoadNetworks[colorID].ContainsKey(bc1) || playerRoadNetworks[colorID].ContainsKey(bc2))// daca macar una din cele doua coordonate face parte din graful playerului
+        //{
+        //    List<KeyValuePair<Corner, Corner>> availableConnectors = GetAvailableConnectors(p.color);
+        //    foreach(var conn in availableConnectors)
+        //    {
+        //        if (bc1 == conn.Key.coordinate && bc2 == conn.Value.coordinate ||
+        //            bc2 == conn.Key.coordinate && bc1 == conn.Value.coordinate)
+        //            return connectorToPlace;//daca coordonatele se gasesc in lista availableConnectors atunci putem pune drumul
+        //    }
+        //}
 
-        return null;
+
+        PlaceConnector(p.color, bc1, bc2);
+        return connectorToPlace;
 
 
         /*
@@ -373,20 +373,20 @@ public class Board
         {
             case "road":
                 {
-                    Corner c1 = new Corner(bc1);
-                    Corner c2 = new Corner(bc2);
+                    Corner c1 = corners[bc1];
+                    Corner c2 = corners[bc2];
                     return new Road(c1,c2);
                 }
             case "boat":
                 {
-                    Corner c1 = new Corner(bc1);
-                    Corner c2 = new Corner(bc2);
+                    Corner c1 = corners[bc1];
+                    Corner c2 = corners[bc2];
                     return new Boat(c1, c2);
                 }
             default:
                 {
-                    Corner c1 = new Corner(bc1);
-                    Corner c2 = new Corner(bc2);
+                    Corner c1 = corners[bc1];
+                    Corner c2 = corners[bc2];
                     return new TestConnector(c1,c2);
                 }
         }

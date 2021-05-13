@@ -16,6 +16,7 @@ public abstract class Settlement
         set
         {
             _owner = value;
+            //VFX.GetComponent<ChangingColorBehaviour>().UpdateColor(_owner);
             //O sa trebuiasca pus cod aici care sa schimbe culoarea cum trebuie
         }
     }

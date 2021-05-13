@@ -23,6 +23,6 @@ public class CornerBehaviour : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = new Color(255, 0, 0, 0.5f);
-        Gizmos.DrawWireCube(transform.position + new Vector3(0, 10, 0), new Vector3(10f, 10f, 10f));
+        Gizmos.DrawWireCube(transform.position, new Vector3(2f, 2f, 2f));
     }
 }

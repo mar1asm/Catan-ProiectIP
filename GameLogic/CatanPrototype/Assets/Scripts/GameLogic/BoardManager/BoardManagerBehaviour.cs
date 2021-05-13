@@ -21,22 +21,29 @@ public class BoardManagerBehaviour : MonoBehaviour
     [SerializeField]
     private Board board;
 
-    //E o variabila folosita doar la testare, nu are relevanta in viitor
-    
 
-    //Dictionary<Vector2, GameObject> board = new Dictionary<Vector2, GameObject>();
+  
+    private float deltaY = 0.002003f * 5751.438f * 0.3f;
+
+
 
     void Start()
     {
+        //deltaY = 0.002003f * 5751.438f * 0.3f;
+    
         InitializeBoardFromFile("GameLogic/inimioara");
         board.PlacePort(new Corner(new BoardCoordinate(1.33f, -2.66f)),
                         new Corner(new BoardCoordinate(0.66f, -2.33f)),
                         ResourceTypes.Any, 3, 1);
 
         InstantiateBoard();
-        
-      
 
+        Player p = new Player("test", "123");
+
+        p.color = PlayerColor.Red;
+
+        AddSettlement(p, new BoardCoordinate(1.33f, -2.66f), "city");
+        AddConnector(p, new BoardCoordinate(1.33f, -2.66f), new BoardCoordinate(0.66f, -2.33f), "road");
         
        
         //bounds = hex.GetComponent<Collider>().bounds.size;
@@ -137,8 +144,11 @@ public class BoardManagerBehaviour : MonoBehaviour
         //made by jon
         Settlement settlement = board.PlaceSettlement(p,coordinate, type);
         Vector3 position = settlement.corner.coordinate.ToWorldSpace();
+        position.y += deltaY;
         GameObject gameobj = Instantiate(settlementPrefab, position, Quaternion.identity, transform);
+        settlement.owner = p;
         gameobj.GetComponent<SettlementBehaviour>().settlement = settlement;
+        
 
     }
 
@@ -167,8 +177,11 @@ public class BoardManagerBehaviour : MonoBehaviour
     {
         //made by jon
         Connector connector = board.PlaceConnector(p,bc1,bc2,type);
-        Vector3 position = connector.middle.ToWorldSpace();// aici nu trebuie sa fie diferita aceasta adaugare?
-        GameObject gameobj = Instantiate(connectorPrefab, position, Quaternion.identity, transform);
+        Vector3 position = connector.middle.ToWorldSpace();
+        position.y += deltaY; 
+        Quaternion rotation = connector.rotation;
+        GameObject gameobj = Instantiate(connectorPrefab, position, rotation, transform);
+        connector.owner = p;
         gameobj.GetComponent<ConnectorBehaviour>().connector = connector;
 
     }
@@ -190,7 +203,7 @@ public class BoardManagerBehaviour : MonoBehaviour
         {
            // Debug.Log(entry.Key.q + " " + entry.Key.r);
             Vector3 position = entry.Key.ToWorldSpace();
-            position.y += 0.3f;
+            position.y += deltaY;
             GameObject corner = Instantiate(cornerPrefab, position, Quaternion.identity, transform);
             corner.GetComponent<CornerBehaviour>().corner = entry.Value;
         }
