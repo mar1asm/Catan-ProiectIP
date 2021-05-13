@@ -212,6 +212,10 @@ public class BoardManagerBehaviour : MonoBehaviour
             Debug.Log(entry.Value.GetTypeAsString());
             GameObject tile = Instantiate(tilePrefab, position, Quaternion.identity, transform);
             tile.GetComponent<TileBehaviour>().tile = entry.Value;
+            if(entry.Value is ResourceTile)
+            {
+                ((ResourceTile)entry.Value).numberTileValue = 12;
+            }
         }
 
         foreach(KeyValuePair<BoardCoordinate, Corner> entry in board.corners)
