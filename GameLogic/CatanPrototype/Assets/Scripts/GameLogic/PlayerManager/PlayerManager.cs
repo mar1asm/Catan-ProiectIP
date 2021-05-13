@@ -10,7 +10,7 @@ public class PlayerManager : MonoBehaviour
 
     void Start()
     {
-        /*Player test = new Player("test", "abc");
+        Player test = new Player("test", "abc");
         test.color = PlayerColor.Blue;
 
         players.Add(test);
@@ -18,7 +18,7 @@ public class PlayerManager : MonoBehaviour
         test.deck.add(new SheepCard(1, ResourceTypes.Sheep));
         test.deck.add(new SheepCard(1, ResourceTypes.Sheep));
         test.deck.add(new SheepCard(1, ResourceTypes.Sheep));
-        */
+        
 
 
         Trade t = new Trade(true);
