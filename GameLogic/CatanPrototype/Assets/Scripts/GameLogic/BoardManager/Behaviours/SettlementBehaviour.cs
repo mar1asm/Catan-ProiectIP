@@ -1,26 +1,26 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ConnectorBehaviour : MonoBehaviour
+public class SettlementBehaviour : MonoBehaviour
 {
-    private Connector _connector;
 
-    public Connector connector
+    private Settlement _settlement;
+    public Settlement settlement
     {
         get
         {
-            return _connector;
+            return _settlement;
         }
 
         set
         {
-            _connector = value;
+            _settlement = value;
             CleanVFX();
-            _connector.AddVFX2Object(transform.GetChild(0).gameObject);
+            GameObject vfx = _settlement.AddVFX2Object(transform.GetChild(0).gameObject);
+            vfx.GetComponent<ChangingColorBehaviour>().UpdateColor(_settlement.owner);
         }
     }
-
 
     private void CleanVFX()
     {

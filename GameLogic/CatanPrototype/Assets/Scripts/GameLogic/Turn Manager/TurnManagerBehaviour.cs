@@ -64,22 +64,11 @@ public class TurnManagerBehaviour : MonoBehaviour
         dice1 = RollDice();
         dice2=RollDice();
         number = dice1 + dice2; //Zarul 1 +Zarul 2     
-        number = 5;
+  
        // GiveResources(number);//jucatorii primesc resursele daca au asezari pe regiunea cu numarul picat
     }
     
-   
-    public void GiveResources(int nr)
-    {
-        Debug.Log("Jucatorii care au asezari pe" + nr + "primesc resurse.");
-        
-       /* foreach (KeyValuePair<BoardCoordinate, Tile> entry in board.tiles)
-        {
-            if (entry.Value.tile.number == nr && entry.Value is ResourceTypes)
-                tile.SpecialAction();       
-        }*/
-
-    }
+  
    
     //returneaza numarul jucatorului care urmeaza 
     public int  Next()

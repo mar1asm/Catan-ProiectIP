@@ -10,15 +10,16 @@ public class PlayerManager : MonoBehaviour
 
     void Start()
     {
-        Player test = new Player("test", "abc");
+        /*Player test = new Player("test", "abc");
         test.color = PlayerColor.Blue;
 
         players.Add(test);
 
+        test.deck.add(new SheepCard(1, ResourceTypes.Sheep));
+        test.deck.add(new SheepCard(1, ResourceTypes.Sheep));
+        test.deck.add(new SheepCard(1, ResourceTypes.Sheep));
+        */
 
-        test.deck.add(new SheepCard(1, ResourceTypes.Sheep));
-        test.deck.add(new SheepCard(1, ResourceTypes.Sheep));
-        test.deck.add(new SheepCard(1, ResourceTypes.Sheep));
 
         Trade t = new Trade(true);
         t.AddResourceNeeded(ResourceTypes.Sheep);
@@ -27,6 +28,7 @@ public class PlayerManager : MonoBehaviour
 
         TradeManagerBehaviour tmb = GameObject.Find("Trade Manager").GetComponent<TradeManagerBehaviour>();
 
+
         Debug.Log(tmb.PlayerSatisfiesTradeRequirements(test, t));
 
         test.PayResources(t.resourcesNeeded);
@@ -34,9 +36,7 @@ public class PlayerManager : MonoBehaviour
         Debug.Log("Cate carti are?" + test.deck.Cards.Count);
         //StartCoroutine(WaitForBoardToFinish());
         
-  
-
-
+ 
     }
 
     /// <summary>
@@ -76,5 +76,6 @@ public class PlayerManager : MonoBehaviour
     {
         players.Remove(p);
     }
+   
 
 }

@@ -21,7 +21,6 @@ public class City : Settlement
 
     public override void LoadVFX()
     {
-        //Trebuie adaugata aici incarcarea VFX-ului
-        //(vezi SheepTile pentru un exemplu)
+        VFX = (GameObject)Resources.Load("GameLogic/Prefabs/Settlements/AdvancedCity");
     }
 }
