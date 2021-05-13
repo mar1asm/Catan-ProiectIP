@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class CraftingCost
 {
-    public List<ResourceTypes> resourcesRequired;
+  //  public List<ResourceTypes> resourcesRequired;
 
+   public Dictionary<ResourceTypes,int> resourcesRequired;
+  
+   
 }

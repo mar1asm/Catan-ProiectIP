@@ -24,7 +24,7 @@ public class TileBehaviour : MonoBehaviour
         {
             _tile = value;
             CleanVFX();
-            Debug.Log(_tile.GetTypeAsString());
+            //Debug.Log(_tile.GetTypeAsString());
             _tile.AddVFX2Object(transform.GetChild(0).gameObject);
         }
     }

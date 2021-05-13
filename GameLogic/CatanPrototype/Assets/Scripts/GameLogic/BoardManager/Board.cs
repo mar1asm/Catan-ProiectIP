@@ -118,6 +118,7 @@ public class Board
         int index = Random.Range(0, availableTileTypes.Count);
         string tileType = availableTileTypes[index];
         availableTileTypes.RemoveAt(index);
+        Debug.Log("Random tile chosen : " + tileType);
         return tileType;
     }
 

@@ -21,6 +21,7 @@ public abstract class Connector
 
     public Corner[] corners = new Corner[2];
 
+
     public BoardCoordinate middle
     {
         get
