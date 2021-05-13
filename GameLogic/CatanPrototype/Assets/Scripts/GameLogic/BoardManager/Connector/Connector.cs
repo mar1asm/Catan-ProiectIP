@@ -21,7 +21,9 @@ public abstract class Connector
 
     public Corner[] corners = new Corner[2];
 
-    public BoardCoordinate middle {
+
+    public BoardCoordinate middle
+    {
         get
         {
             return (corners[0].coordinate + corners[1].coordinate) / 2;
@@ -43,7 +45,7 @@ public abstract class Connector
         }
     }
 
-    protected Connector(Corner c1,Corner c2)
+    protected Connector(Corner c1, Corner c2)
     {
         this.corners[0] = c1;
         this.corners[1] = c2;

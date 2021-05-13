@@ -110,7 +110,6 @@ public class Board
         {
             network[bc2].Add(bc1);
         }
-        
     }
     
     private string ExtractRandomTileType()
@@ -206,6 +205,98 @@ public class Board
 
     }
 
+
+    public int CheckLongestRoad()
+    {
+        //returneaza numarul culorii jucatorului care are cel mai lung drum
+        //made by jon
+                                       
+        int maxLength = 4;
+        int longestRoadColor = -1;
+        for (int i = 0; i < (int)PlayerColor.NbOfColors; ++i)
+        {
+
+            int playerMaxLength = PlayerLongestRoad(i);
+            if (playerMaxLength > maxLength)
+            {
+                maxLength = playerMaxLength;
+                longestRoadColor = i;
+            }
+        }
+        Debug.Log("lungimea"+ maxLength);
+        return longestRoadColor;
+    }
+
+    private int maxFromBkt;//variabila ce ne va ajuta la determinatea celui mai lung drum pornind dint-o anumita coodonata
+    
+
+    private int PlayerLongestRoad(int color)
+    {
+        //made by jon
+        //calculeaza lungimea celui mai lung al jucatorului cu culoarea color
+        int maxLength = 4;
+
+        foreach (var iterator in playerRoadNetworks[color])
+        {
+            //reinitializam maxFromBkt pt ca calculam lungimea drumului din alta coordonata
+            maxFromBkt = 4;
+
+            // vectorul care contine drumurile prin care am trecut in 
+            // determinarea celui mai lung drum
+            Dictionary<BoardCoordinate, BoardCoordinate>[] CheckedRoads = new Dictionary<BoardCoordinate, BoardCoordinate>[20];
+
+            for (int i = 0; i < 20; ++i)
+                CheckedRoads[i] = new Dictionary<BoardCoordinate, BoardCoordinate>();
+
+
+            BktRoad(iterator.Key, 0, color, CheckedRoads);// functia care pune in maxFromBkt lungimea celui mai lung drum ponind din iterator.Key
+            
+            if (maxFromBkt > maxLength)
+                maxLength = maxFromBkt;
+        }
+        return maxLength;
+    }
+
+    private void BktRoad(BoardCoordinate bc, int length, int color, Dictionary<BoardCoordinate, BoardCoordinate>[] CheckedRoads)
+    {
+        //made by jon
+        //calculeaza lungimea celui mai lung drum pornind din bc
+
+        foreach (var iterator in playerRoadNetworks[color][bc])
+        {
+            bool roadIsNotChecked = true;
+            if (length != 0)
+                for (int i = 0; i < length; ++i)
+                {
+                    if (CheckedRoads[i].ContainsKey(bc))
+                        if (CheckedRoads[i][bc] == iterator)
+                        {
+                            roadIsNotChecked = false;   //drumul "bc-iterator" e deja parcurs
+                            break;
+                        }
+                }
+            if (roadIsNotChecked)
+            {
+
+                //punem drumul in lista drumurilor parcurse
+
+                CheckedRoads[length].Add(bc,iterator);
+                CheckedRoads[length].Add(iterator,bc);
+
+
+
+                //retinem lungmea maxima
+                if (length + 1 > maxFromBkt)
+                    maxFromBkt = length + 1;
+
+                BktRoad(iterator, length + 1, color, CheckedRoads);
+
+                //"debifam" drumul 
+                CheckedRoads[length].Clear();
+            }
+        }
+    }
+
     public Settlement PlaceSettlement(Player p, BoardCoordinate boardCoordinate, string type)
     {
         //made by jon
@@ -240,17 +331,17 @@ public class Board
 
         int colorID = (int)p.color;
         Connector connectorToPlace = GetConnectorFromString(bc1, bc2, type);
-
-        //if (playerRoadNetworks[colorID].ContainsKey(bc1) || playerRoadNetworks[colorID].ContainsKey(bc2))// daca macar una din cele doua coordonate face parte din graful playerului
-        //{
-        //    List<KeyValuePair<Corner, Corner>> availableConnectors = GetAvailableConnectors(p.color);
-        //    foreach(var conn in availableConnectors)
-        //    {
-        //        if (bc1 == conn.Key.coordinate && bc2 == conn.Value.coordinate ||
-        //            bc2 == conn.Key.coordinate && bc1 == conn.Value.coordinate)
-        //            return connectorToPlace;//daca coordonatele se gasesc in lista availableConnectors atunci putem pune drumul
-        //    }
-        //}
+      
+        /*if (playerRoadNetworks[colorID].ContainsKey(bc1) || playerRoadNetworks[colorID].ContainsKey(bc2))// daca macar una din cele doua coordonate face parte din graful playerului
+        {
+            List<KeyValuePair<Corner, Corner>> availableConnectors = GetAvailableConnectors(p.color);
+            foreach(var conn in availableConnectors)
+            {
+                if (bc1 == conn.Key.coordinate && bc2 == conn.Value.coordinate ||
+                    bc2 == conn.Key.coordinate && bc1 == conn.Value.coordinate)
+                    return connectorToPlace;//daca coordonatele se gasesc in lista availableConnectors atunci putem pune drumul
+            }
+        }*/
 
 
         PlaceConnector(p.color, bc1, bc2);
