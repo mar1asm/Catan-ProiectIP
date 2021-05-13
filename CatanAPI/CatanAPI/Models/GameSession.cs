@@ -20,5 +20,6 @@ namespace CatanAPI.Models
 
         public ICollection<User> Users { get; set; }
         public List<GameSessionUser> GameSessionUsers { get; set; }
+        public List<GameSessionMessage> GameSessionMessages { get; set; }
     }
 }

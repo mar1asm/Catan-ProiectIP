@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
-
+using CatanAPI.Data.DTO.Messages;
 using CatanAPI.Data;
 using CatanAPI.Models;
 using CatanAPI.Data.DTO.GameSessionsDTO;
@@ -59,17 +59,17 @@ namespace CatanAPI.Controllers
             {
                 return NotFound();
             }
-            if(!gameSession.GameSessionUsers.Any(item => item.UserId == currentUser.Id))
+            if (!gameSession.GameSessionUsers.Any(item => item.UserId == currentUser.Id))
             {
                 return Unauthorized();
             }
 
-            return new GetSessionDto { 
+            return new GetSessionDto {
                 Id = gameSession.Id,
                 CreatedAt = gameSession.CreatedAt,
                 Status = gameSession.Status,
-                Extensions = gameSession.Extensions.Select(extension => new GetExtensionDTO { Id = extension.Id, Name = extension.Name}).ToList(),
-                GameSessionUsers = gameSession.GameSessionUsers.Select(user => new GetUserMinDTO { Id = user.UserId, UserName= user.User.UserName }).ToList()
+                Extensions = gameSession.Extensions.Select(extension => new GetExtensionDTO { Id = extension.Id, Name = extension.Name }).ToList(),
+                GameSessionUsers = gameSession.GameSessionUsers.Select(user => new GetUserMinDTO { Id = user.UserId, UserName = user.User.UserName }).ToList()
             };
         }
 
@@ -85,7 +85,8 @@ namespace CatanAPI.Controllers
                 Status = GameSessionStatus.Pending,
                 Extensions = _context.Extensions
                 .Where(item => gameSession.Extensions.Any(extensionItem => extensionItem == item.Id)).ToList(),
-                GameSessionUsers = new List<GameSessionUser>()
+                GameSessionUsers = new List<GameSessionUser>(),
+                GameSessionMessages = new List<GameSessionMessage>()
             };
             _context.GameSessions.Add(session);
             await _context.SaveChangesAsync();
@@ -100,11 +101,11 @@ namespace CatanAPI.Controllers
             });
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetGameSession", new { id = session.Id }, new GetSessionMinDto 
-            { 
-                Id = session.Id, 
-                CreatedAt = session.CreatedAt, 
-                Status = session.Status 
+            return CreatedAtAction("GetGameSession", new { id = session.Id }, new GetSessionMinDto
+            {
+                Id = session.Id,
+                CreatedAt = session.CreatedAt,
+                Status = session.Status
             });
         }
 
@@ -122,6 +123,80 @@ namespace CatanAPI.Controllers
             await _context.SaveChangesAsync();
 
             return NoContent();
+        }
+
+        [Route("{id}/messages")]
+        [HttpGet]
+        public async Task<IActionResult> GetSessionMessages(int id)
+        {
+            var currentUser = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+            var gameSession = await _context.GameSessions
+                .Include(i => i.GameSessionUsers)
+                .Include(i => i.Extensions)
+                .Include(i => i.GameSessionMessages)
+                .FirstOrDefaultAsync(item => item.Id == id);
+
+            if (gameSession == null || gameSession.GameSessionUsers == null)
+            {
+                return NotFound();
+            }
+            if (!gameSession.GameSessionUsers.Any(item => item.UserId == currentUser.Id))
+            {
+                return Unauthorized();
+            }
+
+            var sessionMessages = gameSession.GameSessionMessages.Select(t => new GameSessionMessageDto
+            {
+                Id = t.Id,
+                Message = t.Message,
+                Date = t.Date,
+                FromUserName = t.From.UserName
+            }).ToList();
+
+            return Ok(sessionMessages);
+        }
+
+        [Route("{id}/messages")]
+        [HttpPost]
+        public async Task<IActionResult> PostSessionMessage(int id, GameSessionMessageFormDto newMessageDto)
+        {
+            var currentUser = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+            var gameSession = await _context.GameSessions
+                .Include(i => i.GameSessionUsers)
+                .Include(i => i.Extensions)
+                .Include(i => i.GameSessionMessages)
+                .FirstOrDefaultAsync(item => item.Id == id);
+
+            if (gameSession == null || gameSession.GameSessionUsers == null)
+            {
+                return NotFound();
+            }
+            if (!gameSession.GameSessionUsers.Any(item => item.UserId == currentUser.Id))
+            {
+                return Unauthorized();
+            }
+
+            var newMessage = new GameSessionMessage
+            {
+                Message = newMessageDto.Message,
+                Date = DateTime.Now,
+                FromId = currentUser.Id,
+                From = currentUser,
+                GameSessionId = gameSession.Id,
+                GameSession = gameSession
+            };
+
+            gameSession.GameSessionMessages.Add(newMessage);
+
+            await _context.SaveChangesAsync();
+
+            return Ok(new GameSessionMessageDto
+            {
+                Id = newMessage.Id,
+                Message = newMessage.Message,
+                Date = newMessage.Date,
+                FromUserName = newMessage.From.UserName
+            });
         }
 
         private bool GameSessionExists(int id)
