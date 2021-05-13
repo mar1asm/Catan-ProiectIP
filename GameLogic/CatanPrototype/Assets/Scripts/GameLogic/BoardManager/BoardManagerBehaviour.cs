@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using System;
 
 public class BoardManagerBehaviour : MonoBehaviour
 {
@@ -29,18 +30,47 @@ public class BoardManagerBehaviour : MonoBehaviour
     void Start()
     {
         InitializeBoardFromFile("GameLogic/inimioara");
-        board.PlacePort(new Corner(new BoardCoordinate(1.33f, -2.66f)),
+        /*board.PlacePort(new Corner(new BoardCoordinate(1.33f, -2.66f)),
                         new Corner(new BoardCoordinate(0.66f, -2.33f)),
                         ResourceTypes.Any, 3, 1);
-
+        */
         InstantiateBoard();
-        
-      
 
-        
-       
+        Player pBlue = new Player("ad", "id",board);
+        pBlue.color = PlayerColor.Blue;
+
+        //AddConnector(pBlue, new BoardCoordinate(1.33f, -2.66f), new BoardCoordinate(1.66f, -2.33f), "road");
+        //AddConnector(pBlue, new BoardCoordinate(1.66f, -2.33f), new BoardCoordinate(2.33f, -2.66f), "road");
+        //AddConnector(pBlue, new BoardCoordinate(2.33f, -2.66f), new BoardCoordinate(2.66f, -2.33f), "road");
+        //AddConnector(pBlue, new BoardCoordinate(2.66f, -2.33f), new BoardCoordinate(2.33f, -1.67f), "road");
+        //AddConnector(pBlue, new BoardCoordinate(2.33f, -1.67f), new BoardCoordinate(2.66f, -1.33f), "road");
+
+        Player pRed = new Player("da", "id2", board);
+        pRed.color = PlayerColor.Red;
+
+
+        AddConnector(pRed, new BoardCoordinate(0.33f, -2.66f), new BoardCoordinate(-0.33f, -2.33f), "road");
+        AddConnector(pRed, new BoardCoordinate(-0.33f, -2.33f), new BoardCoordinate(-0.66f, -1.67f), "road");
+        AddConnector(pRed, new BoardCoordinate(-0.66f, -1.67f), new BoardCoordinate(-1.33f, -1.33f), "road");
+        AddConnector(pRed, new BoardCoordinate(-1.33f, -1.33f), new BoardCoordinate(-1.67f, -0.66f), "road");
+        AddConnector(pRed, new BoardCoordinate(-1.67f, -0.66f), new BoardCoordinate(-2.33f, -0.33f), "road");
+        AddConnector(pRed, new BoardCoordinate(-2.33f, -0.33f), new BoardCoordinate(-2.66f, 0.33f), "road");
+        AddConnector(pRed, new BoardCoordinate(-2.66f, 0.33f), new BoardCoordinate(-2.33f, 0.67f), "road");
+        AddConnector(pRed, new BoardCoordinate(-2.33f, 0.67f), new BoardCoordinate(-1.66f, 0.33f), "road");
+        AddConnector(pRed, new BoardCoordinate(-1.66f, 0.33f), new BoardCoordinate(-1.33f, -0.33f), "road");
+        AddConnector(pRed, new BoardCoordinate(-1.33f, -0.33f), new BoardCoordinate(-1.67f, -0.66f), "road");
+        AddConnector(pRed, new BoardCoordinate(-1.33f, -0.33f), new BoardCoordinate(-0.66f, -0.67f), "road");
+        AddConnector(pRed, new BoardCoordinate(-0.66f, -0.67f), new BoardCoordinate(-0.33f, -1.33f), "road");
+        AddConnector(pRed, new BoardCoordinate(-0.33f, -1.33f), new BoardCoordinate(-0.66f, -1.67f), "road");
+
+
+        Debug.Log("culoarea: "+board.CheckLongestRoad());        
+
+
+
+
         //bounds = hex.GetComponent<Collider>().bounds.size;
-            //InstantiateBoard();
+        //InstantiateBoard();
         //PlaceHex(0, 0);
         //PlaceHex(-1, 0);
     }
@@ -102,16 +132,7 @@ public class BoardManagerBehaviour : MonoBehaviour
     /// Functia determina cel mai lung drum 
     /// </summary>
     /// <returns></returns>
-    public Player CheckLongestRoad()
-    {
-        //made by jon
-        for(int i=0; i<(int)PlayerColor.NbOfColors; ++i)
-        {
 
-        }
-
-        return null;
-    }
 
 
     /// <summary>
@@ -181,10 +202,13 @@ public class BoardManagerBehaviour : MonoBehaviour
     public void AddConnector(Player p, BoardCoordinate bc1, BoardCoordinate bc2, string type)
     {
         //made by jon
+
+
         Connector connector = board.PlaceConnector(p,bc1,bc2,type);
-        Vector3 position = connector.middle.ToWorldSpace();// aici nu trebuie sa fie diferita aceasta adaugare?
-        GameObject gameobj = Instantiate(connectorPrefab, position, Quaternion.identity, transform);
-        gameobj.GetComponent<ConnectorBehaviour>().connector = connector;
+        Vector3 position = connector.middle.ToWorldSpace();
+        Quaternion rotation = connector.rotation;
+        GameObject gameobj = Instantiate(connectorPrefab, position, rotation, transform);
+        //gameobj.GetComponent<ConnectorBehaviour>().connector = connector;
 
     }
 
