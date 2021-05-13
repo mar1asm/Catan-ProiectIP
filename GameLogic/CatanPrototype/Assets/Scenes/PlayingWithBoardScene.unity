@@ -1013,6 +1013,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: thief_var2
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 2fbb1934f6c19f4499848031c72711ea, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2fbb1934f6c19f4499848031c72711ea, type: 3}
 --- !u!1 &1854074574
