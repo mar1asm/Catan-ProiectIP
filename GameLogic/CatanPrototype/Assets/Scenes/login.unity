@@ -2487,7 +2487,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 214937654}
         m_TargetAssemblyTypeName: login, Assembly-CSharp
-        m_MethodName: getText1
+        m_MethodName: getusername
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 1373112007}
@@ -2499,7 +2499,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 214937654}
         m_TargetAssemblyTypeName: login, Assembly-CSharp
-        m_MethodName: getText2
+        m_MethodName: getpassword
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 1883916494}
