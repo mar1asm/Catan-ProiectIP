@@ -16,6 +16,7 @@ public abstract class Settlement
         set
         {
             _owner = value;
+            //VFX.GetComponent<ChangingColorBehaviour>().UpdateColor(_owner);
             //O sa trebuiasca pus cod aici care sa schimbe culoarea cum trebuie
         }
     }
@@ -40,9 +41,15 @@ public abstract class Settlement
     /// Genereaza resurse si le da player-ului
     /// (inca nu a fost facut PlayerManager, dupa ce e facut trebuie implementat aici)
     /// </summary>
-    public void GenerateResources()
+    public void GenerateResources(ResourceTypes resourceType)
     {
-
+        //give any resources list to the owner
+        List<ResourceTypes> l =new List<ResourceTypes>();
+        for(int i = 0; i < GetNumberOfResources(); ++i)
+        {
+            l.Add(resourceType);
+        }
+        _owner.GetResources(l);
     }
 
     /// <summary>

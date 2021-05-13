@@ -16,16 +16,33 @@ public class NumberTileBehaviour : MonoBehaviour
         set
         {
             _number = value;
-            //Aici trebuie sa facem schimbarea 
-            //Pentru fiecare numar, ce Tile sa afisam
-            //Pana nu primim de la UI acele cerculete, o sa ne prefacem ca sunt ele acolo.. 
-
-           // transform.GetChild(0).GetChild(0).GetComponent<TextMesh>().text = _number.ToString();
+            UpdateNumberTile();
         }
     }
 
-    private void Update()
+    private void Start()
     {
-        transform.position = new Vector3(0, 0.5f, 0);
+        transform.position = new Vector3(transform.parent.position.x, 
+                                         transform.position.y, 
+                                         transform.parent.position.z);
     }
+
+
+    private void UpdateNumberTile()
+    {
+        GameObject vfx = transform.GetChild(0).gameObject;
+        for(int i = 0; i < vfx.transform.childCount; ++i)
+        {
+            //Debug.LogWarning(i);
+            if(i == _number - 3)
+            {
+                vfx.transform.GetChild(i).gameObject.SetActive(true);
+            }
+            else
+            {
+                vfx.transform.GetChild(i).gameObject.SetActive(false);
+            }
+        }
+    }
+
 }

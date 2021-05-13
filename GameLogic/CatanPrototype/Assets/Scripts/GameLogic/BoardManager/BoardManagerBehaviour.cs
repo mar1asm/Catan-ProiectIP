@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using System;
 
 public class BoardManagerBehaviour : MonoBehaviour
 {
@@ -21,29 +22,85 @@ public class BoardManagerBehaviour : MonoBehaviour
     [SerializeField]
     private Board board;
 
-    //E o variabila folosita doar la testare, nu are relevanta in viitor
-    
 
-    //Dictionary<Vector2, GameObject> board = new Dictionary<Vector2, GameObject>();
+  
+    private float deltaY = 0.002003f * 5751.438f * 0.3f;
+
+
 
     void Start()
     {
+        //deltaY = 0.002003f * 5751.438f * 0.3f;
+    
         InitializeBoardFromFile("GameLogic/inimioara");
-        board.PlacePort(new Corner(new BoardCoordinate(1.33f, -2.66f)),
+        /*board.PlacePort(new Corner(new BoardCoordinate(1.33f, -2.66f)),
                         new Corner(new BoardCoordinate(0.66f, -2.33f)),
                         ResourceTypes.Any, 3, 1);
-
+        */
         InstantiateBoard();
-        
-      
 
+
+        Player p = new Player("test", "123");
+
+        p.color = PlayerColor.Red;
+
+        AddSettlement(p, new BoardCoordinate(1.33f, -2.66f), "city");
+        AddConnector(p, new BoardCoordinate(1.33f, -2.66f), new BoardCoordinate(0.66f, -2.33f), "road");
         
        
+
+        Player pBlue = new Player("ad", "id");
+        pBlue.color = PlayerColor.Blue;
+
+        //AddConnector(pBlue, new BoardCoordinate(1.33f, -2.66f), new BoardCoordinate(1.66f, -2.33f), "road");
+        //AddConnector(pBlue, new BoardCoordinate(1.66f, -2.33f), new BoardCoordinate(2.33f, -2.66f), "road");
+        //AddConnector(pBlue, new BoardCoordinate(2.33f, -2.66f), new BoardCoordinate(2.66f, -2.33f), "road");
+        //AddConnector(pBlue, new BoardCoordinate(2.66f, -2.33f), new BoardCoordinate(2.33f, -1.67f), "road");
+        //AddConnector(pBlue, new BoardCoordinate(2.33f, -1.67f), new BoardCoordinate(2.66f, -1.33f), "road");
+
+        Player pRed = new Player("da", "id2");
+        pRed.color = PlayerColor.Red;
+
+
+        AddConnector(pRed, new BoardCoordinate(0.33f, -2.66f), new BoardCoordinate(-0.33f, -2.33f), "road");
+        AddConnector(pRed, new BoardCoordinate(-0.33f, -2.33f), new BoardCoordinate(-0.66f, -1.67f), "road");
+        AddConnector(pRed, new BoardCoordinate(-0.66f, -1.67f), new BoardCoordinate(-1.33f, -1.33f), "road");
+        AddConnector(pRed, new BoardCoordinate(-1.33f, -1.33f), new BoardCoordinate(-1.67f, -0.66f), "road");
+        AddConnector(pRed, new BoardCoordinate(-1.67f, -0.66f), new BoardCoordinate(-2.33f, -0.33f), "road");
+        AddConnector(pRed, new BoardCoordinate(-2.33f, -0.33f), new BoardCoordinate(-2.66f, 0.33f), "road");
+        AddConnector(pRed, new BoardCoordinate(-2.66f, 0.33f), new BoardCoordinate(-2.33f, 0.67f), "road");
+        AddConnector(pRed, new BoardCoordinate(-2.33f, 0.67f), new BoardCoordinate(-1.66f, 0.33f), "road");
+        AddConnector(pRed, new BoardCoordinate(-1.66f, 0.33f), new BoardCoordinate(-1.33f, -0.33f), "road");
+        AddConnector(pRed, new BoardCoordinate(-1.33f, -0.33f), new BoardCoordinate(-1.67f, -0.66f), "road");
+        AddConnector(pRed, new BoardCoordinate(-1.33f, -0.33f), new BoardCoordinate(-0.66f, -0.67f), "road");
+        AddConnector(pRed, new BoardCoordinate(-0.66f, -0.67f), new BoardCoordinate(-0.33f, -1.33f), "road");
+        AddConnector(pRed, new BoardCoordinate(-0.33f, -1.33f), new BoardCoordinate(-0.66f, -1.67f), "road");
+
+
+        Debug.Log("culoarea: " + board.CheckLongestRoad());        
+
+
+
         //bounds = hex.GetComponent<Collider>().bounds.size;
-            //InstantiateBoard();
+        //InstantiateBoard();
         //PlaceHex(0, 0);
         //PlaceHex(-1, 0);
     }
+
+
+    public void GiveResources(int nr)
+    {
+        // Debug.Log("Jucatorii care au asezari pe" + nr + "primesc resurse.");
+
+        foreach (KeyValuePair<BoardCoordinate, Tile> entry in board.tiles)
+        {
+            if (entry.Value is ResourceTile)
+                if(((ResourceTile)entry.Value).numberTileValue == nr)
+                  entry.Value.SpecialAction();
+        }
+
+    }
+
 
 
     /// <summary>
@@ -87,16 +144,7 @@ public class BoardManagerBehaviour : MonoBehaviour
     /// Functia determina cel mai lung drum 
     /// </summary>
     /// <returns></returns>
-    public Player CheckLongestRoad()
-    {
-        //made by jon
-        for(int i=0; i<(int)PlayerColor.NbOfColors; ++i)
-        {
 
-        }
-
-        return null;
-    }
 
 
     /// <summary>
@@ -137,8 +185,11 @@ public class BoardManagerBehaviour : MonoBehaviour
         //made by jon
         Settlement settlement = board.PlaceSettlement(p,coordinate, type);
         Vector3 position = settlement.corner.coordinate.ToWorldSpace();
+        position.y += deltaY;
         GameObject gameobj = Instantiate(settlementPrefab, position, Quaternion.identity, transform);
+        settlement.owner = p;
         gameobj.GetComponent<SettlementBehaviour>().settlement = settlement;
+        
 
     }
 
@@ -166,11 +217,16 @@ public class BoardManagerBehaviour : MonoBehaviour
     public void AddConnector(Player p, BoardCoordinate bc1, BoardCoordinate bc2, string type)
     {
         //made by jon
-        Connector connector = board.PlaceConnector(p,bc1,bc2,type);
-        Vector3 position = connector.middle.ToWorldSpace();// aici nu trebuie sa fie diferita aceasta adaugare?
-        GameObject gameobj = Instantiate(connectorPrefab, position, Quaternion.identity, transform);
-        gameobj.GetComponent<ConnectorBehaviour>().connector = connector;
 
+
+        Connector connector = board.PlaceConnector(p,bc1,bc2,type);
+        Vector3 position = connector.middle.ToWorldSpace();
+
+        position.y += deltaY; 
+        Quaternion rotation = connector.rotation;
+        GameObject gameobj = Instantiate(connectorPrefab, position, rotation, transform);
+        connector.owner = p;
+        gameobj.GetComponent<ConnectorBehaviour>().connector = connector;
     }
 
 
@@ -181,15 +237,20 @@ public class BoardManagerBehaviour : MonoBehaviour
         foreach(KeyValuePair<BoardCoordinate, Tile> entry in board.tiles)
         {
             Vector3 position = entry.Key.ToWorldSpace();
+            Debug.Log(entry.Value.GetTypeAsString());
             GameObject tile = Instantiate(tilePrefab, position, Quaternion.identity, transform);
             tile.GetComponent<TileBehaviour>().tile = entry.Value;
+            if(entry.Value is ResourceTile)
+            {
+                ((ResourceTile)entry.Value).numberTileValue = 12;
+            }
         }
 
         foreach(KeyValuePair<BoardCoordinate, Corner> entry in board.corners)
         {
            // Debug.Log(entry.Key.q + " " + entry.Key.r);
             Vector3 position = entry.Key.ToWorldSpace();
-            position.y += 0.3f;
+            position.y += deltaY;
             GameObject corner = Instantiate(cornerPrefab, position, Quaternion.identity, transform);
             corner.GetComponent<CornerBehaviour>().corner = entry.Value;
         }

@@ -12,7 +12,7 @@ public class BoardCoordinate
      */
 
     private static GameObject measurementsReference;
-    private static float widthOfTile = 1.004f;
+    private static float widthOfTile =  0.01004f * 11048.06f * 0.3f;
     public float q;
     public float r;
 
@@ -83,7 +83,7 @@ public class BoardCoordinate
 
         //deltaX reprezinta Offset-ul pe X atunci cand mergem pe diagonala
         float deltaX = Mathf.Sqrt(3) * widthOfHex;
-        Vector3 worldPosition = new Vector3();
+        Vector3 worldPosition = new Vector3(0, 0, 0);
         worldPosition.z += -q * 2 * widthOfHex;
         worldPosition.x += -r * deltaX;
         worldPosition.z += -r * widthOfHex;

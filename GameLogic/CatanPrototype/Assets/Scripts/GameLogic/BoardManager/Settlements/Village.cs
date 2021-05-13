@@ -20,6 +20,6 @@ public class Village : Settlement
 
     public override void LoadVFX()
     {
-        VFX = (GameObject)Resources.Load("GameLogic/Prefabs/VillageVFX-WIP");
+        VFX = (GameObject)Resources.Load("GameLogic/Prefabs/Settlements/SmallSettlement");
     }
 }

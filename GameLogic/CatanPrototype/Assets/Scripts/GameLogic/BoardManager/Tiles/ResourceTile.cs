@@ -6,7 +6,10 @@ public abstract class ResourceTile : Tile
 {
 
     private int _numberTileValue = 0;
-    protected ResourceTypes resourceType = ResourceTypes.Sheep;
+    public ResourceTypes resourceType = ResourceTypes.Sheep;
+
+
+    
     public int numberTileValue
     {
         get
@@ -43,8 +46,10 @@ public abstract class ResourceTile : Tile
     public override GameObject AddVFX2Object(GameObject parent)
     {
         GameObject tile = base.AddVFX2Object(parent);
-        inGameNumberTile = GameObject.Instantiate(numberTilePrefab, new Vector3(0, 0.5f, 0), Quaternion.identity, tile.transform);
-        Debug.Log("Numarul acestui tile este: " + inGameNumberTile.transform.position);
+        Vector3 position = tile.transform.position + new Vector3(0, 0.002003f * 5751.438f * 0.3f, 0);
+        
+        inGameNumberTile = GameObject.Instantiate(numberTilePrefab, position, Quaternion.identity, tile.transform);
+        //Debug.Log("Numarul acestui tile este: " + inGameNumberTile.transform.position);
         return tile;
     }
 
@@ -52,9 +57,9 @@ public abstract class ResourceTile : Tile
   
     public override void SpecialAction()
     {
-        for(int i = 0; i < 6; ++i)
+        for(int i = 0; i < corners.Length; ++i)
         {
-            corners[i].ActivateSettlement();
+            corners[i].ActivateSettlement(resourceType);
         }
     }
 }
