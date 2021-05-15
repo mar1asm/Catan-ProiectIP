@@ -2,6 +2,14 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
+using System;
+
+[Serializable]
+public class LoginJson 
+{
+    public string username;
+    public string password;
+}
 
 public class login : MonoBehaviour
 {
@@ -32,46 +40,41 @@ public class login : MonoBehaviour
             Debug.Log("Empty Field(s)");
         }
     }
+
     IEnumerator postLogin(string username, string password)
     {
-        string uri = "https://localhost:5001/api/Authenticate/login";
-        WWWForm form = new WWWForm();
-        form.AddField("username", username);
-        form.AddField("password", password);
+        //Preparing the POST Json Body
+        LoginJson loginJson = new LoginJson();
+        loginJson.username = username;
+        loginJson.password = password;
+        string json = JsonUtility.ToJson(loginJson);
+        byte[] rawJson = new System.Text.UTF8Encoding().GetBytes(json);
 
-        using(UnityWebRequest request = UnityWebRequest.Post(uri, form))
-        {
-            yield return request.SendWebRequest();
-            if (request.result == UnityWebRequest.Result.ConnectionError || 
+        //Preparing the request
+        string uri = "https://localhost:5001/api/Authenticate/login";
+        UnityWebRequest request = UnityWebRequest.Post(uri, "POST");
+        request.uploadHandler = (UploadHandler)new UploadHandlerRaw(rawJson);
+        request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+        request.SetRequestHeader("Content-Type", "application/json");
+
+        //Send the request then wait here until it returns
+        yield return request.SendWebRequest();
+        if (request.result == UnityWebRequest.Result.ConnectionError || 
             request.result == UnityWebRequest.Result.ProtocolError)
                 Debug.Log("POST Error");
-            else 
+        else 
+        {
+            Debug.Log("POST OK");
+            long status = request.responseCode;
+            if (status == 200) 
             {
-                Debug.Log("POST OK");
-                long status = request.responseCode;
-                if (status == 200) 
-                {
-                    SceneManager.LoadScene(sceneName:"mainMenu");
-                }
-            }       
+                Debug.Log(request.downloadHandler.text);
+                SceneManager.LoadScene(sceneName:"mainMenu");
+            }
+            else
+            {
+                Debug.Log(request.downloadHandler.text);
+            }
         }
-
-        // string uri = "https://www.google.com";
-        // using(UnityWebRequest request = UnityWebRequest.Get(uri))
-        // {
-        //     yield return request.SendWebRequest();
-        //     if (request.result == UnityWebRequest.Result.ConnectionError || 
-        //     request.result == UnityWebRequest.Result.ProtocolError)
-        //         Debug.Log("Get Error");
-        //     else 
-        //     {
-        //         Debug.Log("Get OK");
-        //         long status = request.responseCode;
-        //         if (status == 200) 
-        //         {
-        //             SceneManager.LoadScene(sceneName:"mainMenu");
-        //         }
-        //     }       
-        // }
     }
 }

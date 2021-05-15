@@ -2,6 +2,14 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
+using System;
+
+[Serializable]
+public class ResetPasswordJson 
+{
+    public string oldPassword;
+    public string newPassword;
+}
 
 public class resetPassword : MonoBehaviour
 {
@@ -35,26 +43,38 @@ public class resetPassword : MonoBehaviour
 
     IEnumerator postUpdate(string oldPassword, string newPassword)
     {
-        string uri = "https://localhost:5001/api/Authenticate/change";
-        WWWForm form = new WWWForm();
-        form.AddField("oldPassword", oldPassword);
-        form.AddField("newPassword", newPassword);
+        //Preparing the POST Json Body
+        ResetPasswordJson resetPasswordJson = new ResetPasswordJson();
+        resetPasswordJson.oldPassword = oldPassword;
+        resetPasswordJson.newPassword = newPassword;
+        string json = JsonUtility.ToJson(resetPasswordJson);
+        byte[] rawJson = new System.Text.UTF8Encoding().GetBytes(json);
 
-        using(UnityWebRequest request = UnityWebRequest.Post(uri, form))
-        {
-            yield return request.SendWebRequest();
-            if (request.result == UnityWebRequest.Result.ConnectionError || 
+        //Preparing the request
+        string uri = "https://localhost:5001/api/Authenticate/change";
+        UnityWebRequest request = UnityWebRequest.Post(uri, "POST");
+        request.uploadHandler = (UploadHandler)new UploadHandlerRaw(rawJson);
+        request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+        request.SetRequestHeader("Content-Type", "application/json");
+        // request.SetRequestHeader("",""); //TODO: add auth token
+
+        //Send the request then wait here until it returns
+        yield return request.SendWebRequest();
+        if (request.result == UnityWebRequest.Result.ConnectionError || 
             request.result == UnityWebRequest.Result.ProtocolError)
                 Debug.Log("POST Error");
-            else 
+        else 
+        {
+            Debug.Log("POST OK");
+            long status = request.responseCode;
+            if (status == 200) 
             {
-                Debug.Log("POST OK");
-                long status = request.responseCode;
-                if (status == 200) 
-                {
-                    SceneManager.LoadScene(sceneName:"mainMenu");
-                }
-            }       
+                SceneManager.LoadScene(sceneName:"mainMenu");
+            }
+            else
+            {
+                Debug.Log(request.downloadHandler.text);
+            }
         }
     }
 }
