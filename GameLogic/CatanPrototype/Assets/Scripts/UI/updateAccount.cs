@@ -2,6 +2,16 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
+using System;
+
+[Serializable]
+public class UpdateAccountJson 
+{
+    // public string username;
+    // public string email;
+    public string oldPassword;
+    public string newPassword;
+}
 
 public class updateAccount : MonoBehaviour
 {
@@ -46,30 +56,41 @@ public class updateAccount : MonoBehaviour
 
     IEnumerator postUpdate(string username, string email, string oldPassword, string newPassword)
     {
+        //Preparing the POST Json Body
+        UpdateAccountJson updateAccountJson = new UpdateAccountJson();
+        // updateAccountJson.username = username;
+        // updateAccountJson.email = email;
+        updateAccountJson.oldPassword = oldPassword;
+        updateAccountJson.newPassword = newPassword;
+        string json = JsonUtility.ToJson(updateAccountJson);
+        byte[] rawJson = new System.Text.UTF8Encoding().GetBytes(json);
+
+        //Preparing the request
+        //TODO: Add API support for updateAccount
         string uri = "https://localhost:5001/api/Authenticate/change";
-        WWWForm form = new WWWForm();
-        //TODO: update API to support updateAccount
-        // form.AddField("username", username);
-        // form.AddField("email", email);
-        form.AddField("oldPassword", oldPassword);
-        form.AddField("newPassword", newPassword);
+        UnityWebRequest request = UnityWebRequest.Post(uri, "POST");
+        request.uploadHandler = (UploadHandler)new UploadHandlerRaw(rawJson);
+        request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+        request.SetRequestHeader("Content-Type", "application/json");
+        // request.SetRequestHeader("",""); //TODO: add auth token
 
-
-        using(UnityWebRequest request = UnityWebRequest.Post(uri, form))
-        {
-            yield return request.SendWebRequest();
-            if (request.result == UnityWebRequest.Result.ConnectionError || 
+        //Send the request then wait here until it returns
+        yield return request.SendWebRequest();
+        if (request.result == UnityWebRequest.Result.ConnectionError || 
             request.result == UnityWebRequest.Result.ProtocolError)
                 Debug.Log("POST Error");
-            else 
+        else 
+        {
+            Debug.Log("POST OK");
+            long status = request.responseCode;
+            if (status == 200) 
             {
-                Debug.Log("POST OK");
-                long status = request.responseCode;
-                if (status == 200) 
-                {
-                    SceneManager.LoadScene(sceneName:"mainMenu");
-                }
-            }       
+                SceneManager.LoadScene(sceneName:"mainMenu");
+            }
+            else
+            {
+                Debug.Log(request.downloadHandler.text);
+            }
         }
     }
 }

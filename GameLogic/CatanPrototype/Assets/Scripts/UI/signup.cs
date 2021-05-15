@@ -2,6 +2,15 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
+using System;
+
+[Serializable]
+public class SignupJson 
+{
+    public string username;
+    public string email;
+    public string password;
+}
 
 public class signup : MonoBehaviour
 {
@@ -54,29 +63,38 @@ public class signup : MonoBehaviour
 
     IEnumerator postSignup(string username, string email, string password)
     {
-        string uri = "https://localhost:5001/api/Authenticate/register";
-        WWWForm form = new WWWForm();
-        form.AddField("firstName", "Johnny");
-        form.AddField("lastName", "Depp");
-        form.AddField("username", username);
-        form.AddField("email", email);
-        form.AddField("password", password);
+        //Preparing the POST Json Body
+        SignupJson signupJson = new SignupJson();
+        signupJson.username = username;
+        signupJson.email = email;
+        signupJson.password = password;
+        string json = JsonUtility.ToJson(signupJson);
+        byte[] rawJson = new System.Text.UTF8Encoding().GetBytes(json);
 
-        using(UnityWebRequest request = UnityWebRequest.Post(uri, form))
-        {
-            yield return request.SendWebRequest();
-            if (request.result == UnityWebRequest.Result.ConnectionError || 
+        //Preparing the request
+        string uri = "https://localhost:5001/api/Authenticate/register";
+        UnityWebRequest request = UnityWebRequest.Post(uri, "POST");
+        request.uploadHandler = (UploadHandler)new UploadHandlerRaw(rawJson);
+        request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+        request.SetRequestHeader("Content-Type", "application/json");
+
+        //Send the request then wait here until it returns
+        yield return request.SendWebRequest();
+        if (request.result == UnityWebRequest.Result.ConnectionError || 
             request.result == UnityWebRequest.Result.ProtocolError)
                 Debug.Log("POST Error");
-            else 
+        else 
+        {
+            Debug.Log("POST OK");
+            long status = request.responseCode;
+            if (status == 200) 
             {
-                Debug.Log("POST OK");
-                long status = request.responseCode;
-                if (status == 200) 
-                {
-                    SceneManager.LoadScene(sceneName:"mainMenu");
-                }
-            }       
+                SceneManager.LoadScene(sceneName:"mainMenu");
+            }
+            else
+            {
+                Debug.Log(request.downloadHandler.text);
+            }
         }
     }
 }
