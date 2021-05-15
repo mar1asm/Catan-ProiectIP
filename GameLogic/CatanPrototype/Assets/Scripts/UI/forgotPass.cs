@@ -48,6 +48,7 @@ public class forgotPass : MonoBehaviour
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(rawJson);
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         request.SetRequestHeader("Content-Type", "application/json");
+        request.SetRequestHeader("Authorization", UserAuth.GetToken());
 
         //Send the request then wait here until it returns
         yield return request.SendWebRequest();
@@ -60,7 +61,7 @@ public class forgotPass : MonoBehaviour
             long status = request.responseCode;
             if (status == 200) 
             {
-                SceneManager.LoadScene(sceneName:"mainMenu");
+                SceneManager.LoadScene(sceneName:"login");
             }
             else
             {

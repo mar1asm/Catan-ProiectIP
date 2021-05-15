@@ -7,6 +7,8 @@ using System;
 [Serializable]
 public class SignupJson 
 {
+    public string firstName;
+    public string lastName;
     public string username;
     public string email;
     public string password;
@@ -14,8 +16,17 @@ public class SignupJson
 
 public class signup : MonoBehaviour
 {
-    GameObject usernameObj, emailObj, passwordObj, retypePassObj;
+    GameObject firstNameObj, lastNameObj, usernameObj, emailObj, passwordObj, retypePassObj;
 
+    public void getFirstName(GameObject firstname)
+    {
+        this.firstNameObj = firstname;
+    }
+
+    public void getLastName(GameObject lastname)
+    {
+        this.lastNameObj = lastname;
+    }
 
     public void getUsername(GameObject username)
     {
@@ -39,6 +50,8 @@ public class signup : MonoBehaviour
 
     public void verifySignup()
     {
+        string firstname /* = firstNameObj.GetComponent<UnityEngine.UI.InputField>().text; */ = "Johnny";
+        string lastname /* = lastNameObj.GetComponent<UnityEngine.UI.InputField>().text; */  = "Depp";
         string username = usernameObj.GetComponent<UnityEngine.UI.InputField>().text;
         string email = emailObj.GetComponent<UnityEngine.UI.InputField>().text;
         string password = passwordObj.GetComponent<UnityEngine.UI.InputField>().text;
@@ -48,7 +61,7 @@ public class signup : MonoBehaviour
         {
             if (password == passwordAgain)
             {
-                StartCoroutine(postSignup(username, email, password));
+                StartCoroutine(postSignup(firstname, lastname, username, email, password));
             }
             else
             {
@@ -61,10 +74,12 @@ public class signup : MonoBehaviour
         }
     }
 
-    IEnumerator postSignup(string username, string email, string password)
+    IEnumerator postSignup(string firstName, string lastName, string username, string email, string password)
     {
         //Preparing the POST Json Body
         SignupJson signupJson = new SignupJson();
+        signupJson.firstName = firstName;
+        signupJson.lastName = lastName;
         signupJson.username = username;
         signupJson.email = email;
         signupJson.password = password;
@@ -89,7 +104,7 @@ public class signup : MonoBehaviour
             long status = request.responseCode;
             if (status == 200) 
             {
-                SceneManager.LoadScene(sceneName:"mainMenu");
+                SceneManager.LoadScene(sceneName:"login");
             }
             else
             {

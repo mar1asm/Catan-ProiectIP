@@ -11,6 +11,53 @@ public class LoginJson
     public string password;
 }
 
+//Store the response from API
+[Serializable]
+public class LoginRespJson 
+{
+    public string token;
+    public string expiration;
+}
+
+//Singleton class for user auth data
+public sealed class UserAuth    
+{    
+    private static readonly UserAuth instance = new UserAuth();
+    private static string token;
+    private static string expiration;
+
+    static UserAuth(){}    
+    private UserAuth(){}  
+
+    public static UserAuth Instance    
+    {    
+        get    
+        {    
+            return instance;    
+        }    
+    }
+
+    public static string GetToken() 
+    {
+        return token;
+    }
+
+    public static void SetToken(string t)
+    {
+        token = t;
+    }
+
+    public static string GetExpiration() 
+    {
+        return expiration;
+    }
+
+    public static void SetExpiration(string e)
+    {
+        expiration = e;
+    }  
+}
+
 public class login : MonoBehaviour
 {
     GameObject usernameObj, passwordObj;
@@ -68,7 +115,13 @@ public class login : MonoBehaviour
             long status = request.responseCode;
             if (status == 200) 
             {
-                Debug.Log(request.downloadHandler.text);
+                //Get data from Json response
+                LoginRespJson jsonData = JsonUtility.FromJson<LoginRespJson>(request.downloadHandler.text);
+                Debug.Log(jsonData.token);
+                Debug.Log(jsonData.expiration);
+                UserAuth.SetToken(jsonData.token);
+                UserAuth.SetExpiration(jsonData.expiration);
+
                 SceneManager.LoadScene(sceneName:"mainMenu");
             }
             else
