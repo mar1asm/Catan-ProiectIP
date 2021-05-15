@@ -56,7 +56,7 @@ public class resetPassword : MonoBehaviour
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(rawJson);
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         request.SetRequestHeader("Content-Type", "application/json");
-        // request.SetRequestHeader("",""); //TODO: add auth token
+        request.SetRequestHeader("Authorization", UserAuth.GetToken());
 
         //Send the request then wait here until it returns
         yield return request.SendWebRequest();
