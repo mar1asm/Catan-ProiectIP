@@ -9,13 +9,19 @@ public class Player
     public string ID;
     public PlayerColor color;
     int score;
-    DeckPlayer deck;
+    public DeckPlayer deck;
     public Player(string name, string id)
     {
         nickname = name;
         ID = id;
     }
+    public Player ( string name, string id, DeckPlayer d)
+    {
+        nickname = name;
+        ID = id;
+        deck = d;
 
+    }
 
     public void ScoreAdd(int value)
     {

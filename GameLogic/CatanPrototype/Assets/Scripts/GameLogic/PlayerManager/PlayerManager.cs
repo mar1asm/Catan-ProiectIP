@@ -7,7 +7,7 @@ public class PlayerManager : MonoBehaviour
 {
     
     public List<Player> players;
-
+    
     void Start()
     {
         Player test = new Player("test", "abc");
@@ -26,6 +26,7 @@ public class PlayerManager : MonoBehaviour
         ResourceCard wc = new WoodCard(1, ResourceTypes.Wood);
         ResourceCard wc1 = new WoodCard(1, ResourceTypes.Wood);
         ResourceCard wc2 = new WoodCard(1, ResourceTypes.Wood);
+        ResourceCard wh = new WheatCard(1, ResourceTypes.Wheat);
         dp.add(sp);
         dp.add(sp1);
         dp.add(sp2);
@@ -35,10 +36,13 @@ public class PlayerManager : MonoBehaviour
         dp.add(wc);
         dp.add(wc1);
         dp.add(wc2);
-        Building rc = new RoadCost();
-        rc.takeCards(ref dp);
+        dp.add(wh);
+        Player p = new Player("Jucator", "1", dp);
+        playerAddsSettlement(p);
+       /* Building rc = new RoadCost();
+        rc.takeCards(ref dp);*/
         Debug.Log("Uite cate au ramas ");
-        Debug.Log(dp.nrCards);
+        Debug.Log(p.deck.nrCards);
     }
 
     IEnumerator WaitForBoardToFinish()
@@ -64,7 +68,34 @@ public class PlayerManager : MonoBehaviour
 
     public void playerAddsRoad(Player p)
     {
-        
+        CraftingCost c = new CraftingCost();
+        c.resourcesRequired.Add(ResourceTypes.Wood, 1);
+        c.resourcesRequired.Add(ResourceTypes.Brick, 1);
+        c.takeCards(p); // in take card face si verificarea si nu ia daca nu are cartile necesare 
+    }
+    public void playerAddsCity(Player p)
+    {
+       CraftingCost c = new CraftingCost();
+       c.resourcesRequired.Add(ResourceTypes.Stone, 3);
+       c.resourcesRequired.Add(ResourceTypes.Wheat, 2);
+       c.takeCards(p);
+    }
+    public void playerAddsSettlement(Player p)
+    {
+        CraftingCost c = new CraftingCost();
+        c.resourcesRequired.Add(ResourceTypes.Wood, 1);
+        c.resourcesRequired.Add(ResourceTypes.Brick, 1);
+        c.resourcesRequired.Add(ResourceTypes.Sheep, 1);
+        c.resourcesRequired.Add(ResourceTypes.Wheat, 1);
+        c.takeCards(p);
+    }
+    public void playerAddsDevelopment(Player p)
+    {
+        CraftingCost c = new CraftingCost();
+        c.resourcesRequired.Add(ResourceTypes.Wheat, 1);
+        c.resourcesRequired.Add(ResourceTypes.Stone, 1);
+        c.resourcesRequired.Add(ResourceTypes.Sheep, 1);
+        c.takeCards(p);
     }
     public void AddPlayer(Player p)
     {
