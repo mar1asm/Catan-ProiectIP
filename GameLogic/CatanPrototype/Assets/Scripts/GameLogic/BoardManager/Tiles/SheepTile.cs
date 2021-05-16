@@ -22,6 +22,6 @@ public class SheepTile : ResourceTile
 
     public override void LoadVFX()
     {
-        VFX = (GameObject)Resources.Load("GameLogic/Prefabs/FencedLand");
+        VFX = (GameObject)Resources.Load("GameLogic/Prefabs/HexTiles/HexaSheep");
     }
 }

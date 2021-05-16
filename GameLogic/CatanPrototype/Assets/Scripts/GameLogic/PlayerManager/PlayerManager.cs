@@ -10,7 +10,7 @@ public class PlayerManager : MonoBehaviour
     
     void Start()
     {
-        Player test = new Player("test", "abc");
+        /*Player test = new Player("test", "abc");
         test.color = PlayerColor.Blue;
 
         players.Add(test);
@@ -39,12 +39,39 @@ public class PlayerManager : MonoBehaviour
         dp.add(wh);
         Player p = new Player("Jucator", "1", dp);
         playerAddsSettlement(p);
-       /* Building rc = new RoadCost();
-        rc.takeCards(ref dp);*/
+       // Building rc = new RoadCost();
+       // rc.takeCards(ref dp);
         Debug.Log("Uite cate au ramas ");
         Debug.Log(p.deck.nrCards);
+
+        test.deck.add(new SheepCard(1, ResourceTypes.Sheep));
+        test.deck.add(new SheepCard(1, ResourceTypes.Sheep));
+        test.deck.add(new SheepCard(1, ResourceTypes.Sheep));
+        */
+
+
+        Trade t = new Trade(true);
+        t.AddResourceNeeded(ResourceTypes.Sheep);
+        t.AddResourceNeeded(ResourceTypes.Sheep);
+        //t.AddResourceNeeded(ResourceTypes.Stone);
+
+        TradeManagerBehaviour tmb = GameObject.Find("Trade Manager").GetComponent<TradeManagerBehaviour>();
+
+
+        Debug.Log(tmb.PlayerSatisfiesTradeRequirements(test, t));
+
+        test.PayResources(t.resourcesNeeded);
+
+        Debug.Log("Cate carti are?" + test.deck.Cards.Count);
+        //StartCoroutine(WaitForBoardToFinish());
+        
+ 
     }
 
+    /// <summary>
+    /// Corutina asta este doar pentru test, a nu se folosi!!
+    /// </summary>
+    /// <returns></returns>
     IEnumerator WaitForBoardToFinish()
     {
         yield return new WaitForSeconds(1);
@@ -52,7 +79,7 @@ public class PlayerManager : MonoBehaviour
         bb.AddSettlement(players[0], new BoardCoordinate(1.33f, -2.66f), "village");
         Debug.Log("am pus");
         TradeManagerBehaviour tmb = GameObject.Find("Trade Manager").GetComponent<TradeManagerBehaviour>();
-        var trades = tmb.GetTradesForPlayer(players[0]);
+        var trades = tmb.GetHarbourTradesForPlayer(players[0]);
         Debug.Log("E bine aici " + trades.Count);
         foreach (Trade trade in trades)
         {

@@ -22,7 +22,7 @@ public class DesertTile : Tile
 
     public override void LoadVFX()
     {
-        VFX = (GameObject)Resources.Load("GameLogic/Prefabs/DesertCacti");
+        VFX = (GameObject)Resources.Load("GameLogic/Prefabs/HexTiles/HexaDessert");
     }
 
 
