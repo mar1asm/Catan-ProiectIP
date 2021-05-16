@@ -10,13 +10,13 @@ public class PlayerManager : MonoBehaviour
     
     void Start()
     {
-        /*Player test = new Player("test", "abc");
+        Player test = new Player("test", "abc");
         test.color = PlayerColor.Blue;
 
         players.Add(test);
         StartCoroutine(WaitForBoardToFinish());
         /// cod de test  pentru player manager
-        DeckPlayer dp = new DeckPlayer();
+      /*  DeckPlayer dp = new DeckPlayer();
         ResourceCard sp = new SheepCard(1,ResourceTypes.Sheep);
         ResourceCard sp1 = new SheepCard(1, ResourceTypes.Sheep);
         ResourceCard sp2 = new SheepCard(1, ResourceTypes.Sheep);
@@ -43,11 +43,11 @@ public class PlayerManager : MonoBehaviour
        // rc.takeCards(ref dp);
         Debug.Log("Uite cate au ramas ");
         Debug.Log(p.deck.nrCards);
-
+       */
         test.deck.add(new SheepCard(1, ResourceTypes.Sheep));
         test.deck.add(new SheepCard(1, ResourceTypes.Sheep));
         test.deck.add(new SheepCard(1, ResourceTypes.Sheep));
-        */
+        
 
 
         Trade t = new Trade(true);
