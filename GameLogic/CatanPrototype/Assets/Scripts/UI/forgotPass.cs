@@ -48,7 +48,7 @@ public class forgotPass : MonoBehaviour
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(rawJson);
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         request.SetRequestHeader("Content-Type", "application/json");
-        request.SetRequestHeader("Authorization", UserAuth.GetToken());
+        request.SetRequestHeader("Authorization", "Bearer " + UserAuth.GetToken());
 
         //Send the request then wait here until it returns
         yield return request.SendWebRequest();
