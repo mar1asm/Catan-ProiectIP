@@ -7,65 +7,15 @@ public class PlayerManager : MonoBehaviour
 {
     
     public List<Player> players;
-    
+
+    public Player longestRoadHolder;
+
     void Start()
     {
         Player test = new Player("test", "abc");
         test.color = PlayerColor.Blue;
 
         players.Add(test);
-        StartCoroutine(WaitForBoardToFinish());
-        /// cod de test  pentru player manager
-      /*  DeckPlayer dp = new DeckPlayer();
-        ResourceCard sp = new SheepCard(1,ResourceTypes.Sheep);
-        ResourceCard sp1 = new SheepCard(1, ResourceTypes.Sheep);
-        ResourceCard sp2 = new SheepCard(1, ResourceTypes.Sheep);
-        ResourceCard bc = new BrickCard(1, ResourceTypes.Brick);
-        ResourceCard bc1 = new  BrickCard(1, ResourceTypes.Brick);
-        ResourceCard bc2 = new BrickCard(1, ResourceTypes.Brick);
-        ResourceCard wc = new WoodCard(1, ResourceTypes.Wood);
-        ResourceCard wc1 = new WoodCard(1, ResourceTypes.Wood);
-        ResourceCard wc2 = new WoodCard(1, ResourceTypes.Wood);
-        ResourceCard wh = new WheatCard(1, ResourceTypes.Wheat);
-        dp.add(sp);
-        dp.add(sp1);
-        dp.add(sp2);
-        dp.add(bc);
-        dp.add(bc1);
-        dp.add(bc2);
-        dp.add(wc);
-        dp.add(wc1);
-        dp.add(wc2);
-        dp.add(wh);
-        Player p = new Player("Jucator", "1", dp);
-        playerAddsSettlement(p);
-       // Building rc = new RoadCost();
-       // rc.takeCards(ref dp);
-        Debug.Log("Uite cate au ramas ");
-        Debug.Log(p.deck.nrCards);
-       */
-        test.deck.add(new SheepCard(1, ResourceTypes.Sheep));
-        test.deck.add(new SheepCard(1, ResourceTypes.Sheep));
-        test.deck.add(new SheepCard(1, ResourceTypes.Sheep));
-        
-
-
-        Trade t = new Trade(true);
-        t.AddResourceNeeded(ResourceTypes.Sheep);
-        t.AddResourceNeeded(ResourceTypes.Sheep);
-        //t.AddResourceNeeded(ResourceTypes.Stone);
-
-        TradeManagerBehaviour tmb = GameObject.Find("Trade Manager").GetComponent<TradeManagerBehaviour>();
-
-
-        Debug.Log(tmb.PlayerSatisfiesTradeRequirements(test, t));
-
-        test.PayResources(t.resourcesNeeded);
-
-        Debug.Log("Cate carti are?" + test.deck.Cards.Count);
-        //StartCoroutine(WaitForBoardToFinish());
-        
- 
     }
 
     /// <summary>
@@ -132,6 +82,17 @@ public class PlayerManager : MonoBehaviour
     {
         players.Remove(p);
     }
+
+    public void PlayerStealsFromPlayer(Player thief, Player victim)
+    {
+        Card card = victim.RemoveRandomResourceCard();
+        if (card == null) return;
+        List<Card> resourcesAux = new List<Card>();
+        resourcesAux.Add(card);
+        thief.GetCard(card);
+    }
    
+
+
 
 }

@@ -20,7 +20,12 @@ public class BoardManagerBehaviour : MonoBehaviour
     private GameObject portPrefab;
 
     [SerializeField]
+    private GameObject thiefPrefab;
+
+    [SerializeField]
     private Board board;
+
+    private GameObject thiefGameObject;
 
 
   
@@ -38,6 +43,8 @@ public class BoardManagerBehaviour : MonoBehaviour
                         ResourceTypes.Any, 3, 1);
         */
         InstantiateBoard();
+
+        MoveThief(new BoardCoordinate(-1, 2));
 
 
         Player p = new Player("test", "123");
@@ -62,19 +69,19 @@ public class BoardManagerBehaviour : MonoBehaviour
         pRed.color = PlayerColor.Red;
 
 
-        AddConnector(pRed, new BoardCoordinate(0.33f, -2.66f), new BoardCoordinate(-0.33f, -2.33f), "road");
-        AddConnector(pRed, new BoardCoordinate(-0.33f, -2.33f), new BoardCoordinate(-0.66f, -1.67f), "road");
-        AddConnector(pRed, new BoardCoordinate(-0.66f, -1.67f), new BoardCoordinate(-1.33f, -1.33f), "road");
-        AddConnector(pRed, new BoardCoordinate(-1.33f, -1.33f), new BoardCoordinate(-1.67f, -0.66f), "road");
-        AddConnector(pRed, new BoardCoordinate(-1.67f, -0.66f), new BoardCoordinate(-2.33f, -0.33f), "road");
-        AddConnector(pRed, new BoardCoordinate(-2.33f, -0.33f), new BoardCoordinate(-2.66f, 0.33f), "road");
-        AddConnector(pRed, new BoardCoordinate(-2.66f, 0.33f), new BoardCoordinate(-2.33f, 0.67f), "road");
-        AddConnector(pRed, new BoardCoordinate(-2.33f, 0.67f), new BoardCoordinate(-1.66f, 0.33f), "road");
-        AddConnector(pRed, new BoardCoordinate(-1.66f, 0.33f), new BoardCoordinate(-1.33f, -0.33f), "road");
-        AddConnector(pRed, new BoardCoordinate(-1.33f, -0.33f), new BoardCoordinate(-1.67f, -0.66f), "road");
-        AddConnector(pRed, new BoardCoordinate(-1.33f, -0.33f), new BoardCoordinate(-0.66f, -0.67f), "road");
-        AddConnector(pRed, new BoardCoordinate(-0.66f, -0.67f), new BoardCoordinate(-0.33f, -1.33f), "road");
-        AddConnector(pRed, new BoardCoordinate(-0.33f, -1.33f), new BoardCoordinate(-0.66f, -1.67f), "road");
+        //AddConnector(pRed, new BoardCoordinate(0.33f, -2.66f), new BoardCoordinate(-0.33f, -2.33f), "road");
+        //AddConnector(pRed, new BoardCoordinate(-0.33f, -2.33f), new BoardCoordinate(-0.66f, -1.66f), "road");
+        //AddConnector(pRed, new BoardCoordinate(-0.66f, -1.66f), new BoardCoordinate(-1.33f, -1.33f), "road");
+        //AddConnector(pRed, new BoardCoordinate(-1.33f, -1.33f), new BoardCoordinate(-1.67f, -0.66f), "road");
+        //AddConnector(pRed, new BoardCoordinate(-1.67f, -0.66f), new BoardCoordinate(-2.33f, -0.33f), "road");
+        //AddConnector(pRed, new BoardCoordinate(-2.33f, -0.33f), new BoardCoordinate(-2.66f, 0.33f), "road");
+        //AddConnector(pRed, new BoardCoordinate(-2.66f, 0.33f), new BoardCoordinate(-2.33f, 0.66f), "road");
+        //AddConnector(pRed, new BoardCoordinate(-2.33f, 0.66f), new BoardCoordinate(-1.66f, 0.33f), "road");
+        //AddConnector(pRed, new BoardCoordinate(-1.66f, 0.33f), new BoardCoordinate(-1.33f, -0.33f), "road");
+        //AddConnector(pRed, new BoardCoordinate(-1.33f, -0.33f), new BoardCoordinate(-1.67f, -0.66f), "road");
+        //AddConnector(pRed, new BoardCoordinate(-1.33f, -0.33f), new BoardCoordinate(-0.66f, -0.66f), "road");
+        AddConnector(pRed, new BoardCoordinate(-0.66f, -0.66f), new BoardCoordinate(-0.33f, -1.33f), "road");
+        //AddConnector(pRed, new BoardCoordinate(-0.33f, -1.33f), new BoardCoordinate(-0.66f, -1.66f), "road");
 
 
         Debug.Log("culoarea: " + board.CheckLongestRoad());        
@@ -88,12 +95,34 @@ public class BoardManagerBehaviour : MonoBehaviour
     }
 
 
+
+
+    /// <summary>
+    /// Returneaza numarul de puncte din asezari
+    /// </summary>
+    /// <returns></returns>
+    public int GetPlayerPointsFromSettlements(Player p)
+    {
+        int sum = 0;
+        foreach (var pair in board.corners)
+        {
+            if(pair.Value.settlement != null)
+            {
+                if(pair.Value.settlement.owner == p)
+                {
+                    sum += pair.Value.settlement.GetNumberOfPoints();
+                }
+            }
+        }
+        return sum;
+    }
     public void GiveResources(int nr)
     {
         // Debug.Log("Jucatorii care au asezari pe" + nr + "primesc resurse.");
 
         foreach (KeyValuePair<BoardCoordinate, Tile> entry in board.tiles)
         {
+            if (entry.Key == board.thiefPosition) continue;
             if (entry.Value is ResourceTile)
                 if(((ResourceTile)entry.Value).numberTileValue == nr)
                   entry.Value.SpecialAction();
@@ -220,7 +249,10 @@ public class BoardManagerBehaviour : MonoBehaviour
 
 
         Connector connector = board.PlaceConnector(p,bc1,bc2,type);
+
         Vector3 position = connector.middle.ToWorldSpace();
+
+        Debug.LogWarning(position);
 
         position.y += deltaY; 
         Quaternion rotation = connector.rotation;
@@ -262,6 +294,38 @@ public class BoardManagerBehaviour : MonoBehaviour
             GameObject portGO = Instantiate(portPrefab, position, rotation, transform);
             portGO.GetComponent<PortBehaviour>().port = port;
         }
+
+
+        Vector3 thiefPosition = board.thiefPosition.ToWorldSpace();
+        thiefPosition.y += deltaY;
+
+        thiefGameObject = Instantiate(thiefPrefab, thiefPosition,
+                                      Quaternion.identity, transform);
+
+    }
+
+
+    /// <summary>
+    /// Muta hotul la coordonata data
+    /// Functia asta nu realizeaza si furtul! 
+    /// </summary>
+    /// <param name="corner"></param>
+    public void MoveThief(Corner corner)
+    {
+        MoveThief(corner.coordinate);
+    }
+    
+    /// <summary>
+    /// Muta hotul la coordonata data
+    /// Functia asta nu realizeaza si furtul!
+    /// </summary>
+    /// <param name="boardCoordinate"></param>
+    public void MoveThief(BoardCoordinate boardCoordinate)
+    {
+        board.SetThiefPosition(boardCoordinate);
+        Vector3 newThiefPosition = board.thiefPosition.ToWorldSpace();
+        newThiefPosition.y += deltaY;
+        thiefGameObject.transform.position = newThiefPosition;
     }
     public void InitializeBoardFromFile(string filePath)
     {

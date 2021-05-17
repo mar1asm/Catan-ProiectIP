@@ -10,6 +10,7 @@ public class Player
     public PlayerColor color;
     int score;
     public DeckPlayer deck;
+    private int _armySize = 0;
     public Player(string name, string id)
     {
         deck = new DeckPlayer();
@@ -37,6 +38,10 @@ public class Player
         }
     }
 
+    public void GetCard(Card card)
+    {
+        deck.add(card);
+    }
 
     public void GetResources(List<ResourceTypes> resources)
     {
@@ -46,6 +51,74 @@ public class Player
         }
     }
 
+    /// <summary>
+    /// Cate puncte sunt in mana lui?
+    /// </summary>
+    public int pointsFromHand
+    {
+        get
+        {
+            return GetPointsFromHand();
+        }
+    }
+
+    /// <summary>
+    /// Returneaza numarul de carti cu puncte din mana
+    /// </summary>
+    /// <returns></returns>
+    public int GetPointsFromHand()
+    {
+        int sum = 0;
+        foreach(var card in deck.Cards)
+        {
+            if(card is PointCard)
+            {
+                sum++;
+            }
+        }
+        return sum;
+    }
+
+    public void PlayCard(int index)
+    {
+        Card card = deck.Cards[index];
+        if(!(card is DevelopmentCard))
+        {
+            return;
+        }
+
+        //aici trebuie logica cartilor...
+
+        if(card is SoldierCard)
+        {
+            _armySize++;
+        }
+
+        deck.remove(card);
+    } 
+
+
+
+    /// <summary>
+    /// Cati soldati a jucat? (nu in mana lui)
+    /// </summary>
+    public int numberOfSoldiers
+    {
+        get
+        {
+            return _armySize;
+        }
+    }
+
+
+    /// <summary>
+    /// Returneaza numarul de soldati jucati
+    /// </summary>
+    /// <returns></returns>
+    public int GetNumberOfSoldiers()
+    {
+        return _armySize;
+    }
 
     /// <summary>
     /// Returneaza un dictionar care spune cate resurse din fiecare tip are un player
@@ -69,6 +142,25 @@ public class Player
         }
 
         return playerResources;
+    }
+
+
+    public Card RemoveRandomResourceCard()
+    {
+        List<Card> resourceCards = new List<Card>();
+        foreach (var card in deck.Cards)
+        {
+            if(card is ResourceCard)
+            {
+                resourceCards.Add(card);
+            }
+        }
+        if (resourceCards.Count == 0) return null;
+
+        int index = Random.Range(0, resourceCards.Count);
+        Card resourceCard = resourceCards[index];
+        resourceCards.RemoveAt(index);
+        return resourceCard;
     }
 
     public void ScoreAdd(int value)

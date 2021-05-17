@@ -22,6 +22,7 @@ public class Board
         get; private set;
     }
 
+    public BoardCoordinate thiefPosition = new BoardCoordinate(0, 0);
 
     public List<Port> ports = new List<Port>();
 
@@ -43,6 +44,12 @@ public class Board
         }
 
 
+    }
+
+    public void SetThiefPosition(BoardCoordinate boardCoordinate)
+    {
+        if (!tiles.ContainsKey(boardCoordinate)) return;
+        thiefPosition = boardCoordinate;
     }
 
     
@@ -206,25 +213,25 @@ public class Board
     }
 
 
-    public int CheckLongestRoad()
+    public PlayerColor CheckLongestRoad()
     {
         //returneaza numarul culorii jucatorului care are cel mai lung drum
         //made by jon
                                        
         int maxLength = 4;
-        int longestRoadColor = -1;
+        int longestRoadColor = (int)PlayerColor.None;
         for (int i = 0; i < (int)PlayerColor.NbOfColors; ++i)
         {
 
             int playerMaxLength = PlayerLongestRoad(i);
-            if (playerMaxLength > maxLength)
+            if (playerMaxLength > maxLength )
             {
                 maxLength = playerMaxLength;
                 longestRoadColor = i;
             }
         }
         Debug.Log("lungimea"+ maxLength);
-        return longestRoadColor;
+        return (PlayerColor)longestRoadColor;
     }
 
     private int maxFromBkt;//variabila ce ne va ajuta la determinatea celui mai lung drum pornind dint-o anumita coodonata
