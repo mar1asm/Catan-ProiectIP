@@ -73,6 +73,85 @@ namespace CatanAPI.Controllers
             };
         }
 
+        // GET: api/GameSession/user
+        [HttpGet("user")]
+        public async Task<ActionResult<IEnumerable<GetSessionDto>>> GetMySessions()
+        {
+            var currentUser = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+            var gameSessions = await _context.GameSessions
+                .Include(i => i.GameSessionUsers)
+                .Where(item => item.GameSessionUsers.Any(user => user.UserId == currentUser.Id))
+                .Select(gameSession => new GetSessionDto
+                {
+                    Id = gameSession.Id,
+                    CreatedAt = gameSession.CreatedAt,
+                    Status = gameSession.Status,
+                    Extensions = gameSession.Extensions.Select(extension => new GetExtensionDTO { Id = extension.Id, Name = extension.Name }).ToList(),
+                    GameSessionUsers = gameSession.GameSessionUsers.Select(user => new GetUserMinDTO { Id = user.UserId, UserName = user.User.UserName }).ToList()
+                }).ToListAsync();
+            return gameSessions;
+        }
+
+        [HttpPost("{id}/user")]
+        public async Task<ActionResult<GetSessionMinDto>> AddUser(int id, AddUserToSessionDTO userInvite)
+        {
+            var currentUser = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+            var targetUser = await _context.Users.FirstOrDefaultAsync(u => u.UserName == userInvite.UserName);
+            var session = await _context.GameSessions
+                .Include(s => s.GameSessionUsers)
+                .FirstOrDefaultAsync(entry => entry.Id == id);
+            if (session == null || session.GameSessionUsers == null || targetUser == null)
+            {
+                return NotFound();
+            }
+            if (!session.GameSessionUsers.Any(sessionUser => sessionUser.UserId == currentUser.Id 
+                && (sessionUser.SessionRoles & GameSessionRoles.GameAdmin) > 0))
+            {
+                return Unauthorized();
+            }
+            if(session.GameSessionUsers.Any(sessionUser => sessionUser.UserId == targetUser.Id))
+            {
+                return BadRequest();
+            }
+
+            session.GameSessionUsers.Add(new GameSessionUser
+            {
+                GameSession = session,
+                GameSessionId = session.Id,
+                SessionRoles = GameSessionRoles.GameUser,
+                Status = GameSessionUserStatus.Pending,
+                User = targetUser,
+                UserId = targetUser.Id
+            });
+            await _context.SaveChangesAsync();
+            return CreatedAtAction("GetGameSession", new { id = session.Id }, new GetSessionMinDto
+            {
+                Id = session.Id,
+                CreatedAt = session.CreatedAt,
+                Status = session.Status
+            });
+        }
+
+        [HttpPut("{id}/user")]
+        public async Task<IActionResult> PutSessionInviteStatus(int id, SetSessionStatusRequest status)
+        {
+            var currentUser = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+            var sessionUserEntry = await _context.GameSessionUsers
+                .Where(sUser => sUser.UserId == currentUser.Id && sUser.GameSessionId == id).FirstOrDefaultAsync();
+            if(sessionUserEntry == null)
+            {
+                return NotFound();
+            }
+            if(status.Status != GameSessionUserStatus.Accepted && status.Status != GameSessionUserStatus.Declined)
+            {
+                return BadRequest();
+            }
+            sessionUserEntry.Status = status.Status;
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
         // POST: api/GameSessions
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
