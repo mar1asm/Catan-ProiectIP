@@ -17,7 +17,13 @@ public class Player
         ID = id;
         // nu board = b;
     }
+    public Player ( string name, string id, DeckPlayer d)
+    {
+        nickname = name;
+        ID = id;
+        deck = d;
 
+    }
 
     /// <summary>
     /// Functie care "plateste" resursele din mana jucatorului
