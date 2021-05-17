@@ -11,11 +11,13 @@ namespace CatanAPI.Data
 
         public DbSet<Extension> Extensions { get; set; }
         public DbSet<GameSession> GameSessions { get; set; }
+        public DbSet<GameSessionUser> GameSessionUsers { get; set; }
 
         public DbSet<PrivateMessage> PrivateMessages { get; set; }
-        
 
-        public CatanAPIDbContext(DbContextOptions<CatanAPIDbContext> options) : base(options) {
+
+        public CatanAPIDbContext(DbContextOptions<CatanAPIDbContext> options) : base(options)
+        {
 
         }
 
@@ -41,7 +43,7 @@ namespace CatanAPI.Data
                         userNotificationBuilder.HasKey(userNotification => new { userNotification.UserId, userNotification.NotificationId });
                     }
                 );
-            
+
             modelBuilder.Entity<GameSession>()
                  .HasMany(gameSession => gameSession.Users)
                  .WithMany(user => user.GameSessions)
