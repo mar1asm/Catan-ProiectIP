@@ -96,7 +96,7 @@ namespace CatanAPI.Controllers
         public async Task<ActionResult<GetSessionMinDto>> AddUser(int id, AddUserToSessionDTO userInvite)
         {
             var currentUser = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
-            var targetUser = await _context.Users.FindAsync(userInvite.UserId);
+            var targetUser = await _context.Users.FirstOrDefaultAsync(u => u.UserName == userInvite.UserName);
             var session = await _context.GameSessions
                 .Include(s => s.GameSessionUsers)
                 .FirstOrDefaultAsync(entry => entry.Id == id);
