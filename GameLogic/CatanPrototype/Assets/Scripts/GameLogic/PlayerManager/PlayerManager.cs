@@ -7,6 +7,7 @@ public class PlayerManager : MonoBehaviour
 {
     
     public List<Player> players;
+    public Player longestRoadHolder;
 
     void Start()
     {
@@ -15,25 +16,30 @@ public class PlayerManager : MonoBehaviour
 
         players.Add(test);
 
-        test.deck.add(new SheepCard(1, ResourceTypes.Sheep));
-        test.deck.add(new SheepCard(1, ResourceTypes.Sheep));
-        test.deck.add(new SheepCard(1, ResourceTypes.Sheep));
+
+
+        //test.deck.add(new SheepCard(1, ResourceTypes.Sheep));
+        //test.deck.add(new SheepCard(1, ResourceTypes.Sheep));
+        //test.deck.add(new SheepCard(1, ResourceTypes.Sheep));
         
 
 
-        Trade t = new Trade(true);
-        t.AddResourceNeeded(ResourceTypes.Sheep);
-        t.AddResourceNeeded(ResourceTypes.Sheep);
-        //t.AddResourceNeeded(ResourceTypes.Stone);
-
-        TradeManagerBehaviour tmb = GameObject.Find("Trade Manager").GetComponent<TradeManagerBehaviour>();
+        //Trade t = new Trade(true);
+        //t.AddResourceNeeded(ResourceTypes.Sheep);
+        //t.AddResourceNeeded(ResourceTypes.Sheep);
+        ////t.AddResourceNeeded(ResourceTypes.Stone);
 
 
-        Debug.Log(tmb.PlayerSatisfiesTradeRequirements(test, t));
 
-        test.PayResources(t.resourcesNeeded);
 
-        Debug.Log("Cate carti are?" + test.deck.Cards.Count);
+        //TradeManagerBehaviour tmb = GameObject.Find("Trade Manager").GetComponent<TradeManagerBehaviour>();
+
+
+        //Debug.Log(tmb.PlayerSatisfiesTradeRequirements(test, t));
+
+        //test.PayResources(t.resourcesNeeded);
+
+        //Debug.Log("Cate carti are?" + test.deck.Cards.Count);
         //StartCoroutine(WaitForBoardToFinish());
         
  
@@ -76,6 +82,17 @@ public class PlayerManager : MonoBehaviour
     {
         players.Remove(p);
     }
+
+    public void PlayerStealsFromPlayer(Player thief, Player victim)
+    {
+        Card card = victim.RemoveRandomResourceCard();
+        if (card == null) return;
+        List<Card> resourcesAux = new List<Card>();
+        resourcesAux.Add(card);
+        thief.GetCard(card);
+    }
    
+
+
 
 }
