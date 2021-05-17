@@ -17,7 +17,10 @@ namespace CatanAPI.Models
  
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public short Roles { get; set; }
+        public UserRoles Roles { get; set; }
+        public int NoOfGames { get; set; }
+        public int NoOfWonGames { get; set; }
+        public int TimeOnPlay { get; set; }
 
         public ICollection<Notification> Notifications { get; set; }
         public List<UserNotification> UserNotifications { get; set; }
