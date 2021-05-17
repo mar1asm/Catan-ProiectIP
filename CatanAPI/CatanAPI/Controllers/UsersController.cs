@@ -36,6 +36,8 @@ namespace CatanAPI.Controllers
                 Id = b.Id,
                 FirstName = b.FirstName,
                 LastName = b.LastName,
+                IconPath = b.IconPath,
+                Level = b.Level,
                 Email = b.Email,
                 UserName = b.UserName,
                 Notifications = b.UserNotifications
@@ -65,6 +67,8 @@ namespace CatanAPI.Controllers
                     FirstName = entry.FirstName,
                     LastName = entry.LastName,
                     UserName = entry.UserName,
+                    IconPath = entry.IconPath,
+                    Level = entry.Level,
                     Email = entry.Email,
                     Notifications = entry.UserNotifications
                     .Select(
@@ -102,6 +106,8 @@ namespace CatanAPI.Controllers
             userEntry.LastName = user.LastName ?? userEntry.LastName;
             userEntry.Email = user.Email ?? userEntry.Email;
             userEntry.UserName = user.UserName ?? userEntry.UserName;
+            userEntry.IconPath = user.IconPath ?? userEntry.IconPath;
+            userEntry.Level = user.Level ?? userEntry.Level;
 
             try
             {
