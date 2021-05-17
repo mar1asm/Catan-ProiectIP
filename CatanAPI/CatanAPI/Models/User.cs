@@ -18,6 +18,8 @@ namespace CatanAPI.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public UserRoles Roles { get; set; }
+        public string IconPath { get; set; }
+        public int Level { get; set; }
         public int NoOfGames { get; set; }
         public int NoOfWonGames { get; set; }
         public int TimeOnPlay { get; set; }

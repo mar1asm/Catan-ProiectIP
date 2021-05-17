@@ -3,15 +3,17 @@ using System;
 using CatanAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace CatanAPI.Migrations
 {
     [DbContext(typeof(CatanAPIDbContext))]
-    partial class CatanAPIDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210517175121_UserStatisticsFields")]
+    partial class UserStatisticsFields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

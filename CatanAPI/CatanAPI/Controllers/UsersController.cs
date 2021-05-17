@@ -36,6 +36,8 @@ namespace CatanAPI.Controllers
                 Id = b.Id,
                 FirstName = b.FirstName,
                 LastName = b.LastName,
+                IconPath = b.IconPath,
+                Level = b.Level,
                 Email = b.Email,
                 UserName = b.UserName,
                 Notifications = b.UserNotifications
@@ -46,6 +48,39 @@ namespace CatanAPI.Controllers
             return Ok(users);
         }
 
+        // Get: api/Users/me
+        [Authorize]
+        [HttpGet("me")]
+        public async Task<ActionResult<GetUserDTO>> GetLoggedInUser()
+        {
+            var currentUser = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+            var user = await _context
+                .Users.
+                Select(entry =>
+                new GetUserDTO
+                {
+                    Id = entry.Id,
+                    FirstName = entry.FirstName,
+                    LastName = entry.LastName,
+                    UserName = entry.UserName,
+                    IconPath = entry.IconPath,
+                    Level = entry.Level,
+                    Email = entry.Email,
+                    Notifications = entry.UserNotifications
+                    .Select(
+                    n => new NotificationDto { NotificationId = n.Id, CreatedAt = n.CreatedAt, Text = n.Notification.Text, Read = n.Read })
+                    .ToList()
+                }
+                )
+                .SingleOrDefaultAsync(entry => entry.Id == currentUser.Id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return user;
+        }
         // GET: api/Users/5
         [Authorize]
         [HttpGet("{id}")]
@@ -65,6 +100,8 @@ namespace CatanAPI.Controllers
                     FirstName = entry.FirstName,
                     LastName = entry.LastName,
                     UserName = entry.UserName,
+                    IconPath = entry.IconPath,
+                    Level = entry.Level,
                     Email = entry.Email,
                     Notifications = entry.UserNotifications
                     .Select(
@@ -102,6 +139,8 @@ namespace CatanAPI.Controllers
             userEntry.LastName = user.LastName ?? userEntry.LastName;
             userEntry.Email = user.Email ?? userEntry.Email;
             userEntry.UserName = user.UserName ?? userEntry.UserName;
+            userEntry.IconPath = user.IconPath ?? userEntry.IconPath;
+            userEntry.Level = user.Level ?? userEntry.Level;
 
             try
             {
@@ -110,6 +149,44 @@ namespace CatanAPI.Controllers
             catch (DbUpdateConcurrencyException)
             {
                 if (!UserExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        // PUT: api/Users/me
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize]
+        [HttpPut("me")]
+        public async Task<IActionResult> PutLoggedInUser(UserUpdateDto user)
+        {
+            var currentUser = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+            var userEntry = await _context.Users.SingleOrDefaultAsync(entry => entry.Id == currentUser.Id);
+            if (userEntry == null)
+            {
+                return NotFound();
+            }
+            userEntry.FirstName = user.FirstName ?? userEntry.FirstName;
+            userEntry.LastName = user.LastName ?? userEntry.LastName;
+            userEntry.Email = user.Email ?? userEntry.Email;
+            userEntry.UserName = user.UserName ?? userEntry.UserName;
+            userEntry.IconPath = user.IconPath ?? userEntry.IconPath;
+            userEntry.Level = user.Level ?? userEntry.Level;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!UserExists(currentUser.Id))
                 {
                     return NotFound();
                 }

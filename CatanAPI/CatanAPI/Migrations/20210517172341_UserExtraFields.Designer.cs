@@ -3,15 +3,17 @@ using System;
 using CatanAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace CatanAPI.Migrations
 {
     [DbContext(typeof(CatanAPIDbContext))]
-    partial class CatanAPIDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210517172341_UserExtraFields")]
+    partial class UserExtraFields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -213,12 +215,6 @@ namespace CatanAPI.Migrations
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("NoOfGames")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("NoOfWonGames")
-                        .HasColumnType("integer");
-
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
@@ -236,14 +232,11 @@ namespace CatanAPI.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("boolean");
 
-                    b.Property<int>("Roles")
-                        .HasColumnType("integer");
+                    b.Property<short>("Roles")
+                        .HasColumnType("smallint");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("text");
-
-                    b.Property<int>("TimeOnPlay")
-                        .HasColumnType("integer");
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("boolean");
