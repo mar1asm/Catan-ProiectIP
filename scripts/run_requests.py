@@ -12,14 +12,16 @@ USERS = [
         'lastName': 'Doe',
         'email': 'user1@test.com',
         'username': 'user1',
-        'password': 'P@ssw0rd123'
+        'password': 'P@ssw0rd123',
+        'iconPath': '/static/test1'
     },
     {
         'firstName': 'John',
         'lastName': 'Doe',
         'email': 'user1@test.com',
         'username': 'user2',
-        'password': 'P@ssw0rd123'
+        'password': 'P@ssw0rd123',
+        'iconPath': '/static/test2'
     }
 ]
 
