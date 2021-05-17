@@ -226,6 +226,98 @@ namespace CatanAPI.Controllers
             return NoContent();
         }
 
+         [Authorize]
+        [HttpGet("statistics/{id}")]
+        public async Task<ActionResult<Data.DTO.UserStatisticsDto>> GetUserStatistics(string id)
+        {
+            var currentUser = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+            if (id != currentUser.Id)
+            {
+                return Unauthorized();
+            }
+            var user = await _context
+                .Users.
+                Select(entry =>
+                new GetUserDTO
+                {
+                    Id = entry.Id,
+                    NoOfGames = entry.NoOfGames,
+                    NoOfWonGames = entry.NoOfWonGames,
+                    TimeOnPlay = entry.TimeOnPlay
+                }
+                )
+                .SingleOrDefaultAsync(entry => entry.Id == id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var statistics = new Data.DTO.UserStatisticsDto
+            { 
+                NoOfGames = user.NoOfGames, NoOfWonGames = user.NoOfWonGames, TimeOnPlay = user.TimeOnPlay 
+            };
+
+            return statistics;
+        }
+
+
+        [Authorize]
+        [HttpGet("statisticsAdmin")]
+        public async Task<ActionResult<Data.DTO.AdminStatisticsDto>> GetAdminStatistics()
+        {
+            var currentUser = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+
+            if (currentUser.Roles != UserRoles.Administrator)
+            {
+                return Unauthorized();
+            }
+
+            var users = await _context.Users.Select(b => new GetUserDTO
+            {
+                Id = b.Id,
+                FirstName = b.FirstName,
+                LastName = b.LastName,
+                Email = b.Email,
+                NoOfGames = b.NoOfGames,
+                NoOfWonGames = b.NoOfWonGames,
+                Role = b.Roles,
+                Notifications = b.UserNotifications
+                .Select(
+                    n => new NotificationDto { NotificationId = n.Id, CreatedAt = n.CreatedAt, Text = n.Notification.Text, Read = n.Read })
+                .ToList()
+            }).ToListAsync();
+
+            var noOfGames = 0;
+            users.ForEach(e => noOfGames += e.NoOfWonGames);
+
+            var statistics = new Data.DTO.AdminStatisticsDto
+            {
+                NoOfGames = noOfGames,
+                NoOfPlayers = users.Count()
+            };
+
+            return statistics;
+        }
+
+        [HttpGet("ranking")]
+        public async Task<ActionResult<IEnumerable<GetUserDTO>>> GetTopUsers()
+        {
+            var users = await _context.Users.Select(b => new GetUserDTO
+            {
+                Id = b.Id,
+                FirstName = b.FirstName,
+                LastName = b.LastName,
+                Email = b.Email,
+                NoOfGames = b.NoOfGames,
+                NoOfWonGames = b.NoOfWonGames,
+                Notifications = b.UserNotifications
+                .Select(
+                    n => new NotificationDto { NotificationId = n.Id, CreatedAt = n.CreatedAt, Text = n.Notification.Text, Read = n.Read })
+                .ToList()
+            }).OrderByDescending(entry => entry.NoOfWonGames).ToListAsync();
+            return Ok(users);
+        }
         private bool UserExists(string id)
         {
             return _context.Users.Any(e => e.Id == id);
