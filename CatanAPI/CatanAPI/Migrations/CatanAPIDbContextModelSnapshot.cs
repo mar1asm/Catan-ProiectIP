@@ -77,6 +77,34 @@ namespace CatanAPI.Migrations
                     b.ToTable("GameSessions");
                 });
 
+            modelBuilder.Entity("CatanAPI.Models.GameSessionMessage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("FromId")
+                        .HasColumnType("text");
+
+                    b.Property<int>("GameSessionId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Message")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FromId");
+
+                    b.HasIndex("GameSessionId");
+
+                    b.ToTable("GameSessionMessage");
+                });
+
             modelBuilder.Entity("CatanAPI.Models.GameSessionUser", b =>
                 {
                     b.Property<string>("UserId")
@@ -120,6 +148,34 @@ namespace CatanAPI.Migrations
                     b.ToTable("Notifications");
                 });
 
+            modelBuilder.Entity("CatanAPI.Models.PrivateMessage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("FromId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Message")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ToId")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FromId");
+
+                    b.HasIndex("ToId");
+
+                    b.ToTable("PrivateMessages");
+                });
+
             modelBuilder.Entity("CatanAPI.Models.User", b =>
                 {
                     b.Property<string>("Id")
@@ -142,8 +198,14 @@ namespace CatanAPI.Migrations
                     b.Property<string>("FirstName")
                         .HasColumnType("text");
 
+                    b.Property<string>("IconPath")
+                        .HasColumnType("text");
+
                     b.Property<string>("LastName")
                         .HasColumnType("text");
+
+                    b.Property<int>("Level")
+                        .HasColumnType("integer");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("boolean");
@@ -378,6 +440,23 @@ namespace CatanAPI.Migrations
                     b.Navigation("Sender");
                 });
 
+            modelBuilder.Entity("CatanAPI.Models.GameSessionMessage", b =>
+                {
+                    b.HasOne("CatanAPI.Models.User", "From")
+                        .WithMany()
+                        .HasForeignKey("FromId");
+
+                    b.HasOne("CatanAPI.Models.GameSession", "GameSession")
+                        .WithMany("GameSessionMessages")
+                        .HasForeignKey("GameSessionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("From");
+
+                    b.Navigation("GameSession");
+                });
+
             modelBuilder.Entity("CatanAPI.Models.GameSessionUser", b =>
                 {
                     b.HasOne("CatanAPI.Models.GameSession", "GameSession")
@@ -395,6 +474,21 @@ namespace CatanAPI.Migrations
                     b.Navigation("GameSession");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("CatanAPI.Models.PrivateMessage", b =>
+                {
+                    b.HasOne("CatanAPI.Models.User", "From")
+                        .WithMany()
+                        .HasForeignKey("FromId");
+
+                    b.HasOne("CatanAPI.Models.User", "To")
+                        .WithMany()
+                        .HasForeignKey("ToId");
+
+                    b.Navigation("From");
+
+                    b.Navigation("To");
                 });
 
             modelBuilder.Entity("CatanAPI.Models.UserNotification", b =>
@@ -484,6 +578,8 @@ namespace CatanAPI.Migrations
 
             modelBuilder.Entity("CatanAPI.Models.GameSession", b =>
                 {
+                    b.Navigation("GameSessionMessages");
+
                     b.Navigation("GameSessionUsers");
                 });
 
