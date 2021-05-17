@@ -10,6 +10,8 @@ namespace CatanAPI.Data.DTO.UsersDTO
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
+        public string IconPath { get; set; }
+        public int Level { get; set; }
 
         public List<NotificationDto> Notifications { get; set; }
         public List<ContactDto> Contacts { get; set; }
