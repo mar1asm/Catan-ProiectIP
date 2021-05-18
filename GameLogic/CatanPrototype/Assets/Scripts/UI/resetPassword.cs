@@ -5,27 +5,16 @@ using UnityEngine.SceneManagement;
 using System;
 
 [Serializable]
-public class UpdateAccountJson 
+public class ResetPasswordJson 
 {
-    // public string username;
-    // public string email;
     public string oldPassword;
     public string newPassword;
 }
 
-public class updateAccount : MonoBehaviour
+public class resetPassword : MonoBehaviour
 {
-    GameObject usernameObj, emailObj, oldPasswordObj, newPasswordObj;
-
-    public void getUsername(GameObject username)
-    {
-        this.usernameObj = username;
-    }
-
-    public void getEmail(GameObject email)
-    {
-        this.emailObj = email;
-    }
+    
+    GameObject oldPasswordObj, newPasswordObj;
 
     public void getOldPass(GameObject oldPassword)
     {
@@ -37,16 +26,14 @@ public class updateAccount : MonoBehaviour
         this.newPasswordObj = newPassword;
     }
 
-    public void verifyUpdate()
+    public void resetPass()
     {
-        string username = usernameObj.GetComponent<UnityEngine.UI.InputField>().text;
-        string email = emailObj.GetComponent<UnityEngine.UI.InputField>().text;
         string oldPassword = oldPasswordObj.GetComponent<UnityEngine.UI.InputField>().text;
         string newPassword = newPasswordObj.GetComponent<UnityEngine.UI.InputField>().text;
 
-        if (username != "" && email != "" && oldPassword != "" && newPassword != "")
+        if (oldPassword != "" && newPassword != "")
         {
-            StartCoroutine(postUpdate(username, email, oldPassword, newPassword));
+            StartCoroutine(postUpdate(oldPassword, newPassword));
         }
         else
         {
@@ -54,19 +41,16 @@ public class updateAccount : MonoBehaviour
         }
     }
 
-    IEnumerator postUpdate(string username, string email, string oldPassword, string newPassword)
+    IEnumerator postUpdate(string oldPassword, string newPassword)
     {
         //Preparing the POST Json Body
-        UpdateAccountJson updateAccountJson = new UpdateAccountJson();
-        // updateAccountJson.username = username;
-        // updateAccountJson.email = email;
-        updateAccountJson.oldPassword = oldPassword;
-        updateAccountJson.newPassword = newPassword;
-        string json = JsonUtility.ToJson(updateAccountJson);
+        ResetPasswordJson resetPasswordJson = new ResetPasswordJson();
+        resetPasswordJson.oldPassword = oldPassword;
+        resetPasswordJson.newPassword = newPassword;
+        string json = JsonUtility.ToJson(resetPasswordJson);
         byte[] rawJson = new System.Text.UTF8Encoding().GetBytes(json);
 
         //Preparing the request
-        //TODO: Add API support for updateAccount
         string uri = "https://localhost:5001/api/Authenticate/change";
         UnityWebRequest request = UnityWebRequest.Post(uri, "POST");
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(rawJson);
