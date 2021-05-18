@@ -12,7 +12,12 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     private TurnManagerBehaviour turnManager;
 
+    [SerializeField]
+    private MasterHighlighterBehaviour masterHighlighter;
+
     public List<Player> players;
+
+    public Player clientPlayer = new Player("test", "1");
 
     public Player longestRoadHolder = null;
     public int longestRoadLenght = 4;
@@ -72,6 +77,22 @@ public class PlayerManager : MonoBehaviour
         } 
     }
 
+
+
+    public IEnumerator PlayerMovesThief(Player p)
+    {
+        Debug.Log(p.nickname + " E RAAAAAU");
+        masterHighlighter.SpawnHighlighters(boardManager.PlacesWithoutThief());
+        //masterHighlighter.waiting = true;
+        yield return StartCoroutine(masterHighlighter.WaitForUserInput());
+
+        //yield return new WaitUntil(() => masterHighlighter.waiting);
+        BoardCoordinate coordinate = BoardCoordinate.ToBoardCoordinate(masterHighlighter.positionPressed);
+
+        boardManager.MoveThief(coordinate);
+        Debug.Log("UAU PLAYERUL A APASAT PE :" + coordinate.q + " " +coordinate.r);
+    }
+
     public void playerAddsRoad(Player p)
     {
         CraftingCost c = new CraftingCost();
@@ -81,6 +102,10 @@ public class PlayerManager : MonoBehaviour
         if (!c.verifCost(p)) return;
 
         c.takeCards(p);
+
+       
+
+
         PlayerColor colorLongest = boardManager.GetPlayerWithLongestRoad(longestRoadLenght);
         foreach (var player in players)
         {
