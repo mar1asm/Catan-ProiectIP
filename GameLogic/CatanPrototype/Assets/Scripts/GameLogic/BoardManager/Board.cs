@@ -22,6 +22,7 @@ public class Board
         get; private set;
     }
 
+    public BoardCoordinate thiefPosition = new BoardCoordinate(0, 0);
 
     public List<Port> ports = new List<Port>();
 
@@ -43,6 +44,44 @@ public class Board
         }
 
 
+    }
+
+
+    public List<ResourceTypes> ResourcesFromCorner(Corner corner)
+    {
+        return ResourcesFromCorner(corner.coordinate);
+    }
+
+    public List<ResourceTypes> ResourcesFromCorner(BoardCoordinate boardCoordinate)
+    {
+        Corner corner = corners[boardCoordinate];
+
+        List<ResourceTypes> resources = new List<ResourceTypes>();
+
+        foreach (var pair in tiles)
+        {
+            Tile tile = pair.Value;
+            if(tile is ResourceTile)
+            {
+                foreach (var tileCorner in tile.corners)
+                {
+                    if(corner == tileCorner)
+                    {
+                        resources.Add(((ResourceTile)tile).resourceType);
+                    }
+                }
+
+            }
+        }
+
+        return resources;
+
+    }
+
+    public void SetThiefPosition(BoardCoordinate boardCoordinate)
+    {
+        if (!tiles.ContainsKey(boardCoordinate)) return;
+        thiefPosition = boardCoordinate;
     }
 
     
@@ -206,31 +245,31 @@ public class Board
     }
 
 
-    public int CheckLongestRoad()
+    public PlayerColor CheckLongestRoad(int oldLongestRoad = 4)
     {
         //returneaza numarul culorii jucatorului care are cel mai lung drum
         //made by jon
                                        
-        int maxLength = 4;
-        int longestRoadColor = -1;
+        int maxLength = oldLongestRoad;
+        int longestRoadColor = (int)PlayerColor.None;
         for (int i = 0; i < (int)PlayerColor.NbOfColors; ++i)
         {
 
             int playerMaxLength = PlayerLongestRoad(i);
-            if (playerMaxLength > maxLength)
+            if (playerMaxLength > maxLength )
             {
                 maxLength = playerMaxLength;
                 longestRoadColor = i;
             }
         }
         Debug.Log("lungimea"+ maxLength);
-        return longestRoadColor;
+        return (PlayerColor)longestRoadColor;
     }
 
     private int maxFromBkt;//variabila ce ne va ajuta la determinatea celui mai lung drum pornind dint-o anumita coodonata
     
 
-    private int PlayerLongestRoad(int color)
+    public int PlayerLongestRoad(int color)
     {
         //made by jon
         //calculeaza lungimea celui mai lung al jucatorului cu culoarea color
@@ -305,6 +344,7 @@ public class Board
         Settlement settlementToPlace = GetSettlementFromString(boardCoordinate, type);
         settlementToPlace.owner = p;
 
+       
 
         //if (playerRoadNetworks[colorID].ContainsKey(boardCoordinate))
         //{
@@ -317,7 +357,23 @@ public class Board
         Debug.Log(boardCoordinate.q + " " + boardCoordinate.r);
         if (corners.ContainsKey(boardCoordinate))
         {
-
+            //daca e de deja ceva construit acolo
+            if (corners[boardCoordinate].settlement != null)
+            {
+                if(corners[boardCoordinate].settlement is Village && settlementToPlace is City)
+                {
+                    if (corners[boardCoordinate].settlement.owner == p)
+                    {
+                        corners[boardCoordinate].settlement = settlementToPlace;
+                        return settlementToPlace;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+            }
+            
             corners[boardCoordinate].settlement = settlementToPlace;
             return settlementToPlace;
         }
@@ -465,6 +521,7 @@ public class Board
             case "road":
                 {
                     Corner c1 = corners[bc1];
+                    Debug.LogWarning(bc2.q + " " + bc2.r);
                     Corner c2 = corners[bc2];
                     return new Road(c1,c2);
                 }

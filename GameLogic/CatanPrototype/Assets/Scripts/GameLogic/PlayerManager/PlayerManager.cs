@@ -5,38 +5,52 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
-    
+
+    [SerializeField]
+    private BoardManagerBehaviour boardManager;
+
+    [SerializeField]
+    private TurnManagerBehaviour turnManager;
+
     public List<Player> players;
+
+    public Player longestRoadHolder = null;
+    public int longestRoadLenght = 4;
+    public Player biggestArmyHolder = null;
+    public int biggestArmySize = 2;
+
+
+    [SerializeField]
+    private int pointsToWin = 1;
+    
 
     void Start()
     {
-        /*Player test = new Player("test", "abc");
-        test.color = PlayerColor.Blue;
-
-        players.Add(test);
-
-        test.deck.add(new SheepCard(1, ResourceTypes.Sheep));
-        test.deck.add(new SheepCard(1, ResourceTypes.Sheep));
-        test.deck.add(new SheepCard(1, ResourceTypes.Sheep));
-        */
-
-
-        Trade t = new Trade(true);
-        t.AddResourceNeeded(ResourceTypes.Sheep);
-        t.AddResourceNeeded(ResourceTypes.Sheep);
-        //t.AddResourceNeeded(ResourceTypes.Stone);
-
-        TradeManagerBehaviour tmb = GameObject.Find("Trade Manager").GetComponent<TradeManagerBehaviour>();
-
-
-        Debug.Log(tmb.PlayerSatisfiesTradeRequirements(test, t));
-
-        test.PayResources(t.resourcesNeeded);
-
-        Debug.Log("Cate carti are?" + test.deck.Cards.Count);
-        //StartCoroutine(WaitForBoardToFinish());
         
- 
+    }
+
+
+    public void Setup()
+    {
+        SetupTurnManagerPlayers();
+        turnManager.SetOrder();
+        turnManager.currentPlayerIndex = 0;
+    }
+
+
+    private void SetupTurnManagerPlayers()
+    {
+        turnManager.size = players.Count;
+        turnManager.players = new Player[players.Count];
+        for (int i = 0; i < players.Count; ++i)
+        {
+            turnManager.players[i] = players[i];
+        }
+    }
+
+    public void SetPointGoal(int value)
+    {
+        pointsToWin = value;
     }
 
     /// <summary>
@@ -58,15 +72,64 @@ public class PlayerManager : MonoBehaviour
         } 
     }
 
-    void Update()
-    {
-
-    }
-
-
     public void playerAddsRoad(Player p)
     {
+        CraftingCost c = new CraftingCost();
+        c.resourcesRequired.Add(ResourceTypes.Wood, 1);
+        c.resourcesRequired.Add(ResourceTypes.Brick, 1);
         
+        if (!c.verifCost(p)) return;
+
+        c.takeCards(p);
+        PlayerColor colorLongest = boardManager.GetPlayerWithLongestRoad(longestRoadLenght);
+        foreach (var player in players)
+        {
+            if (player.color == colorLongest)
+            {
+                longestRoadHolder = player;
+                longestRoadLenght = boardManager.GetLongestLenghtOfPlayer(longestRoadHolder);
+                break;
+            }
+        }
+        VerifyWinningConditions();
+    }
+    public void playerAddsCity(Player p)
+    {
+       CraftingCost c = new CraftingCost();
+       c.resourcesRequired.Add(ResourceTypes.Stone, 3);
+       c.resourcesRequired.Add(ResourceTypes.Wheat, 2);
+       if(c.verifCost(p))
+       {
+            c.takeCards(p);
+       }
+       VerifyWinningConditions();
+    }
+    public void playerAddsSettlement(Player p)
+    {
+        CraftingCost c = new CraftingCost();
+        c.resourcesRequired.Add(ResourceTypes.Wood, 1);
+        c.resourcesRequired.Add(ResourceTypes.Brick, 1);
+        c.resourcesRequired.Add(ResourceTypes.Sheep, 1);
+        c.resourcesRequired.Add(ResourceTypes.Wheat, 1);
+        //c.takeCards(p);
+        if(c.verifCost(p))
+        {
+            c.takeCards(p);
+        }
+        VerifyWinningConditions();
+    }
+    public void playerAddsDevelopment(Player p)
+    {
+        CraftingCost c = new CraftingCost();
+        c.resourcesRequired.Add(ResourceTypes.Wheat, 1);
+        c.resourcesRequired.Add(ResourceTypes.Stone, 1);
+        c.resourcesRequired.Add(ResourceTypes.Sheep, 1);
+        //c.takeCards(p);
+        if(c.verifCost(p))
+        {
+            c.takeCards(p);
+        }
+        VerifyWinningConditions();
     }
     public void AddPlayer(Player p)
     {
@@ -76,6 +139,30 @@ public class PlayerManager : MonoBehaviour
     {
         players.Remove(p);
     }
+
+    public void PlayerStealsFromPlayer(Player thief, Player victim)
+    {
+        Card card = victim.RemoveRandomResourceCard();
+        if (card == null) return;
+        List<Card> resourcesAux = new List<Card>();
+        resourcesAux.Add(card);
+        thief.GetCard(card);
+    }
    
+
+    public void VerifyWinningConditions()
+    {
+        Player current = turnManager.currentPlayer;
+        int score = 0;
+        if (longestRoadHolder == current) score += 2;
+        if (biggestArmyHolder == current) score += 2;
+
+        score += boardManager.GetPlayerPointsFromSettlements(current);
+        score += current.GetPointsFromHand();
+        if(score >= pointsToWin)
+        {
+            Debug.LogWarning("BRAVOOOOOOOOOOO " + current.nickname + " AI CASTIGAT UHUUUUUUUUU");
+        }
+    }
 
 }

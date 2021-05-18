@@ -27,15 +27,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4710a2a06a93eb9449e1030e85d04da7, type: 3}
       propertyPath: m_LocalScale.x
-      value: 6
+      value: 2.75
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4710a2a06a93eb9449e1030e85d04da7, type: 3}
       propertyPath: m_LocalScale.y
-      value: 6
+      value: 2.75
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4710a2a06a93eb9449e1030e85d04da7, type: 3}
       propertyPath: m_LocalScale.z
-      value: 6
+      value: 2.75
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4710a2a06a93eb9449e1030e85d04da7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -83,7 +83,7 @@ PrefabInstance:
       objectReference: {fileID: 9081225739959865415, guid: 4710a2a06a93eb9449e1030e85d04da7, type: 3}
     - target: {fileID: 919132149155446097, guid: 4710a2a06a93eb9449e1030e85d04da7, type: 3}
       propertyPath: m_Name
-      value: AdvancedCity Variant
+      value: AdvancedCity
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4710a2a06a93eb9449e1030e85d04da7, type: 3}
