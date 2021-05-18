@@ -29,9 +29,19 @@ namespace CatanAPI
 
             //services.AddDbContext<Models.CatanAPIDbContext>(options =>
             //options.UseNpgsql(Configuration.GetConnectionString("CatanAPIContext")));
+            _ = bool.TryParse(Configuration["UsePostgreSQL"], out bool usePostgreSQL);
+            if (usePostgreSQL)
+            {
+                var connectioNString = Configuration["ConnectionStrings:PostgreSQL"];
+                services.AddDbContext<CatanAPIDbContext>(opts => opts.UseNpgsql(connectioNString));
 
-            // Temporary, for testing purposes we keep an InMemoryDatabase with no persistence to avoid setting up a PostgreSQL Database
-            services.AddDbContext<CatanAPIDbContext>(options => options.UseInMemoryDatabase("CatanAPI"));
+            }
+            else
+            {
+                var dbName = Configuration["ConnectionStrings:InMemory"];
+                services.AddDbContext<CatanAPIDbContext>(options => options.UseInMemoryDatabase(dbName));
+            }
+            services.AddScoped<CatanAPIDbContext>();
             services.AddMvc();
             services.AddHttpContextAccessor();
             services.AddControllers();
