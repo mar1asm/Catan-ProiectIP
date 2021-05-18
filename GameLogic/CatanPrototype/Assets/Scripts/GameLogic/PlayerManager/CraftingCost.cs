@@ -11,7 +11,7 @@ public class CraftingCost
     {
         resourcesRequired = new Dictionary<ResourceTypes, int>();
     }
-    public int verifCost(Player p)
+    public bool verifCost(Player p)
     {
         // parcyrgem deckplayer
         // numarm cate oi, cate lemn, ... are ...  -> nrSh,,, nrB, nrW... nrS....
@@ -50,43 +50,43 @@ public class CraftingCost
                 case ResourceTypes.Sheep:
                     if (resourcesRequired[resource] > nrSheep)
                     {
-                        return 0;
+                        return false;
                     }
                     break;
                 case ResourceTypes.Brick:
                     if (resourcesRequired[resource] > nrBrick)
                     {
-                        return 0;
+                        return false;
                     }
                     break;
                 case ResourceTypes.Wood:
                     if (resourcesRequired[resource] > nrWood)
                     {
-                        return 0;
+                        return false;
                     }
                     break;
                 case ResourceTypes.Wheat:
                     if (resourcesRequired[resource] > nrWheat)
                     {
-                        return 0;
+                        return false;
                     }
                     break;
                 case ResourceTypes.Stone:
                     if (resourcesRequired[resource] > nrStone)
                     {
-                        return 0;
+                        return false;
                     }
                     break;
 
             }
         }
 
-        return 1;
+        return true;
     }
 
     public void takeCards(Player p)
     {
-        if (verifCost(p) == 1)
+        if (verifCost(p))
         {
             foreach (ResourceTypes resource in resourcesRequired.Keys)
             {

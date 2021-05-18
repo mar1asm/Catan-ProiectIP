@@ -166,11 +166,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c45497bd40f20e04ab25ec89b5cb2b68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boardManager: {fileID: 1854074575}
+  turnManager: {fileID: 750080241}
   players: []
   longestRoadHolder:
     nickname: 
     ID: 
     color: 0
+  longestRoadLenght: 4
+  biggestArmyHolder:
+    nickname: 
+    ID: 
+    color: 0
+  biggestArmySize: 2
+  pointsToWin: 1
 --- !u!1 &252895474
 GameObject:
   m_ObjectHideFlags: 0
@@ -593,6 +602,7 @@ MonoBehaviour:
   size: 0
   currentPlayerIndex: -1
   tradeManager: {fileID: 2069777499}
+  boardManager: {fileID: 1854074575}
 --- !u!1001 &822299411
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -730,13 +740,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.5, y: 0.5, z: -0.5, w: 0.5}
-  m_LocalPosition: {x: 0, y: 6.9, z: 0}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0.7071068, w: 0}
+  m_LocalPosition: {x: 0, y: 155, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 90, y: 90, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: -180, z: 0}
 --- !u!1 &973679731
 GameObject:
   m_ObjectHideFlags: 0
@@ -962,6 +972,52 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 71be69e7a312bc844ad384574d3624fe, type: 3}
+--- !u!1 &1695648231
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1695648233}
+  - component: {fileID: 1695648232}
+  m_Layer: 0
+  m_Name: GameStarter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1695648232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1695648231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcb83907d92fddb459f8dd9562df8c18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerManager: {fileID: 201632398}
+  boardManager: {fileID: 1854074575}
+  turnManager: {fileID: 750080241}
+--- !u!4 &1695648233
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1695648231}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 28
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1738179315
 PrefabInstance:
   m_ObjectHideFlags: 0
