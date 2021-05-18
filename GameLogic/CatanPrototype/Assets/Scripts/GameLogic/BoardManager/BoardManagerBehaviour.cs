@@ -47,6 +47,19 @@ public class BoardManagerBehaviour : MonoBehaviour
         
     }
 
+    public List<Vector3> PlacesWithoutThief()
+    {
+        List<Vector3> toReturn = new List<Vector3>();
+        foreach (var pair in board.tiles)
+        {
+            if (pair.Value.coordinate == board.thiefPosition) continue;
+            Vector3 position = pair.Value.coordinate.ToWorldSpace();
+            position.y += deltaY;
+            toReturn.Add(position);
+        }
+        return toReturn;
+    }
+
 
     public List<GameObject> GetAvailableCornersForSettlement(Player p)
     {

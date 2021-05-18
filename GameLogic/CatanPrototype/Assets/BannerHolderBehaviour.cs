@@ -45,6 +45,7 @@ public class BannerHolderBehaviour : MonoBehaviour
                 
                 var gameObject =  Instantiate(colorBannerPair.banner, transform);
                 gameObject.GetComponent<BannerBehaviour>().SetText(name);
+                gameObject.transform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
                 return;
             }
         }

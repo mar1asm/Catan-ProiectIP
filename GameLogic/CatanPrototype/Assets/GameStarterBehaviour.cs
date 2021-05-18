@@ -151,9 +151,11 @@ public class GameStarterBehaviour : MonoBehaviour
         turnManager.Next();
 
         turnManager.TurnLogic(turnManager.currentPlayerIndex);
-        
 
-        DisplayHandInfo();
+        StartCoroutine(playerManager.PlayerMovesThief(stefan));
+
+        //DisplayHandInfo();
+
 
         //Corner corner = new Corner(new BoardCoordinate())
         //boardManager.AddSettlement(stefan, )
