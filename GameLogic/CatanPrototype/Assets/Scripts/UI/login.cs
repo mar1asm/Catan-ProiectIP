@@ -1,98 +1,132 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
+using System;
+
+[Serializable]
+public class LoginJson 
+{
+    public string username;
+    public string password;
+}
+
+//Store the response from API
+[Serializable]
+public class LoginRespJson 
+{
+    public string token;
+    public string expiration;
+}
+
+//Singleton class for user auth data
+public sealed class UserAuth    
+{    
+    private static readonly UserAuth instance = new UserAuth();
+    private static string token;
+    private static string expiration;
+
+    static UserAuth(){}    
+    private UserAuth(){}  
+
+    public static UserAuth Instance    
+    {    
+        get    
+        {    
+            return instance;    
+        }    
+    }
+
+    public static string GetToken() 
+    {
+        return token;
+    }
+
+    public static void SetToken(string t)
+    {
+        token = t;
+    }
+
+    public static string GetExpiration() 
+    {
+        return expiration;
+    }
+
+    public static void SetExpiration(string e)
+    {
+        expiration = e;
+    }  
+}
 
 public class login : MonoBehaviour
 {
-    GameObject username, password;
-    // Start is called before the first frame update
+    GameObject usernameObj, passwordObj;
+
+
     public void getusername(GameObject username)
     {
-        this.username = username;
+        this.usernameObj = username;
     }
 
     public void getpassword(GameObject password)
     {
-        this.password = password;
+        this.passwordObj = password;
     }
+
     public void verifyLogin()
     {
-        if (username.GetComponent<UnityEngine.UI.InputField>().text!= "" && password.GetComponent<UnityEngine.UI.InputField>().text!= "")
+        string username = usernameObj.GetComponent<UnityEngine.UI.InputField>().text;
+        string password = passwordObj.GetComponent<UnityEngine.UI.InputField>().text;
+
+        if (username != "" && password != "")
         {
-            print(username.GetComponent<UnityEngine.UI.InputField>().text + " " + password.GetComponent<UnityEngine.UI.InputField>().text);
-            StartCoroutine(postLogin());
-            // StartCoroutine(getLogin());
-            // get when is correct or not si poate trece mai departe la MainMenu
+            StartCoroutine(postLogin(username, password));
         }
         else
         {
-            print("null here");
+            Debug.Log("Empty Field(s)");
         }
     }
 
-    public class LoginData
+    IEnumerator postLogin(string username, string password)
     {
-        // nume de parametrii din json
-        public string username;
-        public string password;
-        public string status;
-    }
+        //Preparing the POST Json Body
+        LoginJson loginJson = new LoginJson();
+        loginJson.username = username;
+        loginJson.password = password;
+        string json = JsonUtility.ToJson(loginJson);
+        byte[] rawJson = new System.Text.UTF8Encoding().GetBytes(json);
 
-    IEnumerator getLogin()
-    {
-        print("a intrat aci");
-        string uri = "http://64.225.52.232:8921/alabala23";
-        UnityWebRequest www = UnityWebRequest.Get(uri);
-        yield return www.SendWebRequest();
-        
-        if (www.isNetworkError)
+        //Preparing the request
+        string uri = "https://localhost:5001/api/Authenticate/login";
+        UnityWebRequest request = UnityWebRequest.Post(uri, "POST");
+        request.uploadHandler = (UploadHandler)new UploadHandlerRaw(rawJson);
+        request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+        request.SetRequestHeader("Content-Type", "application/json");
+
+        //Send the request then wait here until it returns
+        yield return request.SendWebRequest();
+        if (request.result == UnityWebRequest.Result.ConnectionError || 
+            request.result == UnityWebRequest.Result.ProtocolError)
+                Debug.Log("POST Error");
+        else 
         {
-            print("erorar");
-        } else
-        {
-            try
+            Debug.Log("POST OK");
+            long status = request.responseCode;
+            if (status == 200) 
             {
-                // aici iau datele din json si vad fiecare parametru in parte
-                LoginData loginData = JsonUtility.FromJson<LoginData>(www.downloadHandler.text);
-                print(loginData.status);
-                // aici verifica daca statusul este ok si trece la mainmenu
-                //SceneManager.LoadScene("mainMenu");
-                // daca nu, afiseaza ceva mesaj
+                //Get data from Json response
+                LoginRespJson jsonData = JsonUtility.FromJson<LoginRespJson>(request.downloadHandler.text);
+                Debug.Log(jsonData.token);
+                Debug.Log(jsonData.expiration);
+                UserAuth.SetToken(jsonData.token);
+                UserAuth.SetExpiration(jsonData.expiration);
+
+                SceneManager.LoadScene(sceneName:"mainMenu");
             }
-            catch 
+            else
             {
-                print("catch");
-            }
-        }
-        
-    }
-
-    IEnumerator postLogin()
-    {
-        /////////////// put correct 
-        string uri = "https://jsonplaceholder.typicode.com/posts";
-        List<IMultipartFormSection> formData = new List<IMultipartFormSection>();
-        formData.Add(new MultipartFormDataSection("username="+username+"&parola="+password));
-
-        UnityWebRequest www = UnityWebRequest.Post(uri, formData);
-        yield return www.SendWebRequest();
-
-        if (www.isNetworkError)
-        {
-            print("eroare");
-        }
-        else
-        {
-            try
-            {
-                // aici iau datele din json si vad fiecare parametru in parte
-                //LoginData loginData = JsonUtility.FromJson<LoginData>(www.downloadHandler.text);
-                print(www.downloadHandler.text);
-            }
-            catch (System.Exception error)
-            {
-                print("catch" + error.ToString());
+                Debug.Log(request.downloadHandler.text);
             }
         }
     }
