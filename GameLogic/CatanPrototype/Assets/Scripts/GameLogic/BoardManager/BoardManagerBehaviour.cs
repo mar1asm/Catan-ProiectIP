@@ -44,56 +44,31 @@ public class BoardManagerBehaviour : MonoBehaviour
         */
         InstantiateBoard();
 
-        MoveThief(new BoardCoordinate(-1, 2));
-
-
-        Player p = new Player("test", "123");
-
-        p.color = PlayerColor.Red;
-
-        AddSettlement(p, new BoardCoordinate(1.33f, -2.66f), "city");
-        AddConnector(p, new BoardCoordinate(1.33f, -2.66f), new BoardCoordinate(0.66f, -2.33f), "road");
         
-       
-
-        Player pBlue = new Player("ad", "id");
-        pBlue.color = PlayerColor.Blue;
-
-        //AddConnector(pBlue, new BoardCoordinate(1.33f, -2.66f), new BoardCoordinate(1.66f, -2.33f), "road");
-        //AddConnector(pBlue, new BoardCoordinate(1.66f, -2.33f), new BoardCoordinate(2.33f, -2.66f), "road");
-        //AddConnector(pBlue, new BoardCoordinate(2.33f, -2.66f), new BoardCoordinate(2.66f, -2.33f), "road");
-        //AddConnector(pBlue, new BoardCoordinate(2.66f, -2.33f), new BoardCoordinate(2.33f, -1.67f), "road");
-        //AddConnector(pBlue, new BoardCoordinate(2.33f, -1.67f), new BoardCoordinate(2.66f, -1.33f), "road");
-
-        Player pRed = new Player("da", "id2");
-        pRed.color = PlayerColor.Red;
-
-
-        //AddConnector(pRed, new BoardCoordinate(0.33f, -2.66f), new BoardCoordinate(-0.33f, -2.33f), "road");
-        //AddConnector(pRed, new BoardCoordinate(-0.33f, -2.33f), new BoardCoordinate(-0.66f, -1.66f), "road");
-        //AddConnector(pRed, new BoardCoordinate(-0.66f, -1.66f), new BoardCoordinate(-1.33f, -1.33f), "road");
-        //AddConnector(pRed, new BoardCoordinate(-1.33f, -1.33f), new BoardCoordinate(-1.67f, -0.66f), "road");
-        //AddConnector(pRed, new BoardCoordinate(-1.67f, -0.66f), new BoardCoordinate(-2.33f, -0.33f), "road");
-        //AddConnector(pRed, new BoardCoordinate(-2.33f, -0.33f), new BoardCoordinate(-2.66f, 0.33f), "road");
-        //AddConnector(pRed, new BoardCoordinate(-2.66f, 0.33f), new BoardCoordinate(-2.33f, 0.66f), "road");
-        //AddConnector(pRed, new BoardCoordinate(-2.33f, 0.66f), new BoardCoordinate(-1.66f, 0.33f), "road");
-        //AddConnector(pRed, new BoardCoordinate(-1.66f, 0.33f), new BoardCoordinate(-1.33f, -0.33f), "road");
-        //AddConnector(pRed, new BoardCoordinate(-1.33f, -0.33f), new BoardCoordinate(-1.67f, -0.66f), "road");
-        //AddConnector(pRed, new BoardCoordinate(-1.33f, -0.33f), new BoardCoordinate(-0.66f, -0.66f), "road");
-        AddConnector(pRed, new BoardCoordinate(-0.66f, -0.66f), new BoardCoordinate(-0.33f, -1.33f), "road");
-        //AddConnector(pRed, new BoardCoordinate(-0.33f, -1.33f), new BoardCoordinate(-0.66f, -1.66f), "road");
-
-
-        Debug.Log("culoarea: " + board.CheckLongestRoad());        
-
-
-
-        //bounds = hex.GetComponent<Collider>().bounds.size;
-        //InstantiateBoard();
-        //PlaceHex(0, 0);
-        //PlaceHex(-1, 0);
     }
 
+
+    public List<ResourceTypes> GetResourcesFromCorner(Corner corner)
+    {
+        return board.ResourcesFromCorner(corner);
+    }
+
+
+    /// <summary>
+    /// Returneaza culoarea jucatorului cu cel mai lung drum de cel putin 5
+    /// </summary>
+    /// <param name="oldValue"></param>
+    /// <returns></returns>
+    public PlayerColor GetPlayerWithLongestRoad(int oldValue = 4)
+    {
+        return board.CheckLongestRoad(oldValue);
+    }
+
+
+    public int GetLongestLenghtOfPlayer(Player player)
+    {
+        return board.PlayerLongestRoad((int)player.color);
+    }
 
 
 
@@ -136,6 +111,7 @@ public class BoardManagerBehaviour : MonoBehaviour
     /// Lista de trade-uri posibile din port-urile construite de jucator
     /// </summary>
     /// <param name="player">Jucatorul pentru care vrem sa aflam trade-urile</param>
+    /// <returns>Lista de trade-uri din porturi</returns>
     /// <returns>Lista de trade-uri din porturi</returns>
     public List<Trade> GetTradesForPlayerFromPorts(Player player)
     {
@@ -252,7 +228,7 @@ public class BoardManagerBehaviour : MonoBehaviour
 
         Vector3 position = connector.middle.ToWorldSpace();
 
-        Debug.LogWarning(position);
+
 
         position.y += deltaY; 
         Quaternion rotation = connector.rotation;

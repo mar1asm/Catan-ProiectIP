@@ -56,7 +56,7 @@ public class ChangingColorBehaviour : MonoBehaviour
                 break;
             case PlayerColor.Brown: c = GetColor(128, 66, 0);
                 break;
-            case PlayerColor.Green: c = GetColor(0, 255, 0);
+            case PlayerColor.Green: c = GetColor(0, 82, 0);
                 break;       
             default: c = GetColor(0, 0, 0);
                 break;

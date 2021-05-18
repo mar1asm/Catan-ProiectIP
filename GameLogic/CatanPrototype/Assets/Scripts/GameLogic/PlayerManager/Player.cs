@@ -18,6 +18,25 @@ public class Player
         ID = id;
         // nu board = b;
     }
+
+    public string GetHandInfo()
+    {
+        string handString = "";
+        foreach(var card in deck.Cards)
+        {
+            handString += card.GetType() + ",";
+        }
+        return handString;
+    }
+
+    public Player(string name, string id, PlayerColor color)
+    {
+        deck = new DeckPlayer();
+        nickname = name;
+        ID = id;
+        this.color = color;
+        // nu board = b;
+    }
     public Player ( string name, string id, DeckPlayer d)
     {
         nickname = name;
