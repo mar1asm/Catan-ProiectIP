@@ -1,118 +1,114 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
+using System;
+
+[Serializable]
+public class SignupJson 
+{
+    public string firstName;
+    public string lastName;
+    public string username;
+    public string email;
+    public string password;
+}
 
 public class signup : MonoBehaviour
 {
-    GameObject username, email, password, retypePass;
-    // Start is called before the first frame update
+    GameObject firstNameObj, lastNameObj, usernameObj, emailObj, passwordObj, retypePassObj;
+
+    public void getFirstName(GameObject firstname)
+    {
+        this.firstNameObj = firstname;
+    }
+
+    public void getLastName(GameObject lastname)
+    {
+        this.lastNameObj = lastname;
+    }
+
     public void getUsername(GameObject username)
     {
-        this.username = username;
+        this.usernameObj = username;
     }
 
     public void getEmail(GameObject email)
     {
-        this.email = email;
+        this.emailObj = email;
     }
 
     public void getPass(GameObject password)
     {
-        this.password = password;
+        this.passwordObj = password;
     }
 
     public void getRePass(GameObject retypePassword)
     {
-        this.retypePass = retypePassword;
+        this.retypePassObj = retypePassword;
     }
+
     public void verifySignup()
     {
-        if (username.GetComponent<UnityEngine.UI.InputField>().text != "" && 
-            email.GetComponent<UnityEngine.UI.InputField>().text != "" &&
-            password.GetComponent<UnityEngine.UI.InputField>().text != "" &&
-            retypePass.GetComponent<UnityEngine.UI.InputField>().text != "")
+        string firstname /* = firstNameObj.GetComponent<UnityEngine.UI.InputField>().text; */ = "Johnny";
+        string lastname /* = lastNameObj.GetComponent<UnityEngine.UI.InputField>().text; */  = "Depp";
+        string username = usernameObj.GetComponent<UnityEngine.UI.InputField>().text;
+        string email = emailObj.GetComponent<UnityEngine.UI.InputField>().text;
+        string password = passwordObj.GetComponent<UnityEngine.UI.InputField>().text;
+        string passwordAgain = retypePassObj.GetComponent<UnityEngine.UI.InputField>().text;
+
+        if (username != "" && email != "" && password != "" && passwordAgain != "")
         {
-            print(username.GetComponent<UnityEngine.UI.InputField>().text + " " + 
-                email.GetComponent<UnityEngine.UI.InputField>().text + " " +
-                password.GetComponent<UnityEngine.UI.InputField>().text + " " +
-                retypePass.GetComponent<UnityEngine.UI.InputField>().text);
-            StartCoroutine(postSignup());
-            // StartCoroutine(getSignup());
-            // get when is correct or not si poate trece mai departe la MainMenu
+            if (password == passwordAgain)
+            {
+                StartCoroutine(postSignup(firstname, lastname, username, email, password));
+            }
+            else
+            {
+                Debug.Log("Password does not match");
+            }
         }
         else
         {
-            print("null here");
+            Debug.Log("Empty Field(s)");
         }
     }
 
-    public class SignupData
+    IEnumerator postSignup(string firstName, string lastName, string username, string email, string password)
     {
-        // nume de parametrii din json
-        public string username;
-        public string email;
-        public string password;
-        public string retypePass;
-        public string status;
-    }
+        //Preparing the POST Json Body
+        SignupJson signupJson = new SignupJson();
+        signupJson.firstName = firstName;
+        signupJson.lastName = lastName;
+        signupJson.username = username;
+        signupJson.email = email;
+        signupJson.password = password;
+        string json = JsonUtility.ToJson(signupJson);
+        byte[] rawJson = new System.Text.UTF8Encoding().GetBytes(json);
 
-    IEnumerator getSignup()
-    {
-        print("a intrat aci");
-        string uri = "http://64.225.52.232:8921/alabala23";
-        UnityWebRequest www = UnityWebRequest.Get(uri);
-        yield return www.SendWebRequest();
+        //Preparing the request
+        string uri = "https://localhost:5001/api/Authenticate/register";
+        UnityWebRequest request = UnityWebRequest.Post(uri, "POST");
+        request.uploadHandler = (UploadHandler)new UploadHandlerRaw(rawJson);
+        request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+        request.SetRequestHeader("Content-Type", "application/json");
 
-        if (www.isNetworkError)
+        //Send the request then wait here until it returns
+        yield return request.SendWebRequest();
+        if (request.result == UnityWebRequest.Result.ConnectionError || 
+            request.result == UnityWebRequest.Result.ProtocolError)
+                Debug.Log("POST Error");
+        else 
         {
-            print("erorar");
-        }
-        else
-        {
-            try
+            Debug.Log("POST OK");
+            long status = request.responseCode;
+            if (status == 200) 
             {
-                // aici iau datele din json si vad fiecare parametru in parte
-                SignupData SignupData = JsonUtility.FromJson<SignupData>(www.downloadHandler.text);
-                print(SignupData.status);
-                // aici verifica daca statusul este ok si trece la mainmenu
-                //SceneManager.LoadScene("mainMenu");
-                // daca nu, afiseaza ceva mesaj
+                SceneManager.LoadScene(sceneName:"login");
             }
-            catch
+            else
             {
-                print("catch");
-            }
-        }
-
-    }
-
-    IEnumerator postSignup()
-    {
-        /////////////// put correct 
-        string uri = "https://jsonplaceholder.typicode.com/posts";
-        List<IMultipartFormSection> formData = new List<IMultipartFormSection>();
-        formData.Add(new MultipartFormDataSection("username=" + username + "&email=" + email + 
-            "&password=" + password + "&retypePass=" + retypePass));
-
-        UnityWebRequest www = UnityWebRequest.Post(uri, formData);
-        yield return www.SendWebRequest();
-
-        if (www.isNetworkError)
-        {
-            print("eroare");
-        }
-        else
-        {
-            try
-            {
-                // aici iau datele din json si vad fiecare parametru in parte
-                //SignupData SignupData = JsonUtility.FromJson<SignupData>(www.downloadHandler.text);
-                print(www.downloadHandler.text);
-            }
-            catch (System.Exception error)
-            {
-                print("catch" + error.ToString());
+                Debug.Log(request.downloadHandler.text);
             }
         }
     }
