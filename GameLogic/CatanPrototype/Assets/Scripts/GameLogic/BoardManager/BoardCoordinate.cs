@@ -73,9 +73,11 @@ public class BoardCoordinate
         return new BoardCoordinate(a.q / f, a.r / f);
     }
 
-    /*Functie care converteste din coordonatele pe care le folosim in 
-    * coordonatele din unity
-    */
+    /// <summary>
+    /// Functie care converteste din coordonatele pe care le folosim in 
+    /// coordonatele din unity
+    /// </summary>
+    /// <returns></returns>
     public Vector3 ToWorldSpace()
     {
     
@@ -89,6 +91,30 @@ public class BoardCoordinate
         worldPosition.z += -r * widthOfHex;
 
         return worldPosition;
+    }
+
+    /// <summary>
+    /// Transforma o positie din lumea unity in coordonate de pe masa
+    /// </summary>
+    /// <param name="position"></param>
+    /// <returns></returns>
+    public static BoardCoordinate ToBoardCoordinate(Vector3 position)
+    {
+        float widthOfHex = widthOfTile / 2;
+
+        //deltaX reprezinta Offset-ul pe X atunci cand mergem pe diagonala
+        float deltaX = Mathf.Sqrt(3) * widthOfHex;
+
+        float r = -(position.x / deltaX);
+
+        float z = position.z;
+
+        z -= -r * widthOfHex;
+
+
+        float q = -(z / (2 * widthOfHex));
+
+        return new BoardCoordinate(q, r);
     }
     
 }
