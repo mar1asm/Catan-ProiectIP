@@ -48,6 +48,18 @@ public class BoardManagerBehaviour : MonoBehaviour
     }
 
 
+    public List<GameObject> GetAvailableCornersForSettlement(Player p)
+    {
+        var corners = board.GetAvailableCorners(p.color);
+        List<GameObject> toReturn = new List<GameObject>();
+        foreach (var  corner in corners)
+        {
+            toReturn.Add(corner.inGameObject);
+        }
+
+        return toReturn;
+    }
+
     public List<ResourceTypes> GetResourcesFromCorner(Corner corner)
     {
         return board.ResourcesFromCorner(corner);

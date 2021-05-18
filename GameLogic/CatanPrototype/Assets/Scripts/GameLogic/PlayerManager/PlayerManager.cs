@@ -14,6 +14,8 @@ public class PlayerManager : MonoBehaviour
 
     public List<Player> players;
 
+    public Player clientPlayer = new Player("test", "1");
+
     public Player longestRoadHolder = null;
     public int longestRoadLenght = 4;
     public Player biggestArmyHolder = null;

@@ -40,6 +40,8 @@ public class GameStarterBehaviour : MonoBehaviour
 
     IEnumerator SimulateGame()
     {
+
+        #region testStefan
         yield return new WaitForSeconds(0.5f);
         boardManager.AddSettlement(
             stefan, 
@@ -66,6 +68,8 @@ public class GameStarterBehaviour : MonoBehaviour
             new Corner(new BoardCoordinate(-1.66f, -0.66f)),
             new Corner(new BoardCoordinate(-1.33f, -0.33f)),
             "road");
+
+        #endregion testStefan;
 
         yield return new WaitForSeconds(0.25f);
 
@@ -127,6 +131,22 @@ public class GameStarterBehaviour : MonoBehaviour
             new Corner(new BoardCoordinate(-0.33f, 1.66f)),
             new Corner(new BoardCoordinate(-0.66f, 1.33f)),
             "road");
+
+        boardManager.AddConnector(
+            dragos,
+            new Corner(new BoardCoordinate(0.66f, -0.33f)),
+            new Corner(new BoardCoordinate(1.33f, -0.66f)),
+            "road");
+
+        var corners = boardManager.GetAvailableCornersForSettlement(dragos);
+
+        Debug.LogWarning("Number of corners:" + corners.Count);
+
+        foreach (var corner in corners)
+        {
+            Debug.LogWarning(corner.GetComponent<CornerBehaviour>().corner.coordinate.q + " " +
+                corner.GetComponent<CornerBehaviour>().corner.coordinate.r);
+        }
 
         turnManager.Next();
 
