@@ -29,11 +29,6 @@ public class PlayerManager : MonoBehaviour
         TradeManagerBehaviour tmb = GameObject.Find("Trade Manager").GetComponent<TradeManagerBehaviour>();
 
 
-        Debug.Log(tmb.PlayerSatisfiesTradeRequirements(test, t));
-
-        test.PayResources(t.resourcesNeeded);
-
-        Debug.Log("Cate carti are?" + test.deck.Cards.Count);
         //StartCoroutine(WaitForBoardToFinish());
         
  
