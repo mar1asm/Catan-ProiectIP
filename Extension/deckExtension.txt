@@ -1,0 +1,40 @@
+{
+"availableCard": [
+{
+"name": Sheep,
+"d": 
+[
+{
+"type": sheep,
+"number": 19
+}
+]
+},
+{
+"name": Development,
+"d": 
+[
+{
+"type": soldier,
+"number": 14
+},
+{
+"type": victory,
+"number": 5
+},
+{
+"type": road,
+"number": 2
+},
+{
+"type": year,
+"number": 2
+},
+{
+"type": monopoly,
+"number": 2
+}
+]
+}
+]
+}
