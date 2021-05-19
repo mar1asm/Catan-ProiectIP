@@ -1,21 +1,8 @@
-﻿using crypto;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-System.Security.AccessControl.DirectoryObjectSecurity
-System.Security.AccessControl.DirectorySecurity
-System.Security.AccessControl.FileSecurity
-System.Security.AccessControl.FileSystemAccessRule
-System.Security.AccessControl.FileSystemAuditRule
-System.Security.AccessControl.FileSystemRights
-System.Security.AccessControl.FileSystemSecurity
-
-When using NuGet 3.x this package requires at least version 3.4.  
-
-
-Requires NuGet 2.12 or higher. 
 
 
 namespace Extension
@@ -25,7 +12,7 @@ namespace Extension
     {
         private String strFilePath;
         private RuleExtension rules;
-        private BoardExpansion board = new BoardExpansion(100);
+        private BoardExpansion board;
         private DeckControlerExpansion deck ;
         private List<ConectorCreator> conectors = new List<ConectorCreator>();
         private List<TileExtension> tiles = new List<TileExtension>();
@@ -120,24 +107,19 @@ namespace Extension
 
         public void toFile()
         {
-         
+
             strFilePath = Directory.GetCurrentDirectory();
             strFilePath = Directory.GetParent(strFilePath).ToString();
             strFilePath = Directory.GetParent(strFilePath).ToString();
             strFilePath = Directory.GetParent(strFilePath).ToString();
-            strFilePath = strFilePath + "\\JsonExtension";
-           
-            DirectoryInfo dinfo = new DirectoryInfo(strFilePath);
-            DirectorySecurity dSecurity = dinfo.GetAccessControl();
-            dSecurity.AddAccessRule(new FileSystemAccessRule(new SecurityIdentifier(WellKnownSidType.WorldSid, null), FileSystemRights.FullControl, InheritanceFlags.ObjectInherit | InheritanceFlags.ContainerInherit, PropagationFlags.NoPropagateInherit, AccessControlType.Allow));
-            dinfo.SetAccessControl(dSecurity);
+            strFilePath += "\\JsonExtension";
 
 
             if (!Directory.Exists(strFilePath))
             {
                 Directory.CreateDirectory(strFilePath);
             }
-            
+
             toFileBoard();
             toFileDeck();
             toFileRules();
@@ -148,25 +130,21 @@ namespace Extension
     public void toFileBoard()
     {
 
-        String name = strFilePath;
+        String name = strFilePath + "\\boardJson.json";
         // scriem in fisier ce returneaza`toStringAvailableTiles`
         string output = "";
         output = "{\n";
         output += toStringAvailableTiles() + ",\n";
         output += board.toString();
         output += "\n}";
-        /*File.WriteAllText("board.txt", output);*/
-        Console.WriteLine(output);
 
         if (!File.Exists(name))
         {
                 // Create a file to write to.
-                using (StreamWriter sw = File.CreateText(name))
-            {
-
-                sw.Write(name, output);
-
-            }
+            StreamWriter sw = File.CreateText(name);
+                sw.Write(output);
+                sw.Flush();
+               
         }
         else
         {
@@ -175,7 +153,7 @@ namespace Extension
 
     }
         public void toFileDeck() {
-            String name = strFilePath;
+            String name = strFilePath + "\\deckJson.json";
 
 
             if (!File.Exists(name))
@@ -183,8 +161,7 @@ namespace Extension
                 // Create a file to write to.
                 using (StreamWriter sw = File.CreateText(name))
                 {
-
-                    sw.Write(name, deck.getJson());
+                    sw.Write(deck.getJson());
 
                 }
             }
@@ -197,7 +174,7 @@ namespace Extension
 
         public void toFileRules()
         {
-            String name = strFilePath;
+            String name = strFilePath + "\\rulesJson.json";
 
 
             if (!File.Exists(name))
@@ -206,7 +183,7 @@ namespace Extension
                 using (StreamWriter sw = File.CreateText(name))
                 {
 
-                    sw.Write(name, rules.toString());
+                    sw.Write(rules.toString());
 
                 }
             }
@@ -219,7 +196,7 @@ namespace Extension
 
         public void toFileConectors()
         {
-            String name = strFilePath;
+            String name = strFilePath + "\\conectorsJson.json";
 
             string output = "\"conectors\" : [ \n";
 
@@ -237,7 +214,7 @@ namespace Extension
                 using (StreamWriter sw = File.CreateText(name))
                 {
 
-                    sw.Write(name, output);
+                    sw.Write(output);
 
                 }
             }

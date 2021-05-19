@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\User\\source\\repos\\Extension\\Extension\\Extension.csproj": {}
+    "E:\\ip\\Extension\\Extension\\Extension.csproj": {}
   },
   "projects": {
-    "C:\\Users\\User\\source\\repos\\Extension\\Extension\\Extension.csproj": {
+    "E:\\ip\\Extension\\Extension\\Extension.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\User\\source\\repos\\Extension\\Extension\\Extension.csproj",
+        "projectUniqueName": "E:\\ip\\Extension\\Extension\\Extension.csproj",
         "projectName": "Extension",
-        "projectPath": "C:\\Users\\User\\source\\repos\\Extension\\Extension\\Extension.csproj",
-        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\User\\source\\repos\\Extension\\Extension\\obj\\",
+        "projectPath": "E:\\ip\\Extension\\Extension\\Extension.csproj",
+        "packagesPath": "C:\\Users\\andre\\.nuget\\packages\\",
+        "outputPath": "E:\\ip\\Extension\\Extension\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\andre\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -37,12 +37,6 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
-          "dependencies": {
-            "Portable.BouncyCastle": {
-              "target": "Package",
-              "version": "[1.8.10, )"
-            }
-          },
           "imports": [
             "net461",
             "net462",
@@ -58,7 +52,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.401\\RuntimeIdentifierGraph.json"
         }
       }
     }

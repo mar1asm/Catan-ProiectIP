@@ -1,0 +1,18 @@
+"conectors" : [ 
+{
+"name" : "boat"
+"color" : "red"
+},
+{
+"name" : "boat"
+"color" : "black"
+},
+{
+"name" : "boat"
+"color" : "pink"
+},
+{
+"name" : "road"
+"color" : "green"
+}
+]

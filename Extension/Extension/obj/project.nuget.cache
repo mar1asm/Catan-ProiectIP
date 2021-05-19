@@ -1,10 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "yOppvvNHw3DL+DwVW9rkO72mdHJ6XSHqPAs8vqmP8IPGs/0IvCivZXCoAZbQ5HoJP+qS6jnYgyZmRGQfYYRMyg==",
+  "dgSpecHash": "3SXMo9KAp0cGkDiblcjTR8E2MkEXh84GX2TA6DtUdbMNh+/4onlrJ1QKu7LF7gJnI6jpiFsKCe3BKMjnBMpGoA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\User\\source\\repos\\Extension\\Extension\\Extension.csproj",
-  "expectedPackageFiles": [
-    "C:\\Users\\User\\.nuget\\packages\\portable.bouncycastle\\1.8.10\\portable.bouncycastle.1.8.10.nupkg.sha512"
-  ],
+  "projectFilePath": "E:\\ip\\Extension\\Extension\\Extension.csproj",
+  "expectedPackageFiles": [],
   "logs": []
 }
