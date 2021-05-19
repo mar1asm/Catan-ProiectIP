@@ -209,8 +209,12 @@ public class Board
             BoardCoordinate bc=it.Key;
             List<BoardCoordinate> bclist= cornerLattice[bc];
             foreach (var b in bclist)
+            {
                 if (corners[b].settlement != null) // daca este asezare in vecini atunci "bc" nu este disponibil
                     ok = false;
+            }
+            if (corners[bc].settlement != null) ok = false;
+                
             if(ok) listOfCorners.Add(corners[bc]);
         }
 
@@ -224,15 +228,23 @@ public class Board
         foreach (var it in playerRoadNetworks[(int)color])
         {
             bool ok = true;
+
             BoardCoordinate bc = it.Key; //bc este una dintre coordonate
-            List<BoardCoordinate> bclist = cornerLattice[bc];//list de vcini ai lui bc
+
+            if (corners[bc].settlement!=null)
+                if (corners[bc].settlement.owner.color != color)
+                    continue;
+            List<BoardCoordinate> bclist = cornerLattice[bc];//lista de vecini ai lui bc
             foreach (var b in bclist)
             {
+                ok = true;
+
                 for (int i = 0; i < (int)PlayerColor.NbOfColors; i++)
-                    if (playerRoadNetworks[i].ContainsKey(b)) //daca un vecin face parte din graful unui player
-                        if (playerRoadNetworks[i].ContainsKey(bc)) // si bc face si l part din graful aceluias player 
-                            ok = false;// perechea (b,bc) nu este buna pt ca acolo deja exista un drum
-                if(ok)
+                    if (playerRoadNetworks[i].ContainsKey(b))
+                        if (playerRoadNetworks[i][b].Contains(bc))
+                            ok = false;
+
+                if (ok)
                 {
                     KeyValuePair<Corner, Corner> item = new KeyValuePair<Corner, Corner>(corners[b], corners[bc]);
                     listOfConnectors.Add(item);
@@ -388,16 +400,16 @@ public class Board
         int colorID = (int)p.color;
         Connector connectorToPlace = GetConnectorFromString(bc1, bc2, type);
       
-        /*if (playerRoadNetworks[colorID].ContainsKey(bc1) || playerRoadNetworks[colorID].ContainsKey(bc2))// daca macar una din cele doua coordonate face parte din graful playerului
-        {
-            List<KeyValuePair<Corner, Corner>> availableConnectors = GetAvailableConnectors(p.color);
-            foreach(var conn in availableConnectors)
-            {
-                if (bc1 == conn.Key.coordinate && bc2 == conn.Value.coordinate ||
-                    bc2 == conn.Key.coordinate && bc1 == conn.Value.coordinate)
-                    return connectorToPlace;//daca coordonatele se gasesc in lista availableConnectors atunci putem pune drumul
-            }
-        }*/
+        //if (playerRoadNetworks[colorID].ContainsKey(bc1) || playerRoadNetworks[colorID].ContainsKey(bc2))// daca macar una din cele doua coordonate face parte din graful playerului
+        //{
+        //    List<KeyValuePair<Corner, Corner>> availableConnectors = GetAvailableConnectors(p.color);
+        //    foreach(var conn in availableConnectors)
+        //    {
+        //        if (bc1 == conn.Key.coordinate && bc2 == conn.Value.coordinate ||
+        //            bc2 == conn.Key.coordinate && bc1 == conn.Value.coordinate)
+        //            return connectorToPlace;//daca coordonatele se gasesc in lista availableConnectors atunci putem pune drumul
+        //    }
+        //}
 
 
         PlaceConnector(p.color, bc1, bc2);
