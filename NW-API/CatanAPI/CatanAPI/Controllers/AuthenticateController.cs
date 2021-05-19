@@ -80,7 +80,9 @@ namespace CatanAPI.Controllers
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 Email = model.Email,
-                UserName = model.Username
+                UserName = model.Username,
+                IconPath = model.IconPath,
+                Level = 0
             };
             var result = await userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)

@@ -13,10 +13,12 @@ public class TurnManagerBehaviour : MonoBehaviour
     [SerializeField]
     private TradeManagerBehaviour tradeManager;
 
-    void Start()
-    {
+    [SerializeField]
+    private BoardManagerBehaviour boardManager;
 
-    }
+    
+
+    
 
 
     public Player currentPlayer
@@ -36,9 +38,9 @@ public class TurnManagerBehaviour : MonoBehaviour
     }
     //seteaza ordinea aleatorie a jucatorilor din lista
     // public void SetOrder(PlayerManagement p)
-    public void SetOrder(Player [] p)
+    public void SetOrder()
     {
-       
+        
         int x;
         this.order = new int[size];
         int [] v=new int[10];
@@ -47,7 +49,8 @@ public class TurnManagerBehaviour : MonoBehaviour
             v[i] = 0;
         }
         for (int i = 0; i < size; i++)
-        { x= Random.Range(0, size);
+        { 
+            x= Random.Range(0, size);
             while(v[x]==1)
                 x= Random.Range(0, size);
             this.order[i] = x;
@@ -63,7 +66,11 @@ public class TurnManagerBehaviour : MonoBehaviour
         //momentan p[x] face mutarea
         dice1 = RollDice();
         dice2=RollDice();
-        number = dice1 + dice2; //Zarul 1 +Zarul 2     
+        number = dice1 + dice2; //Zarul 1 +Zarul 2    
+
+        number = 12;
+
+        boardManager.GiveResources(12);
   
        // GiveResources(number);//jucatorii primesc resursele daca au asezari pe regiunea cu numarul picat
     }
