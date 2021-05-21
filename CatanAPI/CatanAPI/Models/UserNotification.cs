@@ -4,7 +4,7 @@ namespace CatanAPI.Models
 {
     public class UserNotification
     {
-        public int Id;
+        public int Id { get; set; }
         public DateTime CreatedAt { get; set; }
         public bool Read { get; set; }
 
