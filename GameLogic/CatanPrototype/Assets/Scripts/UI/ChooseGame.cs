@@ -1,10 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class ChooseGame : MonoBehaviour
 {
     public GameObject pop_up_TheGame, pop_up_Seafarers, pop_up_CitiesKnights, loadingScreen;
+
+
+    [SerializeField]
+    private StartGameBehaviour startGame;
     
     public void TheGame()
     {
@@ -58,13 +63,36 @@ public class ChooseGame : MonoBehaviour
 
     public void StartGame()
     {
-        pop_up_TheGame.SetActive(false);
-        pop_up_Seafarers.SetActive(false);
-        pop_up_CitiesKnights.SetActive(false);
+   
 
         bool isActive = loadingScreen.activeSelf;
 
         loadingScreen.SetActive(!isActive);
+
+
+        startGame.CreateGame();
+
+        pop_up_TheGame.SetActive(false);
+        pop_up_Seafarers.SetActive(false);
+        pop_up_CitiesKnights.SetActive(false);
+
+       
     }
 
+    
+
+}
+
+
+
+[System.Serializable]
+public class GameSessionStarterJSON {
+    public List<int> extensions = new List<int>();
+}
+
+[System.Serializable]
+public class GameSessionStarterResponseJSON {
+    public int id;
+    public int status;
+    public string createdAt;
 }

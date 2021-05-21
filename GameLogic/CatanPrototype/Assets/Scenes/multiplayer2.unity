@@ -555,6 +555,7 @@ MonoBehaviour:
   pop_up_Seafarers: {fileID: 241723840}
   pop_up_CitiesKnights: {fileID: 390774543}
   loadingScreen: {fileID: 1184893613}
+  startGame: {fileID: 0}
 --- !u!1 &365564741
 GameObject:
   m_ObjectHideFlags: 0
@@ -797,6 +798,7 @@ MonoBehaviour:
   pop_up_Seafarers: {fileID: 241723840}
   pop_up_CitiesKnights: {fileID: 390774543}
   loadingScreen: {fileID: 1184893613}
+  startGame: {fileID: 0}
 --- !u!1 &412588284
 GameObject:
   m_ObjectHideFlags: 0
@@ -1478,6 +1480,7 @@ MonoBehaviour:
   pop_up_Seafarers: {fileID: 241723840}
   pop_up_CitiesKnights: {fileID: 390774543}
   loadingScreen: {fileID: 1184893613}
+  startGame: {fileID: 0}
 --- !u!114 &825106725
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1721,6 +1724,7 @@ MonoBehaviour:
   pop_up_Seafarers: {fileID: 241723840}
   pop_up_CitiesKnights: {fileID: 390774543}
   loadingScreen: {fileID: 1184893613}
+  startGame: {fileID: 0}
 --- !u!1 &917319307
 GameObject:
   m_ObjectHideFlags: 0
@@ -1976,6 +1980,7 @@ MonoBehaviour:
   pop_up_Seafarers: {fileID: 241723840}
   pop_up_CitiesKnights: {fileID: 390774543}
   loadingScreen: {fileID: 1184893613}
+  startGame: {fileID: 2008368909}
 --- !u!1 &972041170
 GameObject:
   m_ObjectHideFlags: 0
@@ -2125,6 +2130,7 @@ MonoBehaviour:
   pop_up_Seafarers: {fileID: 241723840}
   pop_up_CitiesKnights: {fileID: 390774543}
   loadingScreen: {fileID: 1184893613}
+  startGame: {fileID: 0}
 --- !u!1 &984963560
 GameObject:
   m_ObjectHideFlags: 0
@@ -2180,6 +2186,7 @@ MonoBehaviour:
   pop_up_Seafarers: {fileID: 241723840}
   pop_up_CitiesKnights: {fileID: 390774543}
   loadingScreen: {fileID: 1184893613}
+  startGame: {fileID: 0}
 --- !u!114 &984963563
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2423,6 +2430,7 @@ MonoBehaviour:
   pop_up_Seafarers: {fileID: 241723840}
   pop_up_CitiesKnights: {fileID: 390774543}
   loadingScreen: {fileID: 1184893613}
+  startGame: {fileID: 0}
 --- !u!1 &1116322656
 GameObject:
   m_ObjectHideFlags: 0
@@ -2638,6 +2646,7 @@ MonoBehaviour:
   pop_up_Seafarers: {fileID: 241723840}
   pop_up_CitiesKnights: {fileID: 390774543}
   loadingScreen: {fileID: 1184893613}
+  startGame: {fileID: 0}
 --- !u!114 &1184893616
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2810,6 +2819,7 @@ MonoBehaviour:
   pop_up_Seafarers: {fileID: 241723840}
   pop_up_CitiesKnights: {fileID: 390774543}
   loadingScreen: {fileID: 1184893613}
+  startGame: {fileID: 2008368909}
 --- !u!114 &1304079821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2959,6 +2969,7 @@ MonoBehaviour:
   pop_up_Seafarers: {fileID: 241723840}
   pop_up_CitiesKnights: {fileID: 390774543}
   loadingScreen: {fileID: 1184893613}
+  startGame: {fileID: 0}
 --- !u!114 &1351572295
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3260,6 +3271,7 @@ MonoBehaviour:
   pop_up_Seafarers: {fileID: 241723840}
   pop_up_CitiesKnights: {fileID: 390774543}
   loadingScreen: {fileID: 0}
+  startGame: {fileID: 0}
 --- !u!1 &1650152513
 GameObject:
   m_ObjectHideFlags: 0
@@ -3536,6 +3548,7 @@ MonoBehaviour:
   pop_up_Seafarers: {fileID: 241723840}
   pop_up_CitiesKnights: {fileID: 390774543}
   loadingScreen: {fileID: 1184893613}
+  startGame: {fileID: 0}
 --- !u!114 &1793178221
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4231,6 +4244,7 @@ MonoBehaviour:
   pop_up_Seafarers: {fileID: 241723840}
   pop_up_CitiesKnights: {fileID: 390774543}
   loadingScreen: {fileID: 1184893613}
+  startGame: {fileID: 0}
 --- !u!114 &2006138525
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4325,6 +4339,49 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2006138522}
   m_CullTransparentMesh: 1
+--- !u!1 &2008368908
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2008368910}
+  - component: {fileID: 2008368909}
+  m_Layer: 0
+  m_Name: StartGame
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2008368909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2008368908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d738ca0f2a702e9419ad5319fec35202, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &2008368910
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2008368908}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1817.5978, y: 752.1443, z: -120.937126}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2036403915
 GameObject:
   m_ObjectHideFlags: 0
