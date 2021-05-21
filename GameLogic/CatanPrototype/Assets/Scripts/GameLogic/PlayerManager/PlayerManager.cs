@@ -81,7 +81,7 @@ public class PlayerManager : MonoBehaviour
 
     public IEnumerator PlayerMovesThief(Player p)
     {
-        Debug.Log(p.nickname + " E RAAAAAU");
+        
         masterHighlighter.SpawnHighlighters(boardManager.PlacesWithoutThief());
         //masterHighlighter.waiting = true;
         yield return StartCoroutine(masterHighlighter.WaitForUserInput());
@@ -90,20 +90,34 @@ public class PlayerManager : MonoBehaviour
         BoardCoordinate coordinate = BoardCoordinate.ToBoardCoordinate(masterHighlighter.positionPressed);
 
         boardManager.MoveThief(coordinate);
-        Debug.Log("UAU PLAYERUL A APASAT PE :" + coordinate.q + " " +coordinate.r);
+        
     }
 
-    public void playerAddsRoad(Player p)
+    
+
+    public IEnumerator playerAddsRoad(Player p)
     {
         CraftingCost c = new CraftingCost();
         c.resourcesRequired.Add(ResourceTypes.Wood, 1);
         c.resourcesRequired.Add(ResourceTypes.Brick, 1);
         
-        if (!c.verifCost(p)) return;
+        //if (!c.verifCost(p)) yield break;
 
         c.takeCards(p);
 
-       
+        var pairs = boardManager.GetAvailablePlacesForConnector(p);
+
+        List<Vector3> placesToHighlight = new List<Vector3>();
+
+        foreach (var pair in pairs)
+        {
+            Vector3 middle = (pair.Key.transform.position + pair.Value.transform.position) / 2;
+            placesToHighlight.Add(middle);
+        }
+
+        masterHighlighter.SpawnHighlighters(placesToHighlight);
+
+        yield return StartCoroutine(masterHighlighter.WaitForUserInput());
 
 
         PlayerColor colorLongest = boardManager.GetPlayerWithLongestRoad(longestRoadLenght);

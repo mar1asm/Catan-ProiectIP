@@ -242,6 +242,22 @@ public class BoardManagerBehaviour : MonoBehaviour
     }
 
 
+    public void AddConnector(Player player, BoardCoordinate middle, string type) {
+        foreach (var cornerPair1 in board.corners)
+        {
+            Corner c1 = cornerPair1.Value;
+            var neighbours = board.cornerLattice[c1.coordinate];
+            foreach (var c2 in neighbours)
+            {
+                BoardCoordinate auxMiddle = (c1.coordinate + c2) / 2;
+                if(auxMiddle == middle) {
+                    AddConnector(player, c1.coordinate, c2, type);
+                    return;
+                }
+            }
+        }
+    }
+    
     /// <summary>
     /// Adauga un connector la tabla si il instantiaza in scena
     /// </summary>
@@ -266,6 +282,7 @@ public class BoardManagerBehaviour : MonoBehaviour
     {
         //made by jon
 
+        //Debug.LogWarning("(" + bc1.q + "," + bc1.r + ") => (" + bc2.q + "," + bc2.r + ")");
 
         Connector connector = board.PlaceConnector(p,bc1,bc2,type);
 
@@ -288,7 +305,7 @@ public class BoardManagerBehaviour : MonoBehaviour
         foreach(KeyValuePair<BoardCoordinate, Tile> entry in board.tiles)
         {
             Vector3 position = entry.Key.ToWorldSpace();
-            Debug.Log(entry.Value.GetTypeAsString());
+            //Debug.Log(entry.Value.GetTypeAsString());
             GameObject tile = Instantiate(tilePrefab, position, Quaternion.identity, transform);
             tile.GetComponent<TileBehaviour>().tile = entry.Value;
             if(entry.Value is ResourceTile)

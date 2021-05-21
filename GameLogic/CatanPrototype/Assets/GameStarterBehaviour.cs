@@ -17,6 +17,10 @@ public class GameStarterBehaviour : MonoBehaviour
     private TurnManagerBehaviour turnManager;
 
 
+    [SerializeField]
+    private MasterHighlighterBehaviour masterHighlighter;
+
+
     private Player stefan, dragos, sebi, mihnea;
 
     void Start()
@@ -74,7 +78,7 @@ public class GameStarterBehaviour : MonoBehaviour
 
         yield return new WaitForSeconds(0.25f);
 
-
+        #region testSebi
         boardManager.AddSettlement(
            sebi,
            new Corner(new BoardCoordinate(-0.33f, -1.33f)),
@@ -103,9 +107,10 @@ public class GameStarterBehaviour : MonoBehaviour
             new Corner(new BoardCoordinate(1.33f, -1.66f)),
             "road");
 
+        #endregion testSebi
         yield return new WaitForSeconds(0.25f);
 
-
+        #region testDragos
         boardManager.AddSettlement(
            dragos,
            new Corner(new BoardCoordinate(0.33f, 0.33f)),
@@ -139,6 +144,9 @@ public class GameStarterBehaviour : MonoBehaviour
             new Corner(new BoardCoordinate(0.33f, -0.66f)),
             "road");
 
+
+        #endregion testDragos
+
         //var corners = boardManager.GetAvailableCornersForSettlement(dragos);
 
         //Debug.LogWarning("Number of corners:" + corners.Count);
@@ -149,25 +157,38 @@ public class GameStarterBehaviour : MonoBehaviour
         //        corner.GetComponent<CornerBehaviour>().corner.coordinate.r);
         //}
 
-        var pairs = boardManager.GetAvailablePlacesForConnector(dragos);
+        // var pairs = boardManager.GetAvailablePlacesForConnector(dragos);
 
-        Debug.LogWarning("number of connectos: " + pairs.Count);
+        // Debug.LogWarning("number of connectos: " + pairs.Count);
 
-        //foreach (var pair in pairs)
-        //{
+        // foreach (var pair in pairs)
+        // {
         //    var firstCord = pair.Key.GetComponent<CornerBehaviour>().corner.coordinate;
         //    var secondCord = pair.Value.GetComponent<CornerBehaviour>().corner.coordinate;
         //    //Debug.LogWarning("Connector in: (" + firstCord.q + ", " + firstCord.r + ") - (" + secondCord.q + ", " + secondCord.r + ")");
 
-        //    boardManager.AddConnector(
-        //        dragos,
-        //        new Corner(firstCord),
-        //        new Corner(secondCord),
-        //        "road");
+        // }
 
-        //}
+        var pairs = boardManager.GetAvailablePlacesForConnector(dragos);
+
+        List<Vector3> positions = new List<Vector3>();
+
+        foreach (var pair in pairs)
+        {
+            Vector3 middle = (pair.Key.transform.position + pair.Value.transform.position) / 2;
+            positions.Add(middle);
+        }
 
 
+        masterHighlighter.SpawnHighlighters(positions);
+        
+        yield return StartCoroutine(masterHighlighter.WaitForUserInput());
+        
+        Vector3 position = masterHighlighter.positionPressed;
+
+        BoardCoordinate bcPosition = BoardCoordinate.ToBoardCoordinate(position);
+
+        boardManager.AddConnector(dragos, bcPosition, "road");
 
         turnManager.Next();
 

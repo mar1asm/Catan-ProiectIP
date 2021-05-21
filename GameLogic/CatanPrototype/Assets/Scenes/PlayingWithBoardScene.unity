@@ -1142,6 +1142,7 @@ MonoBehaviour:
   playerManager: {fileID: 201632398}
   boardManager: {fileID: 1854074575}
   turnManager: {fileID: 750080241}
+  masterHighlighter: {fileID: 174137412}
 --- !u!4 &1695648233
 Transform:
   m_ObjectHideFlags: 0
