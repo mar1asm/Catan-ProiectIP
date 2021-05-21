@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CatanAPI.Data;
 using CatanAPI.Data.DTO.NotificationsDTO;
 using CatanAPI.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,10 +21,12 @@ namespace CatanAPI.Controllers
     public class NotificationsController : ControllerBase
     {
         private readonly CatanAPIDbContext _context;
+        private readonly UserManager<User> _userManager;
 
-        public NotificationsController(CatanAPIDbContext context)
+        public NotificationsController(CatanAPIDbContext context, UserManager<User> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: api/Notifications
@@ -68,6 +73,79 @@ namespace CatanAPI.Controllers
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetPost", new { id = notification.Id }, notification);
+        }
+
+        [Authorize]
+        [HttpPost("session")]
+        public async Task<ActionResult<SessionNotificationRequestDTO>> CreateSessionNotification(SessionNotificationRequestDTO notification)
+        {
+            var users = await _context.GameSessionUsers
+                .Where(sUser => sUser.GameSessionId == notification.GameSessionId)
+                .Include(item => item.User)
+                .ToListAsync();
+            var newNotifcation = new Notification
+            {
+                Text = notification.Text,
+                CreatedAt = DateTime.Now
+            };
+            _context.Notifications.Add(newNotifcation);
+            foreach(var user in users)
+            {
+                _context.UserNotifications.Add(new UserNotification
+                {
+                    CreatedAt = DateTime.Now,
+                    Read = false,
+                    Notification = newNotifcation,
+                    NotificationId = newNotifcation.Id,
+                    User = user.User,
+                    UserId = user.User.Id
+                });
+            }
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+
+        [Authorize]
+        [HttpGet("user")]
+        public async Task<ActionResult<IEnumerable<NotificationDto>>> GetUserNotifications(bool all=false)
+        {
+            var currentUser = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+            bool queryAll(UserNotification item) => item.UserId == currentUser.Id;
+            bool queryUnread(UserNotification item) => item.UserId == currentUser.Id && item.Read == false;
+            var notifications = _context.UserNotifications
+                .Include(item => item.Notification)
+                .Where(all == false ? queryUnread : queryAll)
+                .Select(item => new NotificationDto
+                {
+                    NotificationId = item.Id,
+                    Text = item.Notification.Text,
+                    CreatedAt = item.CreatedAt,
+                    Read = item.Read
+                });
+            if(notifications == null)
+            {
+                return NotFound();
+            }
+            return notifications.ToList();
+        }
+
+        [Authorize]
+        [HttpPut("user")]
+        public async Task<ActionResult<IEnumerable<NotificationDto>>> MarkAsReadNotification(MarkNotificationAsReadDTO data)
+        {
+            var currentUser = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+            var notification = await _context.UserNotifications.SingleOrDefaultAsync(item => item.Id == data.Id);
+            if(notification == null)
+            {
+                return NotFound();
+            }
+            if(notification.UserId != currentUser.Id)
+            {
+                return Unauthorized();
+            }
+            notification.Read = true;
+            await _context.SaveChangesAsync();
+            return NoContent();
         }
 
         // PUT api/Notifications/5
