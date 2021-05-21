@@ -277,6 +277,9 @@ namespace CatanAPI.Migrations
                         .HasColumnType("timestamp without time zone")
                         .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
+                    b.Property<int>("Id")
+                        .HasColumnType("integer");
+
                     b.Property<bool>("Read")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("boolean")
