@@ -5,10 +5,10 @@ using UnityEngine.Networking;
 public class ServerListenerBehaviour : MonoBehaviour
 {
  
-    public static string notificationUriPath  = "https://localhost:5001/api/Authenticate/register";
+    public static string notificationUriPath  = "https://localhost:5001/api/Notifications";
     void Start()
     {
-        //StartCoroutine(ListenForComands());
+        StartCoroutine(ListenForComands());
     }
 
 
@@ -20,15 +20,41 @@ public class ServerListenerBehaviour : MonoBehaviour
             yield return request.SendWebRequest();
             if (request.result == UnityWebRequest.Result.ConnectionError || 
             request.result == UnityWebRequest.Result.ProtocolError)
-                Debug.Log("GET Error");     
+                Debug.Log("GET ERROR -  Eroare la ascultare");     
             else 
             {
-                //vedem in ce format primi de la server
-                //sa luam si sa interpretam comanda
+                long status = request.responseCode;
+                if(status == 200 || status == 201) {
+                    string preProccesedJson = "{ \"notifications\" : " + request.downloadHandler.text + " }";
+                    var notifications = JsonUtility.FromJson<NotificationListJson>(preProccesedJson);
+
+                    Debug.Log("AM primit " + notifications.notifications.Count + " notificari");
+                    foreach (var notification in notifications.notifications)
+                    {
+                        Debug.Log(notification.notificationId + ": " + notification.text +  " " + notification.read);
+                    }
+                }
             }
 
             yield return new WaitForSeconds(0.1f);
         }
     }
+}
+
+
+
+
+[System.Serializable]
+public class NotificationListJson {
+    public List<NotificationJson> notifications;
+}
+
+[System.Serializable]
+public class NotificationJson {
+    public int notificationId;
+    public string text;
+    public string createdAt;
+
+    public bool read;
 
 }
