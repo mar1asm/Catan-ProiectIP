@@ -117,7 +117,7 @@ namespace CatanAPI.Controllers
                 .Where(all == false ? queryUnread : queryAll)
                 .Select(item => new NotificationDto
                 {
-                    NotificationId = item.Id,
+                    NotificationId = item.NotificationId,
                     Text = item.Notification.Text,
                     CreatedAt = item.CreatedAt,
                     Read = item.Read
@@ -134,14 +134,10 @@ namespace CatanAPI.Controllers
         public async Task<ActionResult<IEnumerable<NotificationDto>>> MarkAsReadNotification(MarkNotificationAsReadDTO data)
         {
             var currentUser = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
-            var notification = await _context.UserNotifications.SingleOrDefaultAsync(item => item.Id == data.Id);
+            var notification = await _context.UserNotifications.SingleOrDefaultAsync(item => item.NotificationId == data.Id && item.UserId == currentUser.Id);
             if(notification == null)
             {
                 return NotFound();
-            }
-            if(notification.UserId != currentUser.Id)
-            {
-                return Unauthorized();
             }
             notification.Read = true;
             await _context.SaveChangesAsync();
