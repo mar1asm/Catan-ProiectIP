@@ -42,7 +42,7 @@ namespace CatanAPI.Controllers
                 UserName = b.UserName,
                 Notifications = b.UserNotifications
                 .Select(
-                    n => new NotificationDto { NotificationId = n.Id, CreatedAt = n.CreatedAt, Text = n.Notification.Text, Read = n.Read })
+                    n => new NotificationDto { NotificationId = n.NotificationId, CreatedAt = n.CreatedAt, Text = n.Notification.Text, Read = n.Read })
                 .ToList()
             }).ToListAsync();
             return Ok(users);
@@ -68,7 +68,7 @@ namespace CatanAPI.Controllers
                     Email = entry.Email,
                     Notifications = entry.UserNotifications
                     .Select(
-                    n => new NotificationDto { NotificationId = n.Id, CreatedAt = n.CreatedAt, Text = n.Notification.Text, Read = n.Read })
+                    n => new NotificationDto { NotificationId = n.NotificationId, CreatedAt = n.CreatedAt, Text = n.Notification.Text, Read = n.Read })
                     .ToList()
                 }
                 )
@@ -105,7 +105,7 @@ namespace CatanAPI.Controllers
                     Email = entry.Email,
                     Notifications = entry.UserNotifications
                     .Select(
-                    n => new NotificationDto { NotificationId = n.Id, CreatedAt = n.CreatedAt, Text = n.Notification.Text, Read = n.Read })
+                    n => new NotificationDto { NotificationId = n.NotificationId, CreatedAt = n.CreatedAt, Text = n.Notification.Text, Read = n.Read })
                     .ToList()
                 }
                 )
@@ -284,7 +284,7 @@ namespace CatanAPI.Controllers
                 Role = b.Roles,
                 Notifications = b.UserNotifications
                 .Select(
-                    n => new NotificationDto { NotificationId = n.Id, CreatedAt = n.CreatedAt, Text = n.Notification.Text, Read = n.Read })
+                    n => new NotificationDto { NotificationId = n.NotificationId, CreatedAt = n.CreatedAt, Text = n.Notification.Text, Read = n.Read })
                 .ToList()
             }).ToListAsync();
 
@@ -313,7 +313,7 @@ namespace CatanAPI.Controllers
                 NoOfWonGames = b.NoOfWonGames,
                 Notifications = b.UserNotifications
                 .Select(
-                    n => new NotificationDto { NotificationId = n.Id, CreatedAt = n.CreatedAt, Text = n.Notification.Text, Read = n.Read })
+                    n => new NotificationDto { NotificationId = n.NotificationId, CreatedAt = n.CreatedAt, Text = n.Notification.Text, Read = n.Read })
                 .ToList()
             }).OrderByDescending(entry => entry.NoOfWonGames).ToListAsync();
             return Ok(users);
