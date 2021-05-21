@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class ChooseGame : MonoBehaviour
 {
-    public GameObject pop_up_TheGame, pop_up_Seafarers, pop_up_CitiesKnights, loadingScreen;
+    public GameObject pop_up_TheGame, pop_up_Seafarers, pop_up_CitiesKnights, loadingScreen, loadingScreen1;
+       
     
     public void TheGame()
     {
         pop_up_Seafarers.SetActive(false);
         pop_up_CitiesKnights.SetActive(false);
         loadingScreen.SetActive(false);
+        loadingScreen1.SetActive(false);
 
         bool isActive = pop_up_TheGame.activeSelf;
 
@@ -23,6 +25,7 @@ public class ChooseGame : MonoBehaviour
         pop_up_TheGame.SetActive(false);
         pop_up_CitiesKnights.SetActive(false);
         loadingScreen.SetActive(false);
+        loadingScreen1.SetActive(false);
 
         bool isActive = pop_up_Seafarers.activeSelf;
 
@@ -34,6 +37,8 @@ public class ChooseGame : MonoBehaviour
         pop_up_TheGame.SetActive(false);
         pop_up_Seafarers.SetActive(false);
         loadingScreen.SetActive(false);
+        loadingScreen1.SetActive(false);
+
 
         bool isActive = pop_up_CitiesKnights.activeSelf;
 
@@ -61,10 +66,26 @@ public class ChooseGame : MonoBehaviour
         pop_up_TheGame.SetActive(false);
         pop_up_Seafarers.SetActive(false);
         pop_up_CitiesKnights.SetActive(false);
+        loadingScreen.SetActive(false);
+
+
+        bool isActive = loadingScreen1.activeSelf;
+
+        loadingScreen1.SetActive(!isActive);
+    }
+
+
+    public void StartGamewithFriends()
+    {
+        pop_up_TheGame.SetActive(false);
+        pop_up_Seafarers.SetActive(false);
+        pop_up_CitiesKnights.SetActive(false);
+        loadingScreen1.SetActive(false);
 
         bool isActive = loadingScreen.activeSelf;
 
         loadingScreen.SetActive(!isActive);
+
     }
 
 }
