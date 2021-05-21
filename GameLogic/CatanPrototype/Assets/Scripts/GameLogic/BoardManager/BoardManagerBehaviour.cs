@@ -73,6 +73,18 @@ public class BoardManagerBehaviour : MonoBehaviour
         return toReturn;
     }
 
+    public List<KeyValuePair<GameObject,GameObject>> GetAvailablePlacesForConnector(Player p)
+    {
+        var pairs = board.GetAvailableConnectors(p.color);
+        List<KeyValuePair<GameObject, GameObject>> toReturn = new List<KeyValuePair<GameObject, GameObject>>();
+        foreach (var pair in pairs)
+        {
+            toReturn.Add( new  KeyValuePair<GameObject, GameObject>( pair.Key.inGameObject,pair.Value.inGameObject));
+        }
+
+        return toReturn;
+    }
+
     public List<ResourceTypes> GetResourcesFromCorner(Corner corner)
     {
         return board.ResourcesFromCorner(corner);
@@ -97,6 +109,8 @@ public class BoardManagerBehaviour : MonoBehaviour
 
 
 
+
+
     /// <summary>
     /// Returneaza numarul de puncte din asezari
     /// </summary>
@@ -116,6 +130,10 @@ public class BoardManagerBehaviour : MonoBehaviour
         }
         return sum;
     }
+
+
+    
+
     public void GiveResources(int nr)
     {
         // Debug.Log("Jucatorii care au asezari pe" + nr + "primesc resurse.");

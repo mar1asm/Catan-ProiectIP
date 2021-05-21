@@ -30,7 +30,6 @@ public class GameStarterBehaviour : MonoBehaviour
         playerManager.AddPlayer(stefan);
         playerManager.AddPlayer(dragos);
         playerManager.AddPlayer(sebi);
-        playerManager.AddPlayer(mihnea);
 
         playerManager.SetPointGoal(10);
         playerManager.Setup();
@@ -137,24 +136,44 @@ public class GameStarterBehaviour : MonoBehaviour
         boardManager.AddConnector(
             dragos,
             new Corner(new BoardCoordinate(0.66f, -0.33f)),
-            new Corner(new BoardCoordinate(1.33f, -0.66f)),
+            new Corner(new BoardCoordinate(0.33f, -0.66f)),
             "road");
 
-        var corners = boardManager.GetAvailableCornersForSettlement(dragos);
+        //var corners = boardManager.GetAvailableCornersForSettlement(dragos);
 
-        Debug.LogWarning("Number of corners:" + corners.Count);
+        //Debug.LogWarning("Number of corners:" + corners.Count);
 
-        foreach (var corner in corners)
-        {
-            Debug.LogWarning(corner.GetComponent<CornerBehaviour>().corner.coordinate.q + " " +
-                corner.GetComponent<CornerBehaviour>().corner.coordinate.r);
-        }
+        //foreach (var corner in corners)
+        //{
+        //    Debug.LogWarning(corner.GetComponent<CornerBehaviour>().corner.coordinate.q + " " +
+        //        corner.GetComponent<CornerBehaviour>().corner.coordinate.r);
+        //}
+
+        var pairs = boardManager.GetAvailablePlacesForConnector(dragos);
+
+        Debug.LogWarning("number of connectos: " + pairs.Count);
+
+        //foreach (var pair in pairs)
+        //{
+        //    var firstCord = pair.Key.GetComponent<CornerBehaviour>().corner.coordinate;
+        //    var secondCord = pair.Value.GetComponent<CornerBehaviour>().corner.coordinate;
+        //    //Debug.LogWarning("Connector in: (" + firstCord.q + ", " + firstCord.r + ") - (" + secondCord.q + ", " + secondCord.r + ")");
+
+        //    boardManager.AddConnector(
+        //        dragos,
+        //        new Corner(firstCord),
+        //        new Corner(secondCord),
+        //        "road");
+
+        //}
+
+
 
         turnManager.Next();
 
         turnManager.TurnLogic(turnManager.currentPlayerIndex);
 
-        StartCoroutine(playerManager.PlayerMovesThief(stefan));
+        //StartCoroutine(playerManager.PlayerMovesThief(stefan));
 
         //DisplayHandInfo();
 
