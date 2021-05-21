@@ -1,0 +1,68 @@
+{
+"availableCard": [
+{
+"name": "Resources",
+"d": 
+[
+{
+"type": "brick",
+"number": 19
+},
+{
+"type": "grain",
+"number": 19
+},
+{
+"type": "ore",
+"number": 19
+},
+{
+"type": "wool",
+"number": 19
+}
+]
+},
+{
+"name": "Development",
+"d": 
+[
+{
+"type": "knight",
+"number": 14
+},
+{
+"type": "progress",
+"number": 6
+},
+{
+"type": "victory point",
+"number": 5
+}
+]
+},
+{
+"name": "BuidingsCosts",
+"d": 
+[
+{
+"type": "cost card",
+"number": 3
+}
+]
+},
+{
+"name": "SpecialCards",
+"d": 
+[
+{
+"type": "longest road",
+"number": 1
+},
+{
+"type": "longest army",
+"number": 1
+}
+]
+}
+]
+}

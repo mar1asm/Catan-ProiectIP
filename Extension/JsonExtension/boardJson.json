@@ -1,0 +1,219 @@
+{
+"availableTiles": [
+{
+"type": "sea",
+"number": 15
+},
+{
+"type": "fields",
+"number": 4
+},
+{
+"type": "hills",
+"number": 4
+},
+{
+"type": "mountains",
+"number": 4
+},
+{
+"type": "pasture",
+"number": 5
+},
+{
+"type": "forest",
+"number": 3
+},
+{
+"type": "goldfield",
+"number": 2
+}
+],
+ "board" :[
+     {
+	"q": 0,
+	"r": 0,
+	"type": "forest"
+     },
+     {
+	"q": 0,
+	"r": -1,
+	"type": "pasture"
+     },
+     {
+	"q": 0,
+	"r": -2,
+	"type": "mountains"
+     },
+     {
+	"q": 0,
+	"r": -3,
+	"type": "fields"
+     },
+     {
+	"q": 0,
+	"r": 1,
+	"type": "sea"
+     },
+     {
+	"q": 0,
+	"r": 2,
+	"type": "pasture"
+     },
+     {
+	"q": 0,
+	"r": 3,
+	"type": "sea"
+     },
+     {
+	"q": 1,
+	"r": 0,
+	"type": "pasture"
+     },
+     {
+	"q": 1,
+	"r": -1,
+	"type": "mountains"
+     },
+     {
+	"q": 1,
+	"r": -2,
+	"type": "pasture"
+     },
+     {
+	"q": 1,
+	"r": -3,
+	"type": "fields"
+     },
+     {
+	"q": 1,
+	"r": 1,
+	"type": "sea"
+     },
+     {
+	"q": 1,
+	"r": 2,
+	"type": "sea"
+     },
+     {
+	"q": 2,
+	"r": 0,
+	"type": "sea"
+     },
+     {
+	"q": 2,
+	"r": 1,
+	"type": "goldfield"
+     },
+     {
+	"q": 2,
+	"r": -1,
+	"type": "field"
+     },
+     {
+	"q": 2,
+	"r": -2,
+	"type": "pasture"
+     },
+     {
+	"q": 2,
+	"r": -3,
+	"type": "hills"
+     },
+     {
+	"q": 3,
+	"r": 0,
+	"type": "hills"
+     },
+     {
+	"q": 3,
+	"r": -1,
+	"type": "sea"
+     },
+     {
+	"q": 3,
+	"r": -2,
+	"type": "sea"
+     },
+     {
+	"q": 3,
+	"r": -3,
+	"type": "sea"
+     },
+     {
+	"q": -1,
+	"r": 0,
+	"type": "forest"
+     },
+     {
+	"q": -1,
+	"r": -1,
+	"type": "hills"
+     },
+     {
+	"q": -1,
+	"r": -2,
+	"type": "forest"
+     },
+     {
+	"q": -1,
+	"r": 1,
+	"type": "sea"
+     },
+     {
+	"q": -1,
+	"r": 2,
+	"type": "field"
+     },
+     {
+	"q": -1,
+	"r": 3,
+	"type": "mountains"
+     },
+     {
+	"q": -2,
+	"r": 0,
+	"type": "sea"
+     },
+     {
+	"q": -2,
+	"r": -1,
+	"type": "sea"
+     },
+     {
+	"q": -2,
+	"r": 1,
+	"type": "sea"
+     },
+     {
+	"q": -2,
+	"r": 2,
+	"type": "goldfield"
+     },
+     {
+	"q": -2,
+	"r": 3,
+	"type": "sea"
+     },
+     {
+	"q": -3,
+	"r": 0,
+	"type": "hills"
+     },
+     {
+	"q": -3,
+	"r": 1,
+	"type": "mountain"
+     },
+     {
+	"q": -3,
+	"r": 2,
+	"type": "sea"
+     },
+     {
+	"q": -3,
+	"r": 3,
+	"type": "sea"
+     }	]
+
+}
