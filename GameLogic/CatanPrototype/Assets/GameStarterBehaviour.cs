@@ -21,6 +21,7 @@ public class GameStarterBehaviour : MonoBehaviour
 
     void Start()
     {
+        
         stefan = new Player("Stefan", "1", PlayerColor.Red);
         dragos = new Player("Dragos", "2", PlayerColor.Blue);
         sebi = new Player("Sebi", "3", PlayerColor.Green);
@@ -38,6 +39,7 @@ public class GameStarterBehaviour : MonoBehaviour
     }
 
 
+    //Folosit doar ca sa testam...
     IEnumerator SimulateGame()
     {
 
