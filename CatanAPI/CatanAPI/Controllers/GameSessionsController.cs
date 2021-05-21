@@ -52,6 +52,7 @@ namespace CatanAPI.Controllers
             var currentUser = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
             var gameSession = await _context.GameSessions
                 .Include(i => i.GameSessionUsers)
+                .ThenInclude(gUser => gUser.User)
                 .Include(i => i.Extensions)
                 .FirstOrDefaultAsync(item => item.Id == id);
 
@@ -69,7 +70,7 @@ namespace CatanAPI.Controllers
                 CreatedAt = gameSession.CreatedAt,
                 Status = gameSession.Status,
                 Extensions = gameSession.Extensions.Select(extension => new GetExtensionDTO { Id = extension.Id, Name = extension.Name }).ToList(),
-                GameSessionUsers = gameSession.GameSessionUsers.Select(user => new GetUserMinDTO { Id = user.UserId, UserName = user.User.UserName }).ToList()
+                GameSessionUsers = gameSession.GameSessionUsers.Select(user => new GetUserSessionDTO { Id = user.UserId, UserName = user.User.UserName, Roles = user.SessionRoles }).ToList()
             };
         }
 
@@ -87,7 +88,7 @@ namespace CatanAPI.Controllers
                     CreatedAt = gameSession.CreatedAt,
                     Status = gameSession.Status,
                     Extensions = gameSession.Extensions.Select(extension => new GetExtensionDTO { Id = extension.Id, Name = extension.Name }).ToList(),
-                    GameSessionUsers = gameSession.GameSessionUsers.Select(user => new GetUserMinDTO { Id = user.UserId, UserName = user.User.UserName }).ToList()
+                    GameSessionUsers = gameSession.GameSessionUsers.Select(user => new GetUserSessionDTO { Id = user.UserId, UserName = user.User.UserName, Roles=user.SessionRoles }).ToList()
                 }).ToListAsync();
             return gameSessions;
         }
