@@ -30,6 +30,12 @@ public class CardManager : MonoBehaviour
 
     }
 
+
+    public void InitializeDecksFromFile(string path) {
+        decks = DeckInitializer.InitializeDeckFromFile(path);
+        ShuffleDecks();
+    }
+
     /// <summary>
     /// Ia prima carte din pachetul cu numele nameOfDeck. 
     /// Returneaza null daca nu exista pachetul respectiv

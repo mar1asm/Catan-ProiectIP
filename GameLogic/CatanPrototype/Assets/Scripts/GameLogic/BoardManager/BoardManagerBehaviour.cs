@@ -47,6 +47,30 @@ public class BoardManagerBehaviour : MonoBehaviour
         
     }
 
+    public List<KeyValuePair<GameObject, GameObject>> GetConnectorPlacesForCorner(BoardCoordinate bc) {
+        List<KeyValuePair<GameObject, GameObject>> toReturn = new List<KeyValuePair<GameObject, GameObject>>();
+        
+        Corner corner = board.corners[bc];
+
+        foreach (var neighbourBC in board.cornerLattice[corner.coordinate])
+        {
+            Corner neighbour = board.corners[neighbourBC];
+
+            toReturn.Add(new KeyValuePair<GameObject, GameObject>(corner.inGameObject, neighbour.inGameObject));
+        }
+        return toReturn;
+    }
+
+    public List<GameObject> GetAvailableCornersForSettlementSetup() {
+        var corners = board.GetAvailableCornersForSettlementSetup();
+        List<GameObject> toReturn = new List<GameObject>();
+        foreach (var corner in corners)
+        {
+            toReturn.Add(corner.inGameObject);
+        }
+        return toReturn;
+    }
+
 
     
 
@@ -216,6 +240,16 @@ public class BoardManagerBehaviour : MonoBehaviour
                 ((ResourceTile)tile).numberTileValue = numberTile;
             }
         }
+
+        var corners = board.PlaceCorners(tile);
+
+        foreach (var corner in corners)
+        {
+            position = corner.coordinate.ToWorldSpace();
+            position.y += deltaY;
+            GameObject cornerObject = Instantiate(cornerPrefab, position, Quaternion.identity, transform);
+            cornerObject.GetComponent<CornerBehaviour>().corner = corner;
+        }
     }
 
     /// <summary>
@@ -253,6 +287,7 @@ public class BoardManagerBehaviour : MonoBehaviour
 
 
     public void AddConnector(Player player, BoardCoordinate middle, string type) {
+        Debug.Log("incercam sa gasim mijlocul");
         foreach (var cornerPair1 in board.corners)
         {
             Corner c1 = cornerPair1.Value;
@@ -260,6 +295,8 @@ public class BoardManagerBehaviour : MonoBehaviour
             foreach (var c2 in neighbours)
             {
                 BoardCoordinate auxMiddle = (c1.coordinate + c2) / 2;
+                //Debug.Log(c1.coordinate.q + "," + c1.coordinate.r + " ==> " + c2.q + "," + c2.r);
+                //Debug.Log(auxMiddle.q + " " + auxMiddle.r);
                 if(auxMiddle == middle) {
                     AddConnector(player, c1.coordinate, c2, type);
                     return;
@@ -308,7 +345,17 @@ public class BoardManagerBehaviour : MonoBehaviour
     }
 
 
-
+    public void InstantiateCorners() {
+       
+        foreach(KeyValuePair<BoardCoordinate, Corner> entry in board.corners)
+        {
+           // Debug.Log(entry.Key.q + " " + entry.Key.r);
+            Vector3 position = entry.Key.ToWorldSpace();
+            position.y += deltaY;
+            GameObject corner = Instantiate(cornerPrefab, position, Quaternion.identity, transform);
+            corner.GetComponent<CornerBehaviour>().corner = entry.Value;
+        }
+    }
 
     public void InstantiateBoard()
     {

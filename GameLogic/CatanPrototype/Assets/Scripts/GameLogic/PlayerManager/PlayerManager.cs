@@ -15,9 +15,18 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     private MasterHighlighterBehaviour masterHighlighter;
 
-    public List<Player> players;
+    public List<Player> players = new List<Player>();
 
-    public Player clientPlayer = new Player("test", "1");
+    public Player clientPlayer {
+        get {
+            foreach (var player in players)
+            {
+                if(player.nickname == UserInfo.GetUsername()) return player;
+            }
+
+            return null;
+        }
+    }
 
     public Player longestRoadHolder = null;
     public int longestRoadLenght = 4;
@@ -36,7 +45,16 @@ public class PlayerManager : MonoBehaviour
 
 
 
+    public Player GetPlayerWithUsername(string username) {
+        foreach (var player in players)
+        {
+            if(player.nickname == username) {
+                return player;
+            }
+        }
 
+        return null;
+    }
 
     public void SetPointGoal(int value)
     {

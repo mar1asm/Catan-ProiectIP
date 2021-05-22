@@ -12,16 +12,13 @@ public class TurnManagerBehaviour : MonoBehaviour
     public int size=0;
     public int currentPlayerIndex =-1;
 
+    public Queue<Player> setupOrder = new Queue<Player>();
+
     [SerializeField]
     private TradeManagerBehaviour tradeManager;
 
     [SerializeField]
     private BoardManagerBehaviour boardManager;
-
-    
-
-    
-
 
     public Player currentPlayer
     {
@@ -31,6 +28,26 @@ public class TurnManagerBehaviour : MonoBehaviour
         }
     }
 
+
+    public void InitSetupOrder() {
+        var players = playerManager.players;
+        for(int i = 0 ; i < players.Count; ++i) {
+            setupOrder.Enqueue(players[i]);
+        }
+        for(int i = players.Count - 1; i >= 0; --i) {
+            setupOrder.Enqueue(players[i]);
+        }
+
+        foreach (var player in setupOrder)
+        {
+            Debug.Log("ordinea de setup: " + player.nickname);
+        }
+    }
+
+    public Player GetNextPlayerInSetup() {
+        if(setupOrder.Count == 0) return null;
+        return setupOrder.Dequeue();
+    }
 
     public void DisplayOrder() {
         string orderString = "";

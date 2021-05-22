@@ -16,6 +16,13 @@ public class CommandInterpreterBehaviour : MonoBehaviour
     [SerializeField]
     private TurnManagerBehaviour turnManager;
 
+    [SerializeField]
+    private SetupMasterBehaviour setupMaster;
+
+
+    [SerializeField]
+    private ServerSenderBehaviour serverSender;
+
     public void InterpretCommand(string command) {
         string[] tokens = command.Split(' ');
         Debug.Log(command);
@@ -43,7 +50,6 @@ public class CommandInterpreterBehaviour : MonoBehaviour
                     }
                     bannersHolderObject.GetComponent<BannerHolderBehaviour>().AddBanner(playerTokens[0], colorOfPlayer);
                 }
-
                 
             } break;
 
@@ -94,6 +100,60 @@ public class CommandInterpreterBehaviour : MonoBehaviour
                 turnManager.SetOrder(newOrder);
 
                 turnManager.DisplayOrder();
+            } break;
+
+            case "setup": {
+                if(tokens.Length < 2) return;
+
+                if(playerManager.clientPlayer.nickname != tokens[1]) return;
+
+                StartCoroutine(setupMaster.PlaceSettlementAndRoad());
+            } break;
+
+
+            case "placeSettlement": {
+                if(tokens.Length < 4) return;
+
+                string username = tokens[1];
+
+                string[] coords = tokens[2].Split(';');
+
+                float q = float.Parse(coords[0]);
+
+                float r = float.Parse(coords[1]);
+
+
+
+                boardManager.AddSettlement(playerManager.GetPlayerWithUsername(username),
+                                new BoardCoordinate(q, r),
+                                tokens[3]);
+            } break;
+
+            case "placeConnector": {
+                string username = tokens[1];
+
+                string[] coords = tokens[2].Split(';');
+
+                float q = float.Parse(coords[0]);
+
+                float r = float.Parse(coords[1]);
+
+                boardManager.AddConnector(playerManager.GetPlayerWithUsername(username),
+                            new BoardCoordinate(q, r),
+                            tokens[3]);
+            } break;
+
+            case "nextSetup": {
+                if(!UserInfo.IsHost()) return;
+
+                Player nextInSetup = turnManager.GetNextPlayerInSetup();
+                if(nextInSetup == null) {
+                    //o sa fie ceva acilea
+                    return;
+                }
+                string message = "setup " + nextInSetup.nickname;
+
+                serverSender.Send(message);
             } break;
         }
     }

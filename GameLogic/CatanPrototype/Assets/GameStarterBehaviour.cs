@@ -20,6 +20,9 @@ public class GameStarterBehaviour : MonoBehaviour
     [SerializeField]
     private MasterHighlighterBehaviour masterHighlighter;
 
+    [SerializeField]
+    private CardManager cardManager;
+
 
     [SerializeField]
     private ServerSenderBehaviour serverSender;
@@ -57,7 +60,7 @@ public class GameStarterBehaviour : MonoBehaviour
 
 
         for(int i = 0 ; i < usernames.Count; ++i) {
-            playerManager.AddPlayer(new Player(usernames[0], "?", playerColors[i]));
+            playerManager.AddPlayer(new Player(usernames[i], "?", playerColors[i]));
         }
 
         //Generam board-ul si dupa trimitem si la ceilalti
@@ -94,9 +97,24 @@ public class GameStarterBehaviour : MonoBehaviour
 
         yield return StartCoroutine(SendOrderToAll());
 
+        cardManager.InitializeDecksFromFile("GameLogic/card1");
+                
         Debug.LogWarning("Setup gata!!!!!!!!!");
 
-        turnManager.DisplayOrder();
+        yield return new WaitForSeconds(2);
+
+
+        turnManager.InitSetupOrder();
+
+        Player firstToSetup = turnManager.GetNextPlayerInSetup(); 
+
+        SendSetupMessage(firstToSetup.nickname);
+    }
+
+
+    public void SendSetupMessage(string username) {
+        string message = "setup " + username;
+        serverSender.Send(message);
     }
 
     private IEnumerator SendOrderToAll() {

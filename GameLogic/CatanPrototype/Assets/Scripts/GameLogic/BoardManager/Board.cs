@@ -196,7 +196,36 @@ public class Board
 
         tiles.Add(boardCoordinate, tileToPlace);
 
+      
+
         return tileToPlace;
+    }
+
+    
+
+    public List<Corner> GetAvailableCornersForSettlementSetup() {
+        List<Corner> toReturn = new List<Corner>();
+
+        foreach (var pair in corners) 
+        {
+            Corner corner = pair.Value;
+            if(corner.settlement == null) {
+                var neighbours = cornerLattice[corner.coordinate];
+                bool ok = true;
+                foreach (var bc in neighbours)
+                {
+                    Corner neighbourCorner = corners[bc];
+                    //daca e ceva asezat acolo
+                    if(neighbourCorner.settlement != null) {
+                        ok  = false;
+                        break;
+                    }
+                }
+                if(ok)toReturn.Add(corner);
+            }
+        }
+
+        return toReturn;
     }
 
     public List<Corner> GetAvailableCorners(PlayerColor color)
@@ -347,6 +376,8 @@ public class Board
             }
         }
     }
+
+
 
     public Settlement PlaceSettlement(Player p, BoardCoordinate boardCoordinate, string type)
     {
