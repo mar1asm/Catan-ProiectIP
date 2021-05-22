@@ -39,7 +39,7 @@ public class playersBanner : MonoBehaviour
         //Preparing the request
         string uri = "https://localhost:5001/api/GameSessions/{id}"; //de modificat cu url-ul de la api
         UnityWebRequest request = UnityWebRequest.Get(uri);
-        request.SetRequestHeader("Authorization", "Bearer " + UserAuth.GetToken());
+        request.SetRequestHeader("Authorization", "Bearer " + UserInfo.GetToken());
 
         //Send the request then wait here until it returns
         yield return request.SendWebRequest();

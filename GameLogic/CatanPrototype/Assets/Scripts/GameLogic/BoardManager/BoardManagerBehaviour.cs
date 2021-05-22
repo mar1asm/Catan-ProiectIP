@@ -22,8 +22,8 @@ public class BoardManagerBehaviour : MonoBehaviour
     [SerializeField]
     private GameObject thiefPrefab;
 
-    [SerializeField]
-    private Board board;
+    
+    public Board board;
 
     private GameObject thiefGameObject;
 
@@ -37,15 +37,18 @@ public class BoardManagerBehaviour : MonoBehaviour
     {
         //deltaY = 0.002003f * 5751.438f * 0.3f;
     
-        InitializeBoardFromFile("GameLogic/inimioara");
-        /*board.PlacePort(new Corner(new BoardCoordinate(1.33f, -2.66f)),
-                        new Corner(new BoardCoordinate(0.66f, -2.33f)),
-                        ResourceTypes.Any, 3, 1);
-        */
-        InstantiateBoard();
+        // InitializeBoardFromFile("GameLogic/inimioara");
+        // /*board.PlacePort(new Corner(new BoardCoordinate(1.33f, -2.66f)),
+        //                 new Corner(new BoardCoordinate(0.66f, -2.33f)),
+        //                 ResourceTypes.Any, 3, 1);
+        // */
+        // InstantiateBoard();
 
         
     }
+
+
+    
 
     public List<Vector3> PlacesWithoutThief()
     {
@@ -68,6 +71,18 @@ public class BoardManagerBehaviour : MonoBehaviour
         foreach (var  corner in corners)
         {
             toReturn.Add(corner.inGameObject);
+        }
+
+        return toReturn;
+    }
+
+    public List<KeyValuePair<GameObject,GameObject>> GetAvailablePlacesForConnector(Player p)
+    {
+        var pairs = board.GetAvailableConnectors(p.color);
+        List<KeyValuePair<GameObject, GameObject>> toReturn = new List<KeyValuePair<GameObject, GameObject>>();
+        foreach (var pair in pairs)
+        {
+            toReturn.Add( new  KeyValuePair<GameObject, GameObject>( pair.Key.inGameObject,pair.Value.inGameObject));
         }
 
         return toReturn;
@@ -97,6 +112,8 @@ public class BoardManagerBehaviour : MonoBehaviour
 
 
 
+
+
     /// <summary>
     /// Returneaza numarul de puncte din asezari
     /// </summary>
@@ -116,6 +133,10 @@ public class BoardManagerBehaviour : MonoBehaviour
         }
         return sum;
     }
+
+
+    
+
     public void GiveResources(int nr)
     {
         // Debug.Log("Jucatorii care au asezari pe" + nr + "primesc resurse.");
@@ -182,12 +203,19 @@ public class BoardManagerBehaviour : MonoBehaviour
     /// </summary>
     /// <param name="coordinate">Pozitia in boardCoordinates unde trebuie pus hexagonul</param>
     /// <param name="type">Tipul de hexagon</param>
-    public void AddTile(BoardCoordinate coordinate, string type)
+    public void AddTile(BoardCoordinate coordinate, string type, int numberTile = -1)
     {
         Tile tile= board.PlaceTile(coordinate, type);
+
         Vector3 position = tile.coordinate.ToWorldSpace();
         GameObject gameobj = Instantiate(tilePrefab, position, Quaternion.identity, transform);
         gameobj.GetComponent<TileBehaviour>().tile = tile;
+        if(numberTile != -1) {
+            if(tile is ResourceTile) {
+                Debug.LogWarning("Schimbam valoarea : " + numberTile);
+                ((ResourceTile)tile).numberTileValue = numberTile;
+            }
+        }
     }
 
     /// <summary>
@@ -224,6 +252,22 @@ public class BoardManagerBehaviour : MonoBehaviour
     }
 
 
+    public void AddConnector(Player player, BoardCoordinate middle, string type) {
+        foreach (var cornerPair1 in board.corners)
+        {
+            Corner c1 = cornerPair1.Value;
+            var neighbours = board.cornerLattice[c1.coordinate];
+            foreach (var c2 in neighbours)
+            {
+                BoardCoordinate auxMiddle = (c1.coordinate + c2) / 2;
+                if(auxMiddle == middle) {
+                    AddConnector(player, c1.coordinate, c2, type);
+                    return;
+                }
+            }
+        }
+    }
+    
     /// <summary>
     /// Adauga un connector la tabla si il instantiaza in scena
     /// </summary>
@@ -248,6 +292,7 @@ public class BoardManagerBehaviour : MonoBehaviour
     {
         //made by jon
 
+        //Debug.LogWarning("(" + bc1.q + "," + bc1.r + ") => (" + bc2.q + "," + bc2.r + ")");
 
         Connector connector = board.PlaceConnector(p,bc1,bc2,type);
 
@@ -270,7 +315,7 @@ public class BoardManagerBehaviour : MonoBehaviour
         foreach(KeyValuePair<BoardCoordinate, Tile> entry in board.tiles)
         {
             Vector3 position = entry.Key.ToWorldSpace();
-            Debug.Log(entry.Value.GetTypeAsString());
+            //Debug.Log(entry.Value.GetTypeAsString());
             GameObject tile = Instantiate(tilePrefab, position, Quaternion.identity, transform);
             tile.GetComponent<TileBehaviour>().tile = entry.Value;
             if(entry.Value is ResourceTile)
@@ -326,6 +371,10 @@ public class BoardManagerBehaviour : MonoBehaviour
         board.SetThiefPosition(boardCoordinate);
         Vector3 newThiefPosition = board.thiefPosition.ToWorldSpace();
         newThiefPosition.y += deltaY;
+
+        if(thiefGameObject == null) {
+            thiefGameObject = Instantiate(thiefPrefab, Vector3.zero, Quaternion.identity, transform);
+        }
         thiefGameObject.transform.position = newThiefPosition;
     }
     public void InitializeBoardFromFile(string filePath)

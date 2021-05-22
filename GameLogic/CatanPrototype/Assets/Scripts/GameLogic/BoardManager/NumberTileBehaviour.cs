@@ -36,6 +36,7 @@ public class NumberTileBehaviour : MonoBehaviour
             //Debug.LogWarning(i);
             if(i == _number - 3)
             {
+                
                 vfx.transform.GetChild(i).gameObject.SetActive(true);
             }
             else
