@@ -12,7 +12,7 @@ public class DeckInitializer
         CardDescriber cards = JsonUtility.FromJson<CardDescriber>(jsonString);
         foreach (AvailableCard  available in cards.availableCard)
         {
-            Debug.Log("Deckul are numele: " + available.name);
+            //Debug.Log("Deckul are numele: " + available.name);
             switch (available.name) {
                 case "sheep": {
                     foreach (DeckDescriber dd in available.d)
@@ -103,7 +103,7 @@ public class DeckInitializer
                         {
                             DevelopmentCard b = new PointCard("point");
                                 //Deck d6 = new PointDeck("point");
-                            Debug.Log("VICTORIE");
+                            //Debug.Log("VICTORIE");
                             for (int i = 0; i < dd.number; i++)
                                 d.add(new PointCard("point"));
 
@@ -134,7 +134,7 @@ public class DeckInitializer
                         }
 
                     }
-                        Debug.Log("aiiiiiiiiiiiiiiiiiiiiiiiiiiici");
+                    
                     lst.Add(d);
                     break;
                 }
