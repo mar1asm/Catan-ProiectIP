@@ -18,7 +18,7 @@ public class BoardInitializer
         TextAsset txtData = (TextAsset)Resources.Load(filePath);
         string jsonString =  txtData.text;
   
-        Debug.Log(jsonString);
+        //Debug.Log(jsonString);
         //Am folosit ceva de la Unity, dar cred ca o sa schimbam cum citim din json..
         //vedem mai tarziu
         GameDescriber game = JsonUtility.FromJson<GameDescriber>(jsonString);
