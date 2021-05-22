@@ -7234,9 +7234,9 @@ MonoBehaviour:
   - color: 0
     banner: {fileID: 3943085580552798911, guid: 34999c384e732be4daed567fe7ab7cec, type: 3}
   - color: 2
-    banner: {fileID: 7571060983098888004, guid: 9965d71345988844aa21af4af7aabaed, type: 3}
-  - color: 5
     banner: {fileID: 6581058011846534059, guid: 28d0f94b056d4c04f934c8919a8089bd, type: 3}
+  - color: 1
+    banner: {fileID: 7571060983098888004, guid: 9965d71345988844aa21af4af7aabaed, type: 3}
   - color: 3
     banner: {fileID: 879467885658634804, guid: 9733ef226ac08314ab2546327b765a60, type: 3}
 --- !u!1 &1376833782928142539

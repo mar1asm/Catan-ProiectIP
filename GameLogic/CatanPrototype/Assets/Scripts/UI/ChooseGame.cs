@@ -67,7 +67,10 @@ public class ChooseGame : MonoBehaviour
 
     public void StartGame()
     {
-   
+        
+        // GameObject gameObject = GameObject.Find("ServerSender");
+
+        // gameObject.GetComponent<ServerSenderBehaviour>().Send("startGame " + UserInfo.GetGameSessionId());
 
         bool isActive = loadingScreen1.activeSelf;
 
@@ -83,14 +86,18 @@ public class ChooseGame : MonoBehaviour
 
     public void StartGamewithFriends()
     {
-        pop_up_TheGame.SetActive(false);
-        pop_up_Seafarers.SetActive(false);
-        pop_up_CitiesKnights.SetActive(false);
-        loadingScreen1.SetActive(false);
+        GameObject gameObject = GameObject.Find("ServerSender");
 
-        bool isActive = loadingScreen.activeSelf;
+        gameObject.GetComponent<ServerSenderBehaviour>().Send("startGame " + UserInfo.GetGameSessionId());
+        // pop_up_TheGame.SetActive(false);
+        // pop_up_Seafarers.SetActive(false);
+        // pop_up_CitiesKnights.SetActive(false);
+        // loadingScreen1.SetActive(false);
 
-        loadingScreen.SetActive(!isActive);
+        // bool isActive = loadingScreen.activeSelf;
+
+        // loadingScreen.SetActive(!isActive);
+
     }
 
     

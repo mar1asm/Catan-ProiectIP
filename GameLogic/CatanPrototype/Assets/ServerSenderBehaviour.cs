@@ -38,7 +38,7 @@ public class ServerSenderBehaviour : MonoBehaviour
         {
             long status = request.responseCode;
             if(status == 200) {
-                Debug.Log("am trimis catre server!");
+                Debug.LogWarning("am trimis catre server!");
             }
             else {
                 Debug.LogError("EROARE NASPA LA TRIMITEREA CATRE SERVER");

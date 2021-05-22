@@ -22,8 +22,8 @@ public class BoardManagerBehaviour : MonoBehaviour
     [SerializeField]
     private GameObject thiefPrefab;
 
-    [SerializeField]
-    private Board board;
+    
+    public Board board;
 
     private GameObject thiefGameObject;
 
@@ -37,15 +37,18 @@ public class BoardManagerBehaviour : MonoBehaviour
     {
         //deltaY = 0.002003f * 5751.438f * 0.3f;
     
-        InitializeBoardFromFile("GameLogic/inimioara");
-        /*board.PlacePort(new Corner(new BoardCoordinate(1.33f, -2.66f)),
-                        new Corner(new BoardCoordinate(0.66f, -2.33f)),
-                        ResourceTypes.Any, 3, 1);
-        */
-        InstantiateBoard();
+        // InitializeBoardFromFile("GameLogic/inimioara");
+        // /*board.PlacePort(new Corner(new BoardCoordinate(1.33f, -2.66f)),
+        //                 new Corner(new BoardCoordinate(0.66f, -2.33f)),
+        //                 ResourceTypes.Any, 3, 1);
+        // */
+        // InstantiateBoard();
 
         
     }
+
+
+    
 
     public List<Vector3> PlacesWithoutThief()
     {
@@ -200,12 +203,19 @@ public class BoardManagerBehaviour : MonoBehaviour
     /// </summary>
     /// <param name="coordinate">Pozitia in boardCoordinates unde trebuie pus hexagonul</param>
     /// <param name="type">Tipul de hexagon</param>
-    public void AddTile(BoardCoordinate coordinate, string type)
+    public void AddTile(BoardCoordinate coordinate, string type, int numberTile = -1)
     {
         Tile tile= board.PlaceTile(coordinate, type);
+
         Vector3 position = tile.coordinate.ToWorldSpace();
         GameObject gameobj = Instantiate(tilePrefab, position, Quaternion.identity, transform);
         gameobj.GetComponent<TileBehaviour>().tile = tile;
+        if(numberTile != -1) {
+            if(tile is ResourceTile) {
+                Debug.LogWarning("Schimbam valoarea : " + numberTile);
+                ((ResourceTile)tile).numberTileValue = numberTile;
+            }
+        }
     }
 
     /// <summary>
@@ -361,6 +371,10 @@ public class BoardManagerBehaviour : MonoBehaviour
         board.SetThiefPosition(boardCoordinate);
         Vector3 newThiefPosition = board.thiefPosition.ToWorldSpace();
         newThiefPosition.y += deltaY;
+
+        if(thiefGameObject == null) {
+            thiefGameObject = Instantiate(thiefPrefab, Vector3.zero, Quaternion.identity, transform);
+        }
         thiefGameObject.transform.position = newThiefPosition;
     }
     public void InitializeBoardFromFile(string filePath)

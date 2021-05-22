@@ -11,6 +11,8 @@ public sealed class UserInfo
     private static int gameSessionId;
     private static string username;
 
+    private static bool host = false;
+
     static UserInfo(){}    
     private UserInfo(){}  
 
@@ -24,6 +26,19 @@ public sealed class UserInfo
     }
 
 
+    public static void SetHost(bool _host) {
+        host = _host;
+    }
+
+
+
+    //stiu ca e fix aceeasi functie de doua ori... dar imi place mai mult IsHost
+    public static bool IsHost() {
+        return host;
+    }
+    public static bool GetHost() {
+        return host;
+    }
     public static void SetGameSessionId(int _gameSessionId) {
         gameSessionId = _gameSessionId;
     }

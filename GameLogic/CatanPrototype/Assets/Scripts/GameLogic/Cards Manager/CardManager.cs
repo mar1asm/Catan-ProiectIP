@@ -19,10 +19,10 @@ public class CardManager : MonoBehaviour
         p.add(c);
         Debug.Log("Merge la sfarsit" + p.nrCards);
         */
-        decks = DeckInitializer.InitializeDeckFromFile("GameLogic/card1");
+        // decks = DeckInitializer.InitializeDeckFromFile("GameLogic/card1");
 
 
-        ShuffleDecks();
+        // ShuffleDecks();
        
         
        // ia lista de deckuri 

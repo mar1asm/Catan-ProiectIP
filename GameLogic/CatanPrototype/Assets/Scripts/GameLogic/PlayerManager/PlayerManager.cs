@@ -35,23 +35,8 @@ public class PlayerManager : MonoBehaviour
     }
 
 
-    public void Setup()
-    {
-        SetupTurnManagerPlayers();
-        turnManager.SetOrder();
-        turnManager.currentPlayerIndex = 0;
-    }
 
 
-    private void SetupTurnManagerPlayers()
-    {
-        turnManager.size = players.Count;
-        turnManager.players = new Player[players.Count];
-        for (int i = 0; i < players.Count; ++i)
-        {
-            turnManager.players[i] = players[i];
-        }
-    }
 
     public void SetPointGoal(int value)
     {
