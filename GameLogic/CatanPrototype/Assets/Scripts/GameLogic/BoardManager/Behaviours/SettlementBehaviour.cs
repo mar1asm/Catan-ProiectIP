@@ -18,6 +18,7 @@ public class SettlementBehaviour : MonoBehaviour
             _settlement = value;
             CleanVFX();
             GameObject vfx = _settlement.AddVFX2Object(transform.GetChild(0).gameObject);
+          
             vfx.GetComponent<ChangingColorBehaviour>().UpdateColor(_settlement.owner);
         }
     }
