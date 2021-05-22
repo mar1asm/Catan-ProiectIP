@@ -26,8 +26,7 @@ public class BannerHolderBehaviour : MonoBehaviour
 
     void Start()
     {
-        AddBanner("Gigel", PlayerColor.Red);
-        AddBanner("Ione", PlayerColor.Blue);
+
     }
 
 

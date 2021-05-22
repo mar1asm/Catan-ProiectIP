@@ -12,7 +12,7 @@ namespace CatanAPI.Data.DTO.GameSessionsDTO
         public GameSessionStatus Status { get; set; }
         public DateTime CreatedAt { get; set; }
         public List<GetExtensionDTO> Extensions { get; set; }
-        public List<GetUserMinDTO> GameSessionUsers { get; set; }
+        public List<GetUserSessionDTO> GameSessionUsers { get; set; }
     }
 
 }
