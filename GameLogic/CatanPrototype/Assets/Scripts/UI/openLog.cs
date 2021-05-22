@@ -3,17 +3,52 @@ using System.Collections.Generic;
 using UnityEngine;
 public class openLog : MonoBehaviour
 {  
-    public GameObject gamelog_emoji, gamelog_chat, gamelog_quit, gamelog_statistics, gamelog_history, gamelog_settings, gamelog_rules, gamelog_info, trade_menu;
-    public GameObject bankTrade, pop_up_quit, pop_up_refresh;
+    public GameObject gamelog_emoji, gamelog_chat, gamelog_quit, gamelog_statistics, gamelog_history, gamelog_settings, gamelog_rules, gamelog_info, trade_menu, trade_accept;
+    public GameObject bankTrade, userTrade, pop_up_quit, pop_up_refresh;
 
+    public void closeAcceptOffer()
+    {
+        trade_accept.SetActive(false);
+    }
+
+    public void closePopUpRefresh()
+    {
+        pop_up_refresh.SetActive(false);
+    }
+
+    public void closePopUpQuit()
+    {
+        pop_up_quit.SetActive(false);
+    }
+
+    public void closeQuitTrade()
+    {
+        pop_up_quit.SetActive(false);
+        trade_menu.SetActive(false);
+
+    }
+
+   
     public void openBank()
     {
         pop_up_quit.SetActive(false);
         pop_up_refresh.SetActive(false);
+        userTrade.SetActive(false);
 
         bool isActive = bankTrade.activeSelf;
 
         bankTrade.SetActive(!isActive);
+    }
+
+    public void openUser()
+    {
+        pop_up_quit.SetActive(false);
+        pop_up_refresh.SetActive(false);
+        bankTrade.SetActive(false);
+
+        bool isActive = userTrade.activeSelf;
+
+        userTrade.SetActive(!isActive);
     }
 
     public void popUpQuit()
@@ -25,6 +60,17 @@ public class openLog : MonoBehaviour
 
         pop_up_quit.SetActive(!isActive);
     }
+
+    public void popUpQuitBank()
+    {
+        
+        pop_up_refresh.SetActive(false);
+
+        bool isActive = pop_up_quit.activeSelf;
+
+        pop_up_quit.SetActive(!isActive);
+    }
+
 
     public void popUpRefresh()
     {
@@ -48,6 +94,7 @@ public class openLog : MonoBehaviour
         gamelog_rules.SetActive(false);
         gamelog_info.SetActive(false);
         trade_menu.SetActive(false);
+        trade_accept.SetActive(false);
 
 
         bool isActive = gamelog_emoji.activeSelf;
@@ -67,6 +114,7 @@ public class openLog : MonoBehaviour
         gamelog_rules.SetActive(false);
         gamelog_info.SetActive(false);
         trade_menu.SetActive(false);
+        trade_accept.SetActive(false);
 
         bool isActive = gamelog_chat.activeSelf;
 
@@ -83,6 +131,7 @@ public class openLog : MonoBehaviour
         gamelog_rules.SetActive(false);
         gamelog_info.SetActive(false);
         trade_menu.SetActive(false);
+        trade_accept.SetActive(false);
 
         bool isActive = gamelog_quit.activeSelf;
 
@@ -99,6 +148,7 @@ public class openLog : MonoBehaviour
         gamelog_rules.SetActive(false);
         gamelog_info.SetActive(false);
         trade_menu.SetActive(false);
+        trade_accept.SetActive(false);
 
         bool isActive = gamelog_statistics.activeSelf;
 
@@ -115,6 +165,7 @@ public class openLog : MonoBehaviour
         gamelog_rules.SetActive(false);
         gamelog_info.SetActive(false);
         trade_menu.SetActive(false);
+        trade_accept.SetActive(false);
 
         bool isActive = gamelog_history.activeSelf;
 
@@ -131,6 +182,7 @@ public class openLog : MonoBehaviour
         gamelog_rules.SetActive(false);
         gamelog_info.SetActive(false);
         trade_menu.SetActive(false);
+        trade_accept.SetActive(false);
 
         bool isActive = gamelog_settings.activeSelf;
 
@@ -148,6 +200,7 @@ public class openLog : MonoBehaviour
         gamelog_settings.SetActive(false);
         gamelog_info.SetActive(false);
         trade_menu.SetActive(false);
+        trade_accept.SetActive(false);
 
         bool isActive = gamelog_rules.activeSelf;
 
@@ -164,6 +217,7 @@ public class openLog : MonoBehaviour
         gamelog_settings.SetActive(false);
         gamelog_rules.SetActive(false);
         trade_menu.SetActive(false);
+        trade_accept.SetActive(false);
 
         bool isActive = gamelog_info.activeSelf;
 
@@ -180,6 +234,7 @@ public class openLog : MonoBehaviour
         gamelog_settings.SetActive(false);
         gamelog_info.SetActive(false);
         gamelog_rules.SetActive(false);
+        trade_accept.SetActive(false);
 
         bool isActive = trade_menu.activeSelf;
 
@@ -197,6 +252,13 @@ public class openLog : MonoBehaviour
         gamelog_info.SetActive(false);
         gamelog_rules.SetActive(false);
         trade_menu.SetActive(false);
+        trade_accept.SetActive(false);
+    }
+    public void goTrade()
+    {
+        bool isActive = trade_accept.activeSelf;
+
+        trade_accept.SetActive(!isActive);
     }
 
 }
