@@ -20,7 +20,12 @@ public class BoardManagerBehaviour : MonoBehaviour
     private GameObject portPrefab;
 
     [SerializeField]
-    private Board board;
+    private GameObject thiefPrefab;
+
+    
+    public Board board;
+
+    private GameObject thiefGameObject;
 
 
   
@@ -32,61 +37,105 @@ public class BoardManagerBehaviour : MonoBehaviour
     {
         //deltaY = 0.002003f * 5751.438f * 0.3f;
     
-        InitializeBoardFromFile("GameLogic/inimioara");
-        /*board.PlacePort(new Corner(new BoardCoordinate(1.33f, -2.66f)),
-                        new Corner(new BoardCoordinate(0.66f, -2.33f)),
-                        ResourceTypes.Any, 3, 1);
-        */
-        InstantiateBoard();
+        // InitializeBoardFromFile("GameLogic/inimioara");
+        // /*board.PlacePort(new Corner(new BoardCoordinate(1.33f, -2.66f)),
+        //                 new Corner(new BoardCoordinate(0.66f, -2.33f)),
+        //                 ResourceTypes.Any, 3, 1);
+        // */
+        // InstantiateBoard();
 
-
-        Player p = new Player("test", "123");
-
-        p.color = PlayerColor.Red;
-
-        AddSettlement(p, new BoardCoordinate(1.33f, -2.66f), "city");
-        AddConnector(p, new BoardCoordinate(1.33f, -2.66f), new BoardCoordinate(0.66f, -2.33f), "road");
         
-       
-
-        Player pBlue = new Player("ad", "id");
-        pBlue.color = PlayerColor.Blue;
-
-        //AddConnector(pBlue, new BoardCoordinate(1.33f, -2.66f), new BoardCoordinate(1.66f, -2.33f), "road");
-        //AddConnector(pBlue, new BoardCoordinate(1.66f, -2.33f), new BoardCoordinate(2.33f, -2.66f), "road");
-        //AddConnector(pBlue, new BoardCoordinate(2.33f, -2.66f), new BoardCoordinate(2.66f, -2.33f), "road");
-        //AddConnector(pBlue, new BoardCoordinate(2.66f, -2.33f), new BoardCoordinate(2.33f, -1.67f), "road");
-        //AddConnector(pBlue, new BoardCoordinate(2.33f, -1.67f), new BoardCoordinate(2.66f, -1.33f), "road");
-
-        Player pRed = new Player("da", "id2");
-        pRed.color = PlayerColor.Red;
-
-
-        AddConnector(pRed, new BoardCoordinate(0.33f, -2.66f), new BoardCoordinate(-0.33f, -2.33f), "road");
-        AddConnector(pRed, new BoardCoordinate(-0.33f, -2.33f), new BoardCoordinate(-0.66f, -1.67f), "road");
-        AddConnector(pRed, new BoardCoordinate(-0.66f, -1.67f), new BoardCoordinate(-1.33f, -1.33f), "road");
-        AddConnector(pRed, new BoardCoordinate(-1.33f, -1.33f), new BoardCoordinate(-1.67f, -0.66f), "road");
-        AddConnector(pRed, new BoardCoordinate(-1.67f, -0.66f), new BoardCoordinate(-2.33f, -0.33f), "road");
-        AddConnector(pRed, new BoardCoordinate(-2.33f, -0.33f), new BoardCoordinate(-2.66f, 0.33f), "road");
-        AddConnector(pRed, new BoardCoordinate(-2.66f, 0.33f), new BoardCoordinate(-2.33f, 0.67f), "road");
-        AddConnector(pRed, new BoardCoordinate(-2.33f, 0.67f), new BoardCoordinate(-1.66f, 0.33f), "road");
-        AddConnector(pRed, new BoardCoordinate(-1.66f, 0.33f), new BoardCoordinate(-1.33f, -0.33f), "road");
-        AddConnector(pRed, new BoardCoordinate(-1.33f, -0.33f), new BoardCoordinate(-1.67f, -0.66f), "road");
-        AddConnector(pRed, new BoardCoordinate(-1.33f, -0.33f), new BoardCoordinate(-0.66f, -0.67f), "road");
-        AddConnector(pRed, new BoardCoordinate(-0.66f, -0.67f), new BoardCoordinate(-0.33f, -1.33f), "road");
-        AddConnector(pRed, new BoardCoordinate(-0.33f, -1.33f), new BoardCoordinate(-0.66f, -1.67f), "road");
-
-
-        Debug.Log("culoarea: " + board.CheckLongestRoad());        
-
-
-
-        //bounds = hex.GetComponent<Collider>().bounds.size;
-        //InstantiateBoard();
-        //PlaceHex(0, 0);
-        //PlaceHex(-1, 0);
     }
 
+
+    
+
+    public List<Vector3> PlacesWithoutThief()
+    {
+        List<Vector3> toReturn = new List<Vector3>();
+        foreach (var pair in board.tiles)
+        {
+            if (pair.Value.coordinate == board.thiefPosition) continue;
+            Vector3 position = pair.Value.coordinate.ToWorldSpace();
+            position.y += deltaY;
+            toReturn.Add(position);
+        }
+        return toReturn;
+    }
+
+
+    public List<GameObject> GetAvailableCornersForSettlement(Player p)
+    {
+        var corners = board.GetAvailableCorners(p.color);
+        List<GameObject> toReturn = new List<GameObject>();
+        foreach (var  corner in corners)
+        {
+            toReturn.Add(corner.inGameObject);
+        }
+
+        return toReturn;
+    }
+
+    public List<KeyValuePair<GameObject,GameObject>> GetAvailablePlacesForConnector(Player p)
+    {
+        var pairs = board.GetAvailableConnectors(p.color);
+        List<KeyValuePair<GameObject, GameObject>> toReturn = new List<KeyValuePair<GameObject, GameObject>>();
+        foreach (var pair in pairs)
+        {
+            toReturn.Add( new  KeyValuePair<GameObject, GameObject>( pair.Key.inGameObject,pair.Value.inGameObject));
+        }
+
+        return toReturn;
+    }
+
+    public List<ResourceTypes> GetResourcesFromCorner(Corner corner)
+    {
+        return board.ResourcesFromCorner(corner);
+    }
+
+
+    /// <summary>
+    /// Returneaza culoarea jucatorului cu cel mai lung drum de cel putin 5
+    /// </summary>
+    /// <param name="oldValue"></param>
+    /// <returns></returns>
+    public PlayerColor GetPlayerWithLongestRoad(int oldValue = 4)
+    {
+        return board.CheckLongestRoad(oldValue);
+    }
+
+
+    public int GetLongestLenghtOfPlayer(Player player)
+    {
+        return board.PlayerLongestRoad((int)player.color);
+    }
+
+
+
+
+
+    /// <summary>
+    /// Returneaza numarul de puncte din asezari
+    /// </summary>
+    /// <returns></returns>
+    public int GetPlayerPointsFromSettlements(Player p)
+    {
+        int sum = 0;
+        foreach (var pair in board.corners)
+        {
+            if(pair.Value.settlement != null)
+            {
+                if(pair.Value.settlement.owner == p)
+                {
+                    sum += pair.Value.settlement.GetNumberOfPoints();
+                }
+            }
+        }
+        return sum;
+    }
+
+
+    
 
     public void GiveResources(int nr)
     {
@@ -94,6 +143,7 @@ public class BoardManagerBehaviour : MonoBehaviour
 
         foreach (KeyValuePair<BoardCoordinate, Tile> entry in board.tiles)
         {
+            if (entry.Key == board.thiefPosition) continue;
             if (entry.Value is ResourceTile)
                 if(((ResourceTile)entry.Value).numberTileValue == nr)
                   entry.Value.SpecialAction();
@@ -107,6 +157,7 @@ public class BoardManagerBehaviour : MonoBehaviour
     /// Lista de trade-uri posibile din port-urile construite de jucator
     /// </summary>
     /// <param name="player">Jucatorul pentru care vrem sa aflam trade-urile</param>
+    /// <returns>Lista de trade-uri din porturi</returns>
     /// <returns>Lista de trade-uri din porturi</returns>
     public List<Trade> GetTradesForPlayerFromPorts(Player player)
     {
@@ -152,12 +203,19 @@ public class BoardManagerBehaviour : MonoBehaviour
     /// </summary>
     /// <param name="coordinate">Pozitia in boardCoordinates unde trebuie pus hexagonul</param>
     /// <param name="type">Tipul de hexagon</param>
-    public void AddTile(BoardCoordinate coordinate, string type)
+    public void AddTile(BoardCoordinate coordinate, string type, int numberTile = -1)
     {
         Tile tile= board.PlaceTile(coordinate, type);
+
         Vector3 position = tile.coordinate.ToWorldSpace();
         GameObject gameobj = Instantiate(tilePrefab, position, Quaternion.identity, transform);
         gameobj.GetComponent<TileBehaviour>().tile = tile;
+        if(numberTile != -1) {
+            if(tile is ResourceTile) {
+                Debug.LogWarning("Schimbam valoarea : " + numberTile);
+                ((ResourceTile)tile).numberTileValue = numberTile;
+            }
+        }
     }
 
     /// <summary>
@@ -194,6 +252,22 @@ public class BoardManagerBehaviour : MonoBehaviour
     }
 
 
+    public void AddConnector(Player player, BoardCoordinate middle, string type) {
+        foreach (var cornerPair1 in board.corners)
+        {
+            Corner c1 = cornerPair1.Value;
+            var neighbours = board.cornerLattice[c1.coordinate];
+            foreach (var c2 in neighbours)
+            {
+                BoardCoordinate auxMiddle = (c1.coordinate + c2) / 2;
+                if(auxMiddle == middle) {
+                    AddConnector(player, c1.coordinate, c2, type);
+                    return;
+                }
+            }
+        }
+    }
+    
     /// <summary>
     /// Adauga un connector la tabla si il instantiaza in scena
     /// </summary>
@@ -218,9 +292,13 @@ public class BoardManagerBehaviour : MonoBehaviour
     {
         //made by jon
 
+        //Debug.LogWarning("(" + bc1.q + "," + bc1.r + ") => (" + bc2.q + "," + bc2.r + ")");
 
         Connector connector = board.PlaceConnector(p,bc1,bc2,type);
+
         Vector3 position = connector.middle.ToWorldSpace();
+
+
 
         position.y += deltaY; 
         Quaternion rotation = connector.rotation;
@@ -237,7 +315,7 @@ public class BoardManagerBehaviour : MonoBehaviour
         foreach(KeyValuePair<BoardCoordinate, Tile> entry in board.tiles)
         {
             Vector3 position = entry.Key.ToWorldSpace();
-            Debug.Log(entry.Value.GetTypeAsString());
+            //Debug.Log(entry.Value.GetTypeAsString());
             GameObject tile = Instantiate(tilePrefab, position, Quaternion.identity, transform);
             tile.GetComponent<TileBehaviour>().tile = entry.Value;
             if(entry.Value is ResourceTile)
@@ -262,6 +340,42 @@ public class BoardManagerBehaviour : MonoBehaviour
             GameObject portGO = Instantiate(portPrefab, position, rotation, transform);
             portGO.GetComponent<PortBehaviour>().port = port;
         }
+
+
+        Vector3 thiefPosition = board.thiefPosition.ToWorldSpace();
+        thiefPosition.y += deltaY;
+
+        thiefGameObject = Instantiate(thiefPrefab, thiefPosition,
+                                      Quaternion.identity, transform);
+
+    }
+
+
+    /// <summary>
+    /// Muta hotul la coordonata data
+    /// Functia asta nu realizeaza si furtul! 
+    /// </summary>
+    /// <param name="corner"></param>
+    public void MoveThief(Corner corner)
+    {
+        MoveThief(corner.coordinate);
+    }
+    
+    /// <summary>
+    /// Muta hotul la coordonata data
+    /// Functia asta nu realizeaza si furtul!
+    /// </summary>
+    /// <param name="boardCoordinate"></param>
+    public void MoveThief(BoardCoordinate boardCoordinate)
+    {
+        board.SetThiefPosition(boardCoordinate);
+        Vector3 newThiefPosition = board.thiefPosition.ToWorldSpace();
+        newThiefPosition.y += deltaY;
+
+        if(thiefGameObject == null) {
+            thiefGameObject = Instantiate(thiefPrefab, Vector3.zero, Quaternion.identity, transform);
+        }
+        thiefGameObject.transform.position = newThiefPosition;
     }
     public void InitializeBoardFromFile(string filePath)
     {

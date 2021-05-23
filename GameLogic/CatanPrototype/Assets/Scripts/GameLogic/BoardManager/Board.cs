@@ -22,6 +22,7 @@ public class Board
         get; private set;
     }
 
+    public BoardCoordinate thiefPosition = new BoardCoordinate(0, 0);
 
     public List<Port> ports = new List<Port>();
 
@@ -43,6 +44,44 @@ public class Board
         }
 
 
+    }
+
+
+    public List<ResourceTypes> ResourcesFromCorner(Corner corner)
+    {
+        return ResourcesFromCorner(corner.coordinate);
+    }
+
+    public List<ResourceTypes> ResourcesFromCorner(BoardCoordinate boardCoordinate)
+    {
+        Corner corner = corners[boardCoordinate];
+
+        List<ResourceTypes> resources = new List<ResourceTypes>();
+
+        foreach (var pair in tiles)
+        {
+            Tile tile = pair.Value;
+            if(tile is ResourceTile)
+            {
+                foreach (var tileCorner in tile.corners)
+                {
+                    if(corner == tileCorner)
+                    {
+                        resources.Add(((ResourceTile)tile).resourceType);
+                    }
+                }
+
+            }
+        }
+
+        return resources;
+
+    }
+
+    public void SetThiefPosition(BoardCoordinate boardCoordinate)
+    {
+        if (!tiles.ContainsKey(boardCoordinate)) return;
+        thiefPosition = boardCoordinate;
     }
 
     
@@ -117,7 +156,7 @@ public class Board
         int index = Random.Range(0, availableTileTypes.Count);
         string tileType = availableTileTypes[index];
         availableTileTypes.RemoveAt(index);
-        Debug.Log("Random tile chosen : " + tileType);
+        //Debug.Log("Random tile chosen : " + tileType);
         return tileType;
     }
 
@@ -170,8 +209,12 @@ public class Board
             BoardCoordinate bc=it.Key;
             List<BoardCoordinate> bclist= cornerLattice[bc];
             foreach (var b in bclist)
+            {
                 if (corners[b].settlement != null) // daca este asezare in vecini atunci "bc" nu este disponibil
                     ok = false;
+            }
+            if (corners[bc].settlement != null) ok = false;
+                
             if(ok) listOfCorners.Add(corners[bc]);
         }
 
@@ -185,15 +228,23 @@ public class Board
         foreach (var it in playerRoadNetworks[(int)color])
         {
             bool ok = true;
+
             BoardCoordinate bc = it.Key; //bc este una dintre coordonate
-            List<BoardCoordinate> bclist = cornerLattice[bc];//list de vcini ai lui bc
+
+            if (corners[bc].settlement!=null)
+                if (corners[bc].settlement.owner.color != color)
+                    continue;
+            List<BoardCoordinate> bclist = cornerLattice[bc];//lista de vecini ai lui bc
             foreach (var b in bclist)
             {
+                ok = true;
+
                 for (int i = 0; i < (int)PlayerColor.NbOfColors; i++)
-                    if (playerRoadNetworks[i].ContainsKey(b)) //daca un vecin face parte din graful unui player
-                        if (playerRoadNetworks[i].ContainsKey(bc)) // si bc face si l part din graful aceluias player 
-                            ok = false;// perechea (b,bc) nu este buna pt ca acolo deja exista un drum
-                if(ok)
+                    if (playerRoadNetworks[i].ContainsKey(b))
+                        if (playerRoadNetworks[i][b].Contains(bc))
+                            ok = false;
+
+                if (ok)
                 {
                     KeyValuePair<Corner, Corner> item = new KeyValuePair<Corner, Corner>(corners[b], corners[bc]);
                     listOfConnectors.Add(item);
@@ -206,31 +257,31 @@ public class Board
     }
 
 
-    public int CheckLongestRoad()
+    public PlayerColor CheckLongestRoad(int oldLongestRoad = 4)
     {
         //returneaza numarul culorii jucatorului care are cel mai lung drum
         //made by jon
                                        
-        int maxLength = 4;
-        int longestRoadColor = -1;
+        int maxLength = oldLongestRoad;
+        int longestRoadColor = (int)PlayerColor.None;
         for (int i = 0; i < (int)PlayerColor.NbOfColors; ++i)
         {
 
             int playerMaxLength = PlayerLongestRoad(i);
-            if (playerMaxLength > maxLength)
+            if (playerMaxLength > maxLength )
             {
                 maxLength = playerMaxLength;
                 longestRoadColor = i;
             }
         }
         Debug.Log("lungimea"+ maxLength);
-        return longestRoadColor;
+        return (PlayerColor)longestRoadColor;
     }
 
     private int maxFromBkt;//variabila ce ne va ajuta la determinatea celui mai lung drum pornind dint-o anumita coodonata
     
 
-    private int PlayerLongestRoad(int color)
+    public int PlayerLongestRoad(int color)
     {
         //made by jon
         //calculeaza lungimea celui mai lung al jucatorului cu culoarea color
@@ -305,6 +356,7 @@ public class Board
         Settlement settlementToPlace = GetSettlementFromString(boardCoordinate, type);
         settlementToPlace.owner = p;
 
+       
 
         //if (playerRoadNetworks[colorID].ContainsKey(boardCoordinate))
         //{
@@ -317,7 +369,23 @@ public class Board
         Debug.Log(boardCoordinate.q + " " + boardCoordinate.r);
         if (corners.ContainsKey(boardCoordinate))
         {
-
+            //daca e de deja ceva construit acolo
+            if (corners[boardCoordinate].settlement != null)
+            {
+                if(corners[boardCoordinate].settlement is Village && settlementToPlace is City)
+                {
+                    if (corners[boardCoordinate].settlement.owner == p)
+                    {
+                        corners[boardCoordinate].settlement = settlementToPlace;
+                        return settlementToPlace;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+            }
+            
             corners[boardCoordinate].settlement = settlementToPlace;
             return settlementToPlace;
         }
@@ -332,16 +400,16 @@ public class Board
         int colorID = (int)p.color;
         Connector connectorToPlace = GetConnectorFromString(bc1, bc2, type);
       
-        /*if (playerRoadNetworks[colorID].ContainsKey(bc1) || playerRoadNetworks[colorID].ContainsKey(bc2))// daca macar una din cele doua coordonate face parte din graful playerului
-        {
-            List<KeyValuePair<Corner, Corner>> availableConnectors = GetAvailableConnectors(p.color);
-            foreach(var conn in availableConnectors)
-            {
-                if (bc1 == conn.Key.coordinate && bc2 == conn.Value.coordinate ||
-                    bc2 == conn.Key.coordinate && bc1 == conn.Value.coordinate)
-                    return connectorToPlace;//daca coordonatele se gasesc in lista availableConnectors atunci putem pune drumul
-            }
-        }*/
+        //if (playerRoadNetworks[colorID].ContainsKey(bc1) || playerRoadNetworks[colorID].ContainsKey(bc2))// daca macar una din cele doua coordonate face parte din graful playerului
+        //{
+        //    List<KeyValuePair<Corner, Corner>> availableConnectors = GetAvailableConnectors(p.color);
+        //    foreach(var conn in availableConnectors)
+        //    {
+        //        if (bc1 == conn.Key.coordinate && bc2 == conn.Value.coordinate ||
+        //            bc2 == conn.Key.coordinate && bc1 == conn.Value.coordinate)
+        //            return connectorToPlace;//daca coordonatele se gasesc in lista availableConnectors atunci putem pune drumul
+        //    }
+        //}
 
 
         PlaceConnector(p.color, bc1, bc2);
@@ -465,6 +533,7 @@ public class Board
             case "road":
                 {
                     Corner c1 = corners[bc1];
+                    Debug.LogWarning(bc2.q + " " + bc2.r);
                     Corner c2 = corners[bc2];
                     return new Road(c1,c2);
                 }

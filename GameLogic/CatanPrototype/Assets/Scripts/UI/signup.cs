@@ -11,6 +11,8 @@ public class SignupJson
     public string lastName;
     public string username;
     public string email;
+    //  "iconPath": "string",
+    public string iconPath;
     public string password;
 }
 
@@ -82,6 +84,7 @@ public class signup : MonoBehaviour
         signupJson.lastName = lastName;
         signupJson.username = username;
         signupJson.email = email;
+        signupJson.iconPath = "whateverman";
         signupJson.password = password;
         string json = JsonUtility.ToJson(signupJson);
         byte[] rawJson = new System.Text.UTF8Encoding().GetBytes(json);

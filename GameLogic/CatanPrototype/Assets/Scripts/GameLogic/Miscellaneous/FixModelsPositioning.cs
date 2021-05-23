@@ -24,7 +24,7 @@ public class FixModelsPositioning : MonoBehaviour
 
         Vector3 corection = -(hexTransform.position - parentPosition);
 
-        Debug.Log(corection);
+        //Debug.Log(corection);
 
         hexTransform.position = parentPosition + Vector3.zero;
 

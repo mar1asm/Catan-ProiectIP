@@ -58,7 +58,7 @@ public class friends : MonoBehaviour
         //Preparing the request
         string uri = "https://localhost:5001/api/user/contacts";
         UnityWebRequest request = UnityWebRequest.Get(uri);
-        request.SetRequestHeader("Authorization", "Bearer " + UserAuth.GetToken());
+        request.SetRequestHeader("Authorization", "Bearer " + UserInfo.GetToken());
 
         //Send the request then wait here until it returns
         yield return request.SendWebRequest();

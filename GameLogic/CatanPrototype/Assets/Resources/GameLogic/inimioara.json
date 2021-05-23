@@ -6,11 +6,11 @@
         },
         {
             "type": "wheat",
-            "number": 4
+            "number": 0
         },
         {
             "type": "forest",
-            "number": 4
+            "number": 8
         },
         {
             "type": "mountain",

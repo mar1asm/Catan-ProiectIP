@@ -65,4 +65,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/update.unity
     guid: bc8fa50690fb71f4d86328a1c070879b
+  - enabled: 1
+    path: Assets/Scenes/multiplayer2.unity
+    guid: f981048bea70149428d5485867c4fe8b
   m_configObjects: {}

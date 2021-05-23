@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class dice : MonoBehaviour
 {
+
     public GameObject unu, doi, trei, patru, cinci, sase, unu2, doi2, trei2, patru2, cinci2, sase2;
 
     public int RandomDice()
@@ -12,7 +13,9 @@ public class dice : MonoBehaviour
         return dice;
     }
 
-  /*  public void Start()
+
+    public void Start()
+
     {
         unu.SetActive(false);
         doi.SetActive(false);
@@ -20,6 +23,7 @@ public class dice : MonoBehaviour
         patru.SetActive(false);
         cinci.SetActive(false);
         sase.SetActive(false);
+
         unu2.SetActive(false);
         doi2.SetActive(false);
         trei2.SetActive(false);
@@ -27,7 +31,6 @@ public class dice : MonoBehaviour
         cinci2.SetActive(false);
         sase2.SetActive(false);
     }
-  */
 
     public void Display()
     {
@@ -111,6 +114,7 @@ public class dice : MonoBehaviour
         {
             case 1:
                 {
+
                     doi2.SetActive(false);
                     trei2.SetActive(false);
                     patru2.SetActive(false);
@@ -118,10 +122,12 @@ public class dice : MonoBehaviour
                     sase2.SetActive(false);
                     bool isActive = unu2.activeSelf;
                     unu2.SetActive(!isActive);
+
                     break;
                 }
             case 2:
                 {
+
                     unu2.SetActive(false);
                     trei2.SetActive(false);
                     patru2.SetActive(false);
@@ -129,10 +135,12 @@ public class dice : MonoBehaviour
                     sase2.SetActive(false);
                     bool isActive = doi2.activeSelf;
                     doi2.SetActive(!isActive);
+I
                     break;
                 }
             case 3:
                 {
+
                     doi2.SetActive(false);
                     unu2.SetActive(false);
                     patru2.SetActive(false);
@@ -151,6 +159,13 @@ public class dice : MonoBehaviour
                     sase2.SetActive(false);
                     bool isActive = patru2.activeSelf;
                     patru2.SetActive(!isActive);
+                    doi.SetActive(false);
+                    trei.SetActive(false);
+                    unu.SetActive(false);
+                    cinci.SetActive(false);
+                    sase.SetActive(false);
+                    bool isActive = patru.activeSelf;
+                    patru.SetActive(!isActive);
                     break;
                 }
             case 5:

@@ -1,0 +1,7 @@
+E:\Repos\Catan\Catan-ProiectIP\NW-API\CatanAPI\CatanAPI\obj\Debug\net5.0\CatanAPI.csprojAssemblyReference.cache
+E:\Repos\Catan\Catan-ProiectIP\NW-API\CatanAPI\CatanAPI\obj\Debug\net5.0\CatanAPI.GeneratedMSBuildEditorConfig.editorconfig
+E:\Repos\Catan\Catan-ProiectIP\NW-API\CatanAPI\CatanAPI\obj\Debug\net5.0\CatanAPI.AssemblyInfoInputs.cache
+E:\Repos\Catan\Catan-ProiectIP\NW-API\CatanAPI\CatanAPI\obj\Debug\net5.0\CatanAPI.AssemblyInfo.cs
+E:\Repos\Catan\Catan-ProiectIP\NW-API\CatanAPI\CatanAPI\obj\Debug\net5.0\CatanAPI.csproj.CoreCompileInputs.cache
+E:\Repos\Catan\Catan-ProiectIP\NW-API\CatanAPI\CatanAPI\obj\Debug\net5.0\CatanAPI.MvcApplicationPartsAssemblyInfo.cs
+E:\Repos\Catan\Catan-ProiectIP\NW-API\CatanAPI\CatanAPI\obj\Debug\net5.0\CatanAPI.MvcApplicationPartsAssemblyInfo.cache
