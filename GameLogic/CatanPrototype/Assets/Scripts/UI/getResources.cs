@@ -3,18 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class getResources : MonoBehaviour{
+public class getResources : MonoBehaviour 
+{
     Text nmr_wood, nmr_rock, nmr_brick, nmr_sheep, nmr_wheat;
 
+    [SerializeField]
     private PlayerManager playerManager;
 
 
-    private void Start()
-    {
-        playerManager = GameObject.Find("Player Manager").GetComponent<PlayerManager>();
-        display();
-    }
-    public void display()
+    
+    public void updateDisplay()
     {
         nmr_wood = GameObject.Find("nmr-wood").GetComponent<Text>();
         nmr_rock = GameObject.Find("nmr-rock").GetComponent<Text>();
@@ -23,23 +21,8 @@ public class getResources : MonoBehaviour{
         nmr_wheat = GameObject.Find("nmr-wheat").GetComponent<Text>();
 
 
-        //Player de test, urmeaza sa fie luat doar playerul corespondent clientului
 
         Player playerClient = playerManager.clientPlayer;
-
-        //List<ResourceTypes> resourcesToGet = new List<ResourceTypes>();
-
-        //resourcesToGet.Add(ResourceTypes.Wheat);
-        //resourcesToGet.Add(ResourceTypes.Wheat);
-        //resourcesToGet.Add(ResourceTypes.Wheat);
-        //resourcesToGet.Add(ResourceTypes.Wheat);
-
-        //resourcesToGet.Add(ResourceTypes.Wood);
-        //resourcesToGet.Add(ResourceTypes.Brick);
-        //resourcesToGet.Add(ResourceTypes.Wood);
-        //resourcesToGet.Add(ResourceTypes.Stone);
-
-        //test.GetResources(resourcesToGet);
 
         var resources = playerClient.GetAvailableResources();
 

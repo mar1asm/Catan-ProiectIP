@@ -15,9 +15,24 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     private MasterHighlighterBehaviour masterHighlighter;
 
-    public List<Player> players;
+    [SerializeField]
+    private BannerHolderBehaviour bannerHolder;
 
-    public Player clientPlayer = new Player("test", "1");
+    public List<Player> players = new List<Player>();
+
+
+    public CraftingCost roadCraftingCost, villageCraftingCost;
+
+    public Player clientPlayer {
+        get {
+            foreach (var player in players)
+            {
+                if(player.nickname == UserInfo.GetUsername()) return player;
+            }
+
+            return null;
+        }
+    }
 
     public Player longestRoadHolder = null;
     public int longestRoadLenght = 4;
@@ -26,17 +41,39 @@ public class PlayerManager : MonoBehaviour
 
 
     [SerializeField]
-    private int pointsToWin = 1;
+    private int pointsToWin = 10;
     
 
     void Start()
     {
+        roadCraftingCost = new CraftingCost();
+        roadCraftingCost.resourcesRequired.Add(ResourceTypes.Brick, 1);
+        roadCraftingCost.resourcesRequired.Add(ResourceTypes.Wood, 1);
+
+
+        villageCraftingCost = new CraftingCost();
+        villageCraftingCost.resourcesRequired.Add(ResourceTypes.Wood, 1);
+        villageCraftingCost.resourcesRequired.Add(ResourceTypes.Sheep, 1);
+        villageCraftingCost.resourcesRequired.Add(ResourceTypes.Brick, 1);
+        villageCraftingCost.resourcesRequired.Add(ResourceTypes.Wheat, 1);
         
     }
 
 
+    public void GiveResourceToPlayer(string username, List<ResourceTypes> resources) {
+        Player p = GetPlayerWithUsername(username);
+        p.GetResources(resources);
+    }
+    public Player GetPlayerWithUsername(string username) {
+        foreach (var player in players)
+        {
+            if(player.nickname == username) {
+                return player;
+            }
+        }
 
-
+        return null;
+    }
 
     public void SetPointGoal(int value)
     {
@@ -80,32 +117,18 @@ public class PlayerManager : MonoBehaviour
 
     
 
-    public IEnumerator playerAddsRoad(Player p)
+    public void playerAddsRoad(Player p, BoardCoordinate boardCoordinate, string type)
     {
-        CraftingCost c = new CraftingCost();
-        c.resourcesRequired.Add(ResourceTypes.Wood, 1);
-        c.resourcesRequired.Add(ResourceTypes.Brick, 1);
         
-        //if (!c.verifCost(p)) yield break;
+        if (!roadCraftingCost.verifCost(p)) return;
 
-        c.takeCards(p);
+        roadCraftingCost.takeCards(p);
 
-        var pairs = boardManager.GetAvailablePlacesForConnector(p);
 
-        List<Vector3> placesToHighlight = new List<Vector3>();
-
-        foreach (var pair in pairs)
-        {
-            Vector3 middle = (pair.Key.transform.position + pair.Value.transform.position) / 2;
-            placesToHighlight.Add(middle);
-        }
-
-        masterHighlighter.SpawnHighlighters(placesToHighlight);
-
-        yield return StartCoroutine(masterHighlighter.WaitForUserInput());
-
+        boardManager.AddConnector(p, boardCoordinate, type);
 
         PlayerColor colorLongest = boardManager.GetPlayerWithLongestRoad(longestRoadLenght);
+
         foreach (var player in players)
         {
             if (player.color == colorLongest)
@@ -128,18 +151,15 @@ public class PlayerManager : MonoBehaviour
        }
        VerifyWinningConditions();
     }
-    public void playerAddsSettlement(Player p)
+    public void playerAddsSettlement(Player p, BoardCoordinate bc)
     {
-        CraftingCost c = new CraftingCost();
-        c.resourcesRequired.Add(ResourceTypes.Wood, 1);
-        c.resourcesRequired.Add(ResourceTypes.Brick, 1);
-        c.resourcesRequired.Add(ResourceTypes.Sheep, 1);
-        c.resourcesRequired.Add(ResourceTypes.Wheat, 1);
         //c.takeCards(p);
-        if(c.verifCost(p))
+        if(villageCraftingCost.verifCost(p))
         {
-            c.takeCards(p);
+            villageCraftingCost.takeCards(p);
         }
+
+        boardManager.AddSettlement(p, bc, "village");
         VerifyWinningConditions();
     }
     public void playerAddsDevelopment(Player p)
@@ -177,15 +197,34 @@ public class PlayerManager : MonoBehaviour
     public void VerifyWinningConditions()
     {
         Player current = turnManager.currentPlayer;
-        int score = 0;
-        if (longestRoadHolder == current) score += 2;
-        if (biggestArmyHolder == current) score += 2;
+        
+        int score= DeterminePointsOfPlayer(current);
 
-        score += boardManager.GetPlayerPointsFromSettlements(current);
-        score += current.GetPointsFromHand();
         if(score >= pointsToWin)
         {
             Debug.LogWarning("BRAVOOOOOOOOOOO " + current.nickname + " AI CASTIGAT UHUUUUUUUUU");
+        }
+    }
+
+
+    private int DeterminePointsOfPlayer(Player p, bool considerHand = true) {
+        int score = 0;
+        if (longestRoadHolder == p) score += 2;
+        if (biggestArmyHolder == p) score += 2;
+
+        score += boardManager.GetPlayerPointsFromSettlements(p);
+        if(considerHand)
+            score += p.GetPointsFromHand();
+        return score;
+    }
+
+    public void UpdateScoreDisplays() 
+    {
+        foreach (var player in players)
+        {
+            //aici punem sa nu ia in considerare mana
+            int score = DeterminePointsOfPlayer(player, false);
+            bannerHolder.UpdateScore(player.nickname, score);
         }
     }
 

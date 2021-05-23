@@ -30,6 +30,25 @@ public class BannerHolderBehaviour : MonoBehaviour
     }
 
 
+    public void UpdateScore(string username, int score) {
+        foreach (Transform child in transform)
+        {
+            BannerBehaviour banner = child.gameObject.GetComponent<BannerBehaviour>();
+            if(banner.GetText() == username) {
+                banner.SetScore(score.ToString());
+                break;
+            }
+        }
+    }
+    public void SetHighlight(string username) {
+        foreach (Transform child in transform)
+        {
+            BannerBehaviour banner = child.gameObject.GetComponent<BannerBehaviour>();
+            banner.SetHighlight(banner.GetText() == username);
+        }
+    }
+
+
     public void AddBanner(Player p)
     {
         AddBanner(p.nickname, p.color);
