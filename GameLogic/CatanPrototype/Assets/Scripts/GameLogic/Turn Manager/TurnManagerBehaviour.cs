@@ -24,6 +24,8 @@ public class TurnManagerBehaviour : MonoBehaviour
     {
         get
         {
+            Debug.Log("currentPlayerIndex " + currentPlayerIndex);
+            Debug.Log("order: " + order[currentPlayerIndex]);
             return playerManager.players[order[currentPlayerIndex]];
         }
     }
@@ -40,7 +42,15 @@ public class TurnManagerBehaviour : MonoBehaviour
 
         foreach (var player in setupOrder)
         {
-            Debug.Log("ordinea de setup: " + player.nickname);
+            //Debug.Log("ordinea de setup: " + player.nickname);
+        }
+    }
+
+
+    //asta o sa mearga doar pe host... deci pls, doar pe host folosit
+    public bool isSetupTime {
+        get {
+            return setupOrder.Count > 0;
         }
     }
 
@@ -127,9 +137,15 @@ public class TurnManagerBehaviour : MonoBehaviour
    
     //returneaza numarul jucatorului care urmeaza 
     public int  Next()
-    {
-        tradeManager.ClearTrades();
-        tradeManager.DetermineHarbourTradesOfCurrentPlayer();
+    {   
+        playerManager.UpdateScoreDisplays();
+        if(size == 0) {
+            size = playerManager.players.Count;
+        }
+        if(currentPlayerIndex != -1) {
+            tradeManager.ClearTrades();
+            tradeManager.DetermineHarbourTradesOfCurrentPlayer();
+        }
         this.currentPlayerIndex++;
         this.currentPlayerIndex = this.currentPlayerIndex % size;
         return order[this.currentPlayerIndex];

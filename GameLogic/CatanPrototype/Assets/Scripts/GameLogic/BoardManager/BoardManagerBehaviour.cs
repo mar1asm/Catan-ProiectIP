@@ -112,6 +112,13 @@ public class BoardManagerBehaviour : MonoBehaviour
         return toReturn;
     }
 
+
+    public List<ResourceTypes> GetResourcesFromCorner(BoardCoordinate corner)
+    {
+        return board.ResourcesFromCorner(corner);
+    }
+
+
     public List<ResourceTypes> GetResourcesFromCorner(Corner corner)
     {
         return board.ResourcesFromCorner(corner);

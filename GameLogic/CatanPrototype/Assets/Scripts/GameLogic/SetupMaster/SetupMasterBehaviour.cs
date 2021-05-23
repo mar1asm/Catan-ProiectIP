@@ -38,7 +38,7 @@ public class SetupMasterBehaviour : MonoBehaviour
         //trimit imd
         //gata bre trimit acuma ho
 
-        string message = "placeSettlement " + playerManager.clientPlayer.nickname + " " + bc.q + ";" + bc.r + " village"; 
+        string message = "placeSettlement " + playerManager.clientPlayer.nickname + " " + bc.q + ";" + bc.r + " village true"; 
 
         serverSender.Send(message);
 
@@ -65,7 +65,7 @@ public class SetupMasterBehaviour : MonoBehaviour
         bc = BoardCoordinate.ToBoardCoordinate(positionPressed);
 
 
-        message = "placeConnector "  + playerManager.clientPlayer.nickname + " " + bc.q + ";" + bc.r + " road"; 
+        message = "placeConnector "  + playerManager.clientPlayer.nickname + " " + bc.q + ";" + bc.r + " road true"; 
 
 
         serverSender.Send(message);
