@@ -12,25 +12,52 @@ public class TurnManagerBehaviour : MonoBehaviour
     public int size=0;
     public int currentPlayerIndex =-1;
 
+    public Queue<Player> setupOrder = new Queue<Player>();
+
     [SerializeField]
     private TradeManagerBehaviour tradeManager;
 
     [SerializeField]
     private BoardManagerBehaviour boardManager;
 
-    
-
-    
-
-
     public Player currentPlayer
     {
         get
         {
+            Debug.Log("currentPlayerIndex " + currentPlayerIndex);
+            Debug.Log("order: " + order[currentPlayerIndex]);
             return playerManager.players[order[currentPlayerIndex]];
         }
     }
 
+
+    public void InitSetupOrder() {
+        var players = playerManager.players;
+        for(int i = 0 ; i < players.Count; ++i) {
+            setupOrder.Enqueue(players[i]);
+        }
+        for(int i = players.Count - 1; i >= 0; --i) {
+            setupOrder.Enqueue(players[i]);
+        }
+
+        foreach (var player in setupOrder)
+        {
+            //Debug.Log("ordinea de setup: " + player.nickname);
+        }
+    }
+
+
+    //asta o sa mearga doar pe host... deci pls, doar pe host folosit
+    public bool isSetupTime {
+        get {
+            return setupOrder.Count > 0;
+        }
+    }
+
+    public Player GetNextPlayerInSetup() {
+        if(setupOrder.Count == 0) return null;
+        return setupOrder.Dequeue();
+    }
 
     public void DisplayOrder() {
         string orderString = "";
@@ -110,9 +137,15 @@ public class TurnManagerBehaviour : MonoBehaviour
    
     //returneaza numarul jucatorului care urmeaza 
     public int  Next()
-    {
-        tradeManager.ClearTrades();
-        tradeManager.DetermineHarbourTradesOfCurrentPlayer();
+    {   
+        playerManager.UpdateScoreDisplays();
+        if(size == 0) {
+            size = playerManager.players.Count;
+        }
+        if(currentPlayerIndex != -1) {
+            tradeManager.ClearTrades();
+            tradeManager.DetermineHarbourTradesOfCurrentPlayer();
+        }
         this.currentPlayerIndex++;
         this.currentPlayerIndex = this.currentPlayerIndex % size;
         return order[this.currentPlayerIndex];
