@@ -37,12 +37,12 @@ public class BoardManagerBehaviour : MonoBehaviour
     {
         //deltaY = 0.002003f * 5751.438f * 0.3f;
     
-        // InitializeBoardFromFile("GameLogic/inimioara");
+       // InitializeBoardFromFile("GameLogic/inimioara");
         // /*board.PlacePort(new Corner(new BoardCoordinate(1.33f, -2.66f)),
         //                 new Corner(new BoardCoordinate(0.66f, -2.33f)),
         //                 ResourceTypes.Any, 3, 1);
         // */
-        // InstantiateBoard();
+        //InstantiateBoard();
 
         
     }
@@ -368,6 +368,7 @@ public class BoardManagerBehaviour : MonoBehaviour
     {
         foreach(KeyValuePair<BoardCoordinate, Tile> entry in board.tiles)
         {
+            
             Vector3 position = entry.Key.ToWorldSpace();
             //Debug.Log(entry.Value.GetTypeAsString());
             GameObject tile = Instantiate(tilePrefab, position, Quaternion.identity, transform);
@@ -376,6 +377,7 @@ public class BoardManagerBehaviour : MonoBehaviour
             {
                 ((ResourceTile)entry.Value).numberTileValue = 12;
             }
+           
         }
 
         foreach(KeyValuePair<BoardCoordinate, Corner> entry in board.corners)

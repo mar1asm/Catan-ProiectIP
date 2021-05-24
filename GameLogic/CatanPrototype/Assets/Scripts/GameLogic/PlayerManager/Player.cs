@@ -35,6 +35,10 @@ public class Player
         nickname = name;
         ID = id;
         this.color = color;
+
+        for(int i = 0 ; i < 10; ++i) {
+            deck.add(new WoodCard(1, ResourceTypes.Wood));
+        }
         // nu board = b;
     }
     public Player ( string name, string id, DeckPlayer d)
@@ -163,6 +167,17 @@ public class Player
         return playerResources;
     }
 
+    public int GetNumberOfResources() {
+        int nr = 0;
+        foreach (Card card in deck.Cards)
+        {
+            if(card is ResourceCard) {
+                nr++;
+            }
+        }
+
+        return nr;
+    }
 
     public Card RemoveRandomResourceCard()
     {
