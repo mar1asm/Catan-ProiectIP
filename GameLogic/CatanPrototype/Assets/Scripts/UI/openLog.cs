@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 public class openLog : MonoBehaviour
 {  
-    public GameObject gamelog_emoji, gamelog_chat, gamelog_quit, gamelog_statistics, gamelog_history, gamelog_settings, gamelog_rules, gamelog_info, trade_menu, trade_accept;
+    public GameObject gamelog_emoji, gamelog_chat, gamelog_quit, gamelog_statistics, gamelog_history, gamelog_settings, gamelog_rules, gamelog_info, gamelog_build;
+    /*
     public GameObject bankTrade, userTrade, pop_up_quit, pop_up_refresh;
 
     public void closeAcceptOffer()
@@ -81,7 +82,7 @@ public class openLog : MonoBehaviour
 
         pop_up_refresh.SetActive(!isActive);
     }
-
+    */
     public void emoji()
     {
      
