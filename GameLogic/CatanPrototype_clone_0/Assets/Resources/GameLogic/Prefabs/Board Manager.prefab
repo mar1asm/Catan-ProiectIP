@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2113675350329679551
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2113675350329679521}
+  - component: {fileID: 2113675350329679550}
+  m_Layer: 0
+  m_Name: Board Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2113675350329679521
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2113675350329679551}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.14000863, y: 0.00241673, z: 0.74594355}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2113675350329679550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2113675350329679551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 965afa8591905ea44af5ec5e95bb20a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tilePrefab: {fileID: 6437722949401728408, guid: 477aa19d8f4cab7408f2b635d971f449, type: 3}
+  cornerPrefab: {fileID: 2296748877678649817, guid: f7044ebddf8f72444bbbdc8616f7c20b, type: 3}
+  settlementPrefab: {fileID: 8439629535120656920, guid: 75780ced20d83304480b1b29c6894a88, type: 3}
+  connectorPrefab: {fileID: 1102046576456625111, guid: a7413b2b59c20fd438087b537fe68ea6, type: 3}
+  portPrefab: {fileID: 4589061853924234682, guid: 45e875fd53b1b7645830e96edf9eb86f, type: 3}
+  thiefPrefab: {fileID: 6312767219049963620, guid: 6ddae90c49a3ad44ab83ffce54d3132a, type: 3}
+  board:
+    availableTileTypes: []
+    thiefPosition:
+      q: 0
+      r: 0
+    ports: []
