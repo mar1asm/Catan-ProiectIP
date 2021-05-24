@@ -11,6 +11,7 @@ public class BoardInitializer
     /*
      * Cel mai probabil o sa fie modificat si nu o sa citim dintr-un fisier
      */
+    public static List<int> hexagonNumber;
     public static Board InitializeBoardFromFile(string filePath) 
     {
 
@@ -24,7 +25,7 @@ public class BoardInitializer
         //Am folosit ceva de la Unity, dar cred ca o sa schimbam cum citim din json..
         //vedem mai tarziu
         GameDescriber game = JsonUtility.FromJson<GameDescriber>(jsonString);
-
+        hexagonNumber = new List<int>();
 
 
         Board board = new Board();
@@ -41,8 +42,20 @@ public class BoardInitializer
             
             board.PlaceCorners(tile);
         }
-       
-       
+        foreach(AvailableToken at in game.availableTokens)
+        {
+            for(int i = 0; i < at.appearance; i++)
+            {
+                hexagonNumber.Add(at.value);
+            }
+        }
+
+       /* Debug.Log("ceva");
+        foreach (int nr in hexagonNumber)
+        {
+            Debug.Log(nr);
+        }*/
+      
         return board;
     }
 }
