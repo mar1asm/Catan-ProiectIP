@@ -137,7 +137,7 @@ public class GameStarterBehaviour : MonoBehaviour
             message += " ";
             message += usernames[i] + "," + playerColors[i];
         }
-        Debug.Log(message);
+        //Debug.Log(message);
         yield return StartCoroutine(serverSender.Send2Server(message));
     }
     private void RandomizeColors(List<PlayerColor> availableColors) {

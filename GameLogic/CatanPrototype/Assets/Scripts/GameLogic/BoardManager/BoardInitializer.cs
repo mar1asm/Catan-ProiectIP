@@ -6,6 +6,8 @@ using System.IO;
 [System.Serializable]
 public class BoardInitializer
 {
+
+    
     /*
      * Cel mai probabil o sa fie modificat si nu o sa citim dintr-un fisier
      */

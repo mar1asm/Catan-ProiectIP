@@ -29,7 +29,7 @@ public class ServerListenerBehaviour : MonoBehaviour
                 if(status == 200 || status == 201) {
                     string preProccesedJson = "{ \"notifications\" : " + request.downloadHandler.text + " }";
                     var notifications = JsonUtility.FromJson<NotificationListJson>(preProccesedJson);
-
+                    
                    
                     //fac asta pentru optimizare
                     List<Coroutine> coroutines  = new List<Coroutine>();

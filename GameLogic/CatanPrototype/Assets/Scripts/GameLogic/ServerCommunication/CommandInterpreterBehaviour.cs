@@ -27,6 +27,9 @@ public class CommandInterpreterBehaviour : MonoBehaviour
     [SerializeField]
     private BannerHolderBehaviour bannerHolder;
 
+    [SerializeField]
+    private ClientActionsMasterBehaviour clientActionsMaster;
+
 
     [SerializeField]
     private GameObject NextTurnButton, AddRoadButton, PlaceVillageButton;
@@ -42,6 +45,7 @@ public class CommandInterpreterBehaviour : MonoBehaviour
  
 
     public void InterpretCommand(string command) {
+        
         string[] tokens = command.Split(' ');
         Debug.Log(command);
         switch (tokens[0])
@@ -101,7 +105,6 @@ public class CommandInterpreterBehaviour : MonoBehaviour
                 boardManager.MoveThief(new BoardCoordinate(q, r));
             }break;
 
-
             case "setOrder": {
                 if(UserInfo.IsHost()) return;
 
@@ -127,7 +130,6 @@ public class CommandInterpreterBehaviour : MonoBehaviour
 
                 StartCoroutine(setupMaster.PlaceSettlementAndRoad());
             } break;
-
 
             case "placeSettlement": {
                 if(tokens.Length < 4) return;
@@ -267,7 +269,7 @@ public class CommandInterpreterBehaviour : MonoBehaviour
                 if(UserInfo.IsHost()) {
                     //momentan o sa fie 12.... pentru ca numa jetoane cu 12 sunt, trebuie facuta initializarea dupa un fisier calumea a 
                     //jetoanelor... sa rezolvati asta va rog
-                    int randomDiceValue = 12;
+                    int randomDiceValue = 7;
 
                     string genString = "genResources " + randomDiceValue;
 
@@ -279,6 +281,26 @@ public class CommandInterpreterBehaviour : MonoBehaviour
                 if(tokens.Length < 2) return;
 
                 int randomDiceValue = int.Parse(tokens[1]);
+
+                if(randomDiceValue == 7) {
+                    Player clientPlayer = playerManager.clientPlayer;
+                    if(clientPlayer.GetNumberOfResources() > 7) {
+                        clientActionsMaster.GiveResourcesToThief();
+                    }
+
+          
+                    if(turnManager.currentPlayer.nickname == UserInfo.GetUsername()) {
+                        int nb = 0;
+                        foreach (var player in playerManager.players)
+                        {
+                            if(player.GetNumberOfResources() > 7) {
+                                nb++;
+                            }
+                        }
+                        clientActionsMaster.MoveThief(nb);
+                    } 
+                    return; 
+                }
 
                 boardManager.GiveResources(randomDiceValue);
 
@@ -300,6 +322,40 @@ public class CommandInterpreterBehaviour : MonoBehaviour
 
                 resourcesDisplay.updateDisplay();
             } break;
+
+            case "playerLosesResourcesToThief": {
+                if(tokens.Length < 3) return;
+
+                string[] resourcesStrings = tokens[2].Split(',');
+
+                List<ResourceTypes> resources = new List<ResourceTypes>();
+
+                for(int i = 0 ; i < resourcesStrings.Length; ++i) {
+                    resources.Add(GetResourceTypeFromString(resourcesStrings[i]));
+                }
+
+                //playerManager.GiveResourceToPlayer(tokens[1], resources);
+                playerManager.GetPlayerWithUsername(tokens[1]).PayResources(resources);
+
+                resourcesDisplay.updateDisplay();
+
+                if(turnManager.currentPlayer.nickname == UserInfo.GetUsername()) {
+                    clientActionsMaster.PlayerGaveResourcesToRobber();
+                }
+            } break;
+        
+            case "moveThief": {
+                if(tokens.Length < 3) return;
+
+                Player p = playerManager.GetPlayerWithUsername(tokens[1]);
+
+                string[] coords = tokens[2].Split(';');
+                float q = float.Parse(coords[0]);
+                float r = float.Parse(coords[1]);
+
+                boardManager.MoveThief(new BoardCoordinate(q, r));
+
+            }break;
         }
     }
 

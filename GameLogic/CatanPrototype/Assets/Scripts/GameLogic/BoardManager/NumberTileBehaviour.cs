@@ -37,7 +37,6 @@ public class NumberTileBehaviour : MonoBehaviour
             vfx.transform.GetChild(i).gameObject.SetActive(false);
             // if(i == _number - 3)
             // {
-
             //     vfx.transform.GetChild(i).gameObject.SetActive(true);
             // }
             // else
