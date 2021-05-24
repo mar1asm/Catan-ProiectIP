@@ -135,7 +135,7 @@ public class dice : MonoBehaviour
                     sase2.SetActive(false);
                     bool isActive = doi2.activeSelf;
                     doi2.SetActive(!isActive);
-I
+
                     break;
                 }
             case 3:
@@ -159,13 +159,6 @@ I
                     sase2.SetActive(false);
                     bool isActive = patru2.activeSelf;
                     patru2.SetActive(!isActive);
-                    doi.SetActive(false);
-                    trei.SetActive(false);
-                    unu.SetActive(false);
-                    cinci.SetActive(false);
-                    sase.SetActive(false);
-                    bool isActive = patru.activeSelf;
-                    patru.SetActive(!isActive);
                     break;
                 }
             case 5:
