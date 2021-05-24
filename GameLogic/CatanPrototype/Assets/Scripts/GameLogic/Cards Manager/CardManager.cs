@@ -19,15 +19,21 @@ public class CardManager : MonoBehaviour
         p.add(c);
         Debug.Log("Merge la sfarsit" + p.nrCards);
         */
-        decks = DeckInitializer.InitializeDeckFromFile("GameLogic/card1");
+        // decks = DeckInitializer.InitializeDeckFromFile("GameLogic/card1");
 
 
-        ShuffleDecks();
+        // ShuffleDecks();
        
         
        // ia lista de deckuri 
        // sa extrg carti din deckuri 
 
+    }
+
+
+    public void InitializeDecksFromFile(string path) {
+        decks = DeckInitializer.InitializeDeckFromFile(path);
+        ShuffleDecks();
     }
 
     /// <summary>

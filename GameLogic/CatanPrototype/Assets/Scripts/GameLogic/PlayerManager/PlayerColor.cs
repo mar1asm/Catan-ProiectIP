@@ -1,5 +1,5 @@
 public enum PlayerColor
 {
-    Red, White, Orange, Blue, Brown, Green,
-    NbOfColors
+    Red, Orange, Green, Blue, Brown , White, 
+    NbOfColors, None
 }

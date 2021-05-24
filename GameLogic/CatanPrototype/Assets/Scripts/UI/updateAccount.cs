@@ -1,118 +1,95 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
+using System;
+
+[Serializable]
+public class UpdateAccountJson 
+{
+    // public string username;
+    // public string email;
+    public string oldPassword;
+    public string newPassword;
+}
 
 public class updateAccount : MonoBehaviour
 {
-    GameObject username, email, newPassword, oldPassword;
-    // Start is called before the first frame update
+    GameObject usernameObj, emailObj, oldPasswordObj, newPasswordObj;
+
     public void getUsername(GameObject username)
     {
-        this.username = username;
+        this.usernameObj = username;
     }
 
     public void getEmail(GameObject email)
     {
-        this.email = email;
+        this.emailObj = email;
     }
+
     public void getOldPass(GameObject oldPassword)
     {
-        this.oldPassword = oldPassword;
+        this.oldPasswordObj = oldPassword;
     }
+
     public void getNewPass(GameObject newPassword)
     {
-        this.newPassword = newPassword;
+        this.newPasswordObj = newPassword;
     }
 
-    
     public void verifyUpdate()
     {
-        if (username.GetComponent<UnityEngine.UI.InputField>().text != "" &&
-            email.GetComponent<UnityEngine.UI.InputField>().text != "" &&
-            newPassword.GetComponent<UnityEngine.UI.InputField>().text != "" &&
-            oldPassword.GetComponent<UnityEngine.UI.InputField>().text != "")
+        string username = usernameObj.GetComponent<UnityEngine.UI.InputField>().text;
+        string email = emailObj.GetComponent<UnityEngine.UI.InputField>().text;
+        string oldPassword = oldPasswordObj.GetComponent<UnityEngine.UI.InputField>().text;
+        string newPassword = newPasswordObj.GetComponent<UnityEngine.UI.InputField>().text;
+
+        if (username != "" && email != "" && oldPassword != "" && newPassword != "")
         {
-            print(username.GetComponent<UnityEngine.UI.InputField>().text + " " +
-                email.GetComponent<UnityEngine.UI.InputField>().text + " " +
-                oldPassword.GetComponent<UnityEngine.UI.InputField>().text + " " +
-                newPassword.GetComponent<UnityEngine.UI.InputField>().text);
-            StartCoroutine(postUpdate());
-            // StartCoroutine(getUpdate());
-            // get when is correct or not si poate trece mai departe la MainMenu
+            StartCoroutine(postUpdate(username, email, oldPassword, newPassword));
         }
         else
         {
-            print("null here");
+            Debug.Log("Empty Field(s)");
         }
     }
 
-    public class UpdateData
+    IEnumerator postUpdate(string username, string email, string oldPassword, string newPassword)
     {
-        // nume de parametrii din json
-        public string username;
-        public string email;
-        public string newPassword;
-        public string oldPassword;
-        public string status;
-    }
+        //Preparing the POST Json Body
+        UpdateAccountJson updateAccountJson = new UpdateAccountJson();
+        // updateAccountJson.username = username;
+        // updateAccountJson.email = email;
+        updateAccountJson.oldPassword = oldPassword;
+        updateAccountJson.newPassword = newPassword;
+        string json = JsonUtility.ToJson(updateAccountJson);
+        byte[] rawJson = new System.Text.UTF8Encoding().GetBytes(json);
 
-    IEnumerator getUpdate()
-    {
-        print("a intrat aci");
-        string uri = "http://64.225.52.232:8921/alabala23";
-        UnityWebRequest www = UnityWebRequest.Get(uri);
-        yield return www.SendWebRequest();
+        //Preparing the request
+        //TODO: Add API support for updateAccount
+        string uri = "https://localhost:5001/api/Authenticate/change";
+        UnityWebRequest request = UnityWebRequest.Post(uri, "POST");
+        request.uploadHandler = (UploadHandler)new UploadHandlerRaw(rawJson);
+        request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+        request.SetRequestHeader("Content-Type", "application/json");
+        request.SetRequestHeader("Authorization", "Bearer " + UserInfo.GetToken());
 
-        if (www.isNetworkError)
+        //Send the request then wait here until it returns
+        yield return request.SendWebRequest();
+        if (request.result == UnityWebRequest.Result.ConnectionError || 
+            request.result == UnityWebRequest.Result.ProtocolError)
+                Debug.Log("POST Error");
+        else 
         {
-            print("erorar");
-        }
-        else
-        {
-            try
+            Debug.Log("POST OK");
+            long status = request.responseCode;
+            if (status == 200) 
             {
-                // aici iau datele din json si vad fiecare parametru in parte
-                UpdateData updateData = JsonUtility.FromJson<UpdateData>(www.downloadHandler.text);
-                print(updateData.status);
-                // aici verifica daca statusul este ok si trece la mainmenu
-                //SceneManager.LoadScene("mainMenu");
-                // daca nu, afiseaza ceva mesaj
+                SceneManager.LoadScene(sceneName:"mainMenu");
             }
-            catch
+            else
             {
-                print("catch");
-            }
-        }
-
-    }
-
-    IEnumerator postUpdate()
-    {
-        /////////////// put correct 
-        string uri = "https://jsonplaceholder.typicode.com/posts";
-        List<IMultipartFormSection> formData = new List<IMultipartFormSection>();
-        formData.Add(new MultipartFormDataSection("username=" + username + "&email=" + email +
-            "&newPassword=" + newPassword + "&oldPassword=" + oldPassword));
-
-        UnityWebRequest www = UnityWebRequest.Post(uri, formData);
-        yield return www.SendWebRequest();
-
-        if (www.isNetworkError)
-        {
-            print("eroare");
-        }
-        else
-        {
-            try
-            {
-                // aici iau datele din json si vad fiecare parametru in parte
-                //UpdateData UpdateData = JsonUtility.FromJson<UpdateData>(www.downloadHandler.text);
-                print(www.downloadHandler.text);
-            }
-            catch (System.Exception error)
-            {
-                print("catch" + error.ToString());
+                Debug.Log(request.downloadHandler.text);
             }
         }
     }
