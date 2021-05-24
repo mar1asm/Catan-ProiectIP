@@ -22,8 +22,8 @@ public class NumberTileBehaviour : MonoBehaviour
 
     private void Start()
     {
-        transform.position = new Vector3(transform.parent.position.x, 
-                                         transform.position.y, 
+        transform.position = new Vector3(transform.parent.position.x,
+                                         transform.position.y,
                                          transform.parent.position.z);
     }
 
@@ -31,18 +31,27 @@ public class NumberTileBehaviour : MonoBehaviour
     private void UpdateNumberTile()
     {
         GameObject vfx = transform.GetChild(0).gameObject;
-        for(int i = 0; i < vfx.transform.childCount; ++i)
+        for (int i = 0; i < vfx.transform.childCount; ++i)
         {
             //Debug.LogWarning(i);
-            if(i == _number - 3)
-            {
-                
-                vfx.transform.GetChild(i).gameObject.SetActive(true);
-            }
-            else
-            {
-                vfx.transform.GetChild(i).gameObject.SetActive(false);
-            }
+            vfx.transform.GetChild(i).gameObject.SetActive(false);
+            // if(i == _number - 3)
+            // {
+
+            //     vfx.transform.GetChild(i).gameObject.SetActive(true);
+            // }
+            // else
+            // {
+            //     vfx.transform.GetChild(i).gameObject.SetActive(false);
+            // }
+        }
+        if (_number < 7)
+        {
+            vfx.transform.GetChild(_number - 2).gameObject.SetActive(true);
+        }
+        else
+        {
+            vfx.transform.GetChild(_number - 3).gameObject.SetActive(true);
         }
     }
 

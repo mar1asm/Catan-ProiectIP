@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System;
+using Random = UnityEngine.Random;
 
 public class BoardManagerBehaviour : MonoBehaviour
 {
@@ -30,19 +31,19 @@ public class BoardManagerBehaviour : MonoBehaviour
 
   
     private float deltaY = 0.002003f * 5751.438f * 0.3f;
-
+    private List<int> hexagonValue;
 
 
     void Start()
     {
         //deltaY = 0.002003f * 5751.438f * 0.3f;
     
-        // InitializeBoardFromFile("GameLogic/inimioara");
+         InitializeBoardFromFile("GameLogic/inimioara");
         // /*board.PlacePort(new Corner(new BoardCoordinate(1.33f, -2.66f)),
         //                 new Corner(new BoardCoordinate(0.66f, -2.33f)),
         //                 ResourceTypes.Any, 3, 1);
         // */
-        // InstantiateBoard();
+         InstantiateBoard();
 
         
     }
@@ -374,7 +375,10 @@ public class BoardManagerBehaviour : MonoBehaviour
             tile.GetComponent<TileBehaviour>().tile = entry.Value;
             if(entry.Value is ResourceTile)
             {
-                ((ResourceTile)entry.Value).numberTileValue = 12;
+                //((ResourceTile)entry.Value).numberTileValue = 7;
+                int nr = getRandomNumber();
+               // Debug.Log(nr);
+               ((ResourceTile)entry.Value).numberTileValue = nr;
             }
         }
 
@@ -434,6 +438,21 @@ public class BoardManagerBehaviour : MonoBehaviour
     public void InitializeBoardFromFile(string filePath)
     {
         board = BoardInitializer.InitializeBoardFromFile(filePath);
+        hexagonValue = new List<int>();
+        hexagonValue = BoardInitializer.hexagonNumber;
+       
+    }
+    public int getRandomNumber()
+    {   
+        System.Random rd = new System.Random();
+        int index = rd.Next(hexagonValue.Count);
+        Debug.Log("Index");
+        Debug.Log(index);
+        //Debug.Log(hexagonValue[index]);
+        int value = hexagonValue[index];
+        hexagonValue.RemoveAt(index);
+        return value;
+              
     }
 
 }
