@@ -14,6 +14,8 @@ public class RobberDisplayBehaviour : MonoBehaviour
 
     
     public List<ResourceTypes> resourcesGiven = new List<ResourceTypes>();
+
+    
     private bool userGaveResources = false;
     void Start()
     {

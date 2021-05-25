@@ -18,6 +18,9 @@ public class ClientActionsMasterBehaviour : MonoBehaviour
     [SerializeField]
     private GameObject RobberDisplay;
 
+    [SerializeField]
+    private GameObject choosePlayerPanel;
+
 
     [SerializeField]
     private ServerSenderBehaviour serverSender;
@@ -93,6 +96,40 @@ public class ClientActionsMasterBehaviour : MonoBehaviour
         string message = "moveThief " + UserInfo.GetUsername() + " " + bc.q + ";" + bc.r;
 
         serverSender.Send(message);
+
+        
+        var players = boardManager.GetPlayersOnTile(bc);
+
+        players.Remove(playerManager.clientPlayer);
+
+        if(players.Count == 0) yield break;
+
+        choosePlayerPanel.SetActive(true);
+
+        var choosePlayerPanelBehaviour = choosePlayerPanel.GetComponent<ChoosePlayerPanelBehaviour>();
+
+        yield return (choosePlayerPanelBehaviour.ChoosePlayer(players));
+
+        var playerChosen = choosePlayerPanelBehaviour.playerChosen;
+
+
+        choosePlayerPanel.SetActive(false);
+
+        Card card = playerChosen.RemoveRandomResourceCard();
+
+        ResourceTypes resource =  ((ResourceCard)card).CardType;
+
+        List<ResourceTypes> getCardBack = new List<ResourceTypes>();
+        playerChosen.GetResources(getCardBack);
+
+        message = "getResources " +  UserInfo.GetUsername() + " " + resource;
+
+        serverSender.Send(message);
+
+        message = "loseResources " + playerChosen.nickname + " " + resource;
+
+        serverSender.Send(message);
+
     }
     private IEnumerator BuildRoadCoroutine() {
         Player client = playerManager.clientPlayer;

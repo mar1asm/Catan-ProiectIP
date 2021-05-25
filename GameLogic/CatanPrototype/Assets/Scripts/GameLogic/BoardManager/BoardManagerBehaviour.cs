@@ -48,6 +48,21 @@ public class BoardManagerBehaviour : MonoBehaviour
         
     }
 
+    public List<Player> GetPlayersOnTile(BoardCoordinate boardCoordinate) {
+        List<Player> players = new List<Player>();
+        Tile tile = board.tiles[boardCoordinate];
+        
+        foreach (var corner in tile.corners)
+        {
+            if(corner.settlement != null) {
+                if(!players.Contains(corner.settlement.owner)) {
+                    players.Add(corner.settlement.owner);
+                }
+            }
+        }
+        return players;
+    }
+
     public List<KeyValuePair<GameObject, GameObject>> GetConnectorPlacesForCorner(BoardCoordinate bc) {
         List<KeyValuePair<GameObject, GameObject>> toReturn = new List<KeyValuePair<GameObject, GameObject>>();
         

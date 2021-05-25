@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class CommandInterpreterBehaviour : MonoBehaviour
 {
@@ -36,6 +37,10 @@ public class CommandInterpreterBehaviour : MonoBehaviour
 
     [SerializeField]
     private getResources resourcesDisplay;
+
+
+    [SerializeField]
+    private TextMeshProUGUI diceDisplay;
 
 
 
@@ -269,7 +274,8 @@ public class CommandInterpreterBehaviour : MonoBehaviour
                 if(UserInfo.IsHost()) {
                     //momentan o sa fie 12.... pentru ca numa jetoane cu 12 sunt, trebuie facuta initializarea dupa un fisier calumea a 
                     //jetoanelor... sa rezolvati asta va rog
-                    int randomDiceValue = 7;
+                    
+                    int randomDiceValue = (Random.Range(0, 6) + 1) + (Random.Range(0, 6) + 1);
 
                     string genString = "genResources " + randomDiceValue;
 
@@ -281,6 +287,8 @@ public class CommandInterpreterBehaviour : MonoBehaviour
                 if(tokens.Length < 2) return;
 
                 int randomDiceValue = int.Parse(tokens[1]);
+
+                diceDisplay.text = tokens[1];
 
                 if(randomDiceValue == 7) {
                     Player clientPlayer = playerManager.clientPlayer;
@@ -343,7 +351,24 @@ public class CommandInterpreterBehaviour : MonoBehaviour
                     clientActionsMaster.PlayerGaveResourcesToRobber();
                 }
             } break;
-        
+
+            case "loseResources": {
+                if(tokens.Length < 3) return;
+
+                string[] resourcesStrings = tokens[2].Split(',');
+
+                List<ResourceTypes> resources = new List<ResourceTypes>();
+
+                for(int i = 0 ; i < resourcesStrings.Length; ++i) {
+                    resources.Add(GetResourceTypeFromString(resourcesStrings[i]));
+                }
+
+                //playerManager.GiveResourceToPlayer(tokens[1], resources);
+                playerManager.GetPlayerWithUsername(tokens[1]).PayResources(resources);
+
+                resourcesDisplay.updateDisplay();
+            } break;
+
             case "moveThief": {
                 if(tokens.Length < 3) return;
 

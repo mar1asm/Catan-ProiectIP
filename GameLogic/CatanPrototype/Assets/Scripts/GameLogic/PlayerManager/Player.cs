@@ -36,9 +36,9 @@ public class Player
         ID = id;
         this.color = color;
 
-        for(int i = 0 ; i < 10; ++i) {
-            deck.add(new WoodCard(1, ResourceTypes.Wood));
-        }
+        // for(int i = 0 ; i < 10; ++i) {
+        //     deck.add(new WoodCard(1, ResourceTypes.Wood));
+        // }
         // nu board = b;
     }
     public Player ( string name, string id, DeckPlayer d)
