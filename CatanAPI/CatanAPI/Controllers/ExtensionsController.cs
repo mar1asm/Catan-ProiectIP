@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using CatanAPI.Data;
 using CatanAPI.Models;
 using Microsoft.AspNetCore.Authorization;
+using Newtonsoft.Json;
+using CatanAPI.Data.DTO.ExtensionsDTO;
 
 namespace CatanAPI.Controllers
 {
@@ -25,15 +27,18 @@ namespace CatanAPI.Controllers
         // GET: api/Extensions
         [Authorize]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Extension>>> GetExtensions()
+        public async Task<ActionResult<IEnumerable<GetExtensionDTO>>> GetExtensions()
         {
-            return await _context.Extensions.ToListAsync();
+            return await _context.Extensions.Select(extension => new GetExtensionDTO {
+                Id = extension.Id,
+                Name = extension.Name,
+            }).ToListAsync();
         }
 
         // GET: api/Extensions/5
         [Authorize]
         [HttpGet("{id}")]
-        public async Task<ActionResult<Extension>> GetExtension(int id)
+        public async Task<ActionResult<GetExtensionFullDTO>> GetExtension(int id)
         {
             var extension = await _context.Extensions.FindAsync(id);
 
@@ -42,19 +47,30 @@ namespace CatanAPI.Controllers
                 return NotFound();
             }
 
-            return extension;
+            return new GetExtensionFullDTO
+            {
+                Id = extension.Id,
+                Name = extension.Name,
+                Data = extension.Data
+            };
         }
 
         // PUT: api/Extensions/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [Authorize]
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutExtension(int id, Extension extension)
+        public async Task<IActionResult> PutExtension(int id, CreateExtensionDTO extension)
         {
-            if (id != extension.Id)
+            var extensionData = await _context.Extensions.FindAsync(id);
+            try
+            {
+                JsonConvert.DeserializeObject(extension.Data);
+            }
+            catch(Exception)
             {
                 return BadRequest();
             }
+            extensionData.Data = extension.Data;
 
             _context.Entry(extension).State = EntityState.Modified;
 
@@ -81,12 +97,29 @@ namespace CatanAPI.Controllers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [Authorize]
         [HttpPost]
-        public async Task<ActionResult<Extension>> PostExtension(Extension extension)
+        public async Task<ActionResult<GetExtensionFullDTO>> PostExtension(CreateExtensionDTO extension)
         {
-            _context.Extensions.Add(extension);
+            try
+            {
+                JsonConvert.DeserializeObject(extension.Data);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+            var ext = new Extension
+            {
+                Name = extension.Name,
+                Data = extension.Data
+            };
+            _context.Extensions.Add(ext);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetExtension", new { id = extension.Id }, extension);
+            return CreatedAtAction("GetExtension", new { id = ext.Id }, new GetExtensionFullDTO {
+                Id = ext.Id,
+                Data = ext.Data,
+                Name = ext.Name
+            });
         }
 
         // DELETE: api/Extensions/5
@@ -99,6 +132,7 @@ namespace CatanAPI.Controllers
             {
                 return NotFound();
             }
+
 
             _context.Extensions.Remove(extension);
             await _context.SaveChangesAsync();
