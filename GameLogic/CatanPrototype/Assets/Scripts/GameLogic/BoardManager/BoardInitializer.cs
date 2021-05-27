@@ -6,12 +6,11 @@ using System.IO;
 [System.Serializable]
 public class BoardInitializer
 {
-
-    
     /*
      * Cel mai probabil o sa fie modificat si nu o sa citim dintr-un fisier
      */
     public static List<int> hexagonNumber;
+    public static List<Port> ports;
     public static Board InitializeBoardFromFile(string filePath) 
     {
 
@@ -49,7 +48,20 @@ public class BoardInitializer
                 hexagonNumber.Add(at.value);
             }
         }
-
+       
+        foreach(Harbour h in game.harbours)
+        {
+            ResourceTypes rs = ResourceTypes.Any;
+            if (h.type == "sheep") rs = ResourceTypes.Sheep;
+            else if (h.type == "wood") rs = ResourceTypes.Wood;
+            else if (h.type == "wheat") rs = ResourceTypes.Wheat;
+            else if (h.type == "stone") rs = ResourceTypes.Stone;
+            else if (h.type == "brick") rs = ResourceTypes.Brick;
+            board.PlacePort(new Corner(new BoardCoordinate(h.q0, h.r0)),
+                      new Corner(new BoardCoordinate(h.q1, h.r1)),
+                       rs, h.raportx, h.raporty);
+        }
+        // facut logica din spate 
        /* Debug.Log("ceva");
         foreach (int nr in hexagonNumber)
         {
