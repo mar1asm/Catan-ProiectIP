@@ -8,4 +8,5 @@ public class GameDescriber
     public TileNumberDescriber[] availableTiles;
     public HexDescriber[] board;
     public AvailableToken[] availableTokens;
+    public Harbour[] harbours;
 }
